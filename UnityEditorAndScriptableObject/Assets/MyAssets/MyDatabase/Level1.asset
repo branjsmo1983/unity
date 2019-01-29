@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4485350ef2479e64fa865c5bfa1c9c36, type: 3}
+  m_Name: Level1
+  m_EditorClassIdentifier: 
+  _numberOfEnemies: 5
+  _enemiesDamage: 1
+  _playerHealth: 10
+  _scoreMultiplier: 5
+  _hitByEnemy: {fileID: 8300000, guid: 87712c8c47fdcb34984497f29b49b740, type: 3}
