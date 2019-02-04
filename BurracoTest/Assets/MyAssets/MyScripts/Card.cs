@@ -20,11 +20,12 @@ public class Card : MonoBehaviour
 	[SerializeField]
 	private MyValues value;
 
-	private bool canBeJolly, canBePin;
+	private Selectable selectable;
+	private Burraco burraco;
 
 	public int Cost { get ; private set; }
-	public bool CanBeJolly { get => canBeJolly; set => canBeJolly = value; }
-	public bool CanBePin { get => canBePin; set => canBePin = value; }
+	public bool CanBeJolly { get; set; }
+	public bool CanBePin { get; set; }
 
 	private void CalculateProp()
 	{
@@ -32,18 +33,18 @@ public class Card : MonoBehaviour
 		{
 			case 0:
 				Cost = 30;
-				canBePin = false;
-				canBeJolly = true;
+				CanBePin = false;
+				CanBeJolly = true;
 				break;
 			case 1:
 				Cost = 15;
-				canBePin = false;
-				canBeJolly = false;
+				CanBePin = false;
+				CanBeJolly = false;
 				break;
 			case 2:
 				Cost = 20;
-				canBePin = true;
-				canBeJolly = true;
+				CanBePin = true;
+				CanBeJolly = true;
 				break;
 			case 3:
 			case 4:
@@ -51,8 +52,8 @@ public class Card : MonoBehaviour
 			case 6:
 			case 7:
 				Cost = 5;
-				canBePin = false;
-				canBeJolly = false;
+				CanBePin = false;
+				CanBeJolly = false;
 				break;
 			case 8:
 			case 9:
@@ -61,8 +62,8 @@ public class Card : MonoBehaviour
 			case 12:
 			case 13:
 				Cost = 10;
-				canBePin = false;
-				canBeJolly = false;
+				CanBePin = false;
+				CanBeJolly = false;
 				break;
 			default:
 				Cost = -1;
@@ -74,6 +75,17 @@ public class Card : MonoBehaviour
 	void Start()
     {
 		CalculateProp();
+		List<string> deck = Burraco.GenerateDeck();
+		burraco = FindObjectOfType<Burraco>();
+
+		int i = 0;
+		foreach(string card in deck)
+		{
+			if(this.name == card)
+			{
+				cardFace = burraco.cardFaces[i];
+			}
+		}
 
 	}
 

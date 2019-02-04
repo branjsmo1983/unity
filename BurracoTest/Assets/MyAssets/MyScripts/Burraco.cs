@@ -7,7 +7,7 @@ public class Burraco : MonoBehaviour
 
 
 	[SerializeField]
-	private Sprite[] cardFaces,cardBacks;
+	internal Sprite[] cardFaces,cardBacks;
 
 	[SerializeField]
 	private GameObject cardPrefab;
@@ -16,7 +16,7 @@ public class Burraco : MonoBehaviour
 	public static string[] values = new string[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
 	public static string[] colors = new string[] { "Red", "Blue" };
 
-	public List<string> deck;
+	internal List<string> deck;
 	// Start is called before the first frame update
 	void Start()
     {
