@@ -6,29 +6,29 @@ public class Deck : MonoBehaviour
 {
 
 	[SerializeField]
-	private Card[] deck = new Card[108];
+	internal Card[] deck = new Card[108];
 
 	public List<Card> myDeck;
 
 
-	void Shuffle<T>(List<T> list)
+	private void FillDeck()
 	{
-		System.Random random = new System.Random();
-		int n = list.Count;
-		while (n > 1)
+		if (deck != null)
 		{
-			int k = random.Next(n);
-			n--;
-			T temp = list[k];
-			list[k] = list[n];
-			list[n] = temp;
+			for (int i = 0; i < deck.Length; i++)
+			{
+				myDeck.Add(deck[i]);
+			}
+		}
+		else
+		{
+			print("ERRORE :  il mazzo non può essere null !!!!!");
 		}
 	}
-
 	// Start is called before the first frame update
 	void Start()
     {
-        
+		FillDeck();
     }
 
     // Update is called once per frame

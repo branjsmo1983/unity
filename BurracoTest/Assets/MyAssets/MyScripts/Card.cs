@@ -15,17 +15,39 @@ public class Card : MonoBehaviour
 	private MySuits suit;
 
 	[SerializeField]
-	private MyColors colors;
+	private MyColors color;
 
 	[SerializeField]
 	private MyValues value;
 
-	private Selectable selectable;
-	private Burraco burraco;
 
-	public int Cost { get ; private set; }
+	internal bool faceup = false;
+
+	public int Cost { get; private set; }
 	public bool CanBeJolly { get; set; }
 	public bool CanBePin { get; set; }
+	public MySuits Suit
+	{
+		get
+		{
+			return suit;
+		}
+	}
+	public MyColors Color
+	{
+		get
+		{
+			return color;
+		}
+	}
+	public MyValues Value {
+		get
+		{
+			return value;
+		}
+
+
+	}
 
 	private void CalculateProp()
 	{
@@ -75,17 +97,7 @@ public class Card : MonoBehaviour
 	void Start()
     {
 		CalculateProp();
-		List<string> deck = Burraco.GenerateDeck();
-		burraco = FindObjectOfType<Burraco>();
-
-		int i = 0;
-		foreach(string card in deck)
-		{
-			if(this.name == card)
-			{
-				cardFace = burraco.cardFaces[i];
-			}
-		}
+	
 
 	}
 

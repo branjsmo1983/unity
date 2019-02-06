@@ -300,6 +300,3 @@
 Assets\MyAssets\MyScripts\Burraco.cs
 Assets\MyAssets\MyScripts\Card.cs
 Assets\MyAssets\MyScripts\Deck.cs
-Assets\MyAssets\MyScripts\Selectable.cs
-Assets\MyAssets\MyScripts\UpdateSprite.cs
-Assets\MyAssets\MyScripts\UserInput.cs

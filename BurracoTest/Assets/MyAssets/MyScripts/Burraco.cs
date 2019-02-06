@@ -5,18 +5,21 @@ using UnityEngine;
 public class Burraco : MonoBehaviour
 {
 
-
 	[SerializeField]
-	internal Sprite[] cardFaces,cardBacks;
+	private Deck deck;
 
-	[SerializeField]
-	private GameObject cardPrefab;
+	//[SerializeField]
+	//internal Sprite[] cardFaces,cardBacks;
 
-	public static string[] suits = new string[] { "Clubs", "Diamonds", "Hearts", "Spades" };
-	public static string[] values = new string[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
-	public static string[] colors = new string[] { "Red", "Blue" };
+	//[SerializeField]
+	//private GameObject cardPrefab;
 
-	internal List<string> deck;
+	//public static string[] suits = new string[] { "Clubs", "Diamonds", "Hearts", "Spades" };
+	//public static string[] values = new string[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+	//public static string[] colors = new string[] { "Red", "Blue" };
+
+	//internal List<string> deck;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -31,37 +34,47 @@ public class Burraco : MonoBehaviour
 
 	public void PlayCards()
 	{
-		deck = GenerateDeck();
-		Shuffle(deck);
-		//to remove, it's only for testing
-		foreach(string card in deck)
+		//deck = GenerateDeck();
+		//Shuffle(deck);
+		////to remove, it's only for testing
+		//foreach(string card in deck)
+		//{
+		//	print(card);
+		//}
+		//BurracoDeal();
+		//Questo funziona
+		//foreach(Card card in deck.deck)
+		//{
+		//	print(card.name + "_" + card.Value +"_"+card.Suit+"_"+card.Color+"_"+card.Cost);
+		//}
+		Shuffle(deck.myDeck);
+		foreach(Card card in deck.myDeck)
 		{
-			print(card);
+			print(card.name + "_" + card.Value + "_" + card.Suit + "_" + card.Color + "_" + card.Cost);
 		}
-		BurracoDeal();
 
 	}
 
-	public static List<string> GenerateDeck()
-	{
+	//public static List<string> GenerateDeck()
+	//{
 
-		List<string> newDeck = new List<string>();
-		foreach(string color in colors)
-		{
-			foreach(string suit in suits)
-			{
-				foreach(string value in values)
-				{
-					newDeck.Add(value + "_" + suit + "_" + color);
-				}
-			}
-		}
-		newDeck.Add("1_Jolly_Blue");
-		newDeck.Add("2_Jolly_Blue");
-		newDeck.Add("1_Jolly_Red");
-		newDeck.Add("2_Jolly_Red");
-		return newDeck;
-	}
+	//	List<string> newDeck = new List<string>();
+	//	foreach(string color in colors)
+	//	{
+	//		foreach(string suit in suits)
+	//		{
+	//			foreach(string value in values)
+	//			{
+	//				newDeck.Add(value + "_" + suit + "_" + color);
+	//			}
+	//		}
+	//	}
+	//	newDeck.Add("1_Jolly_Blue");
+	//	newDeck.Add("2_Jolly_Blue");
+	//	newDeck.Add("1_Jolly_Red");
+	//	newDeck.Add("2_Jolly_Red");
+	//	return newDeck;
+	//}
 
 	void Shuffle<T>(List<T> list)
 	{
@@ -77,19 +90,19 @@ public class Burraco : MonoBehaviour
 		}
 	}
 
-	void BurracoDeal()
-	{
-		float xOffset = 0;
-		float zOffset = 0.03f;
-		foreach(string card in deck)
-		{
-			GameObject newCard = Instantiate(cardPrefab, new Vector3(transform.position.x + xOffset, transform.position.y, transform.position.z + zOffset), Quaternion.identity);
-			newCard.name = card;
+	//void BurracoDeal()
+	//{
+	//	float xOffset = 0;
+	//	float zOffset = 0.03f;
+	//	foreach(string card in deck)
+	//	{
+	//		GameObject newCard = Instantiate(cardPrefab, new Vector3(transform.position.x + xOffset, transform.position.y, transform.position.z + zOffset), Quaternion.identity);
+	//		newCard.name = card;
 
-			xOffset += 0.15f;
-			zOffset += 0.03f;
-		}
-	}
+	//		xOffset += 0.15f;
+	//		zOffset += 0.03f;
+	//	}
+	//}
 
 
 }
