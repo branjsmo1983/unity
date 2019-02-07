@@ -56,6 +56,7 @@
      <Compile Include="Assets\MyAssets\MyScripts\Burraco.cs" />
      <Compile Include="Assets\MyAssets\MyScripts\Card.cs" />
      <Compile Include="Assets\MyAssets\MyScripts\Deck.cs" />
+     <Compile Include="Assets\MyAssets\MyScripts\Hand.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/myUnity/BurracoTest/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>

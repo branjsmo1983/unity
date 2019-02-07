@@ -8,7 +8,7 @@ public class Deck : MonoBehaviour
 	[SerializeField]
 	internal Card[] deck = new Card[108];							// mazzo di carte completo
 
-	public List<Card> myDeck;										// lista di carte, inizialmente uguale al mazzo
+	internal List<Card> myDeck;										// lista di carte, inizialmente uguale al mazzo
 
 	private void FillDeck()
 	{

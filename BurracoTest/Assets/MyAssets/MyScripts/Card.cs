@@ -107,14 +107,6 @@ public class Card : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		//if (IsVisible)
-		//{
-		//	spriteRenderer.sprite = cardFace;
-		//}
-		//else
-		//{
-		//	spriteRenderer.sprite = cardBack;
-		//}
 
 		spriteRenderer.sprite = (IsVisible) ? cardFace : cardBack ;
     }

@@ -8,17 +8,11 @@ public class Burraco : MonoBehaviour
 	[SerializeField]
 	private Deck deck;
 
-	//[SerializeField]
-	//internal Sprite[] cardFaces,cardBacks;
+	[SerializeField]
+	internal Hand myHand, teammateHand, rightOpponentHand, leftOpponentHand;
 
-	//[SerializeField]
-	//private GameObject cardPrefab;
-
-	//public static string[] suits = new string[] { "Clubs", "Diamonds", "Hearts", "Spades" };
-	//public static string[] values = new string[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
-	//public static string[] colors = new string[] { "Red", "Blue" };
-
-	//internal List<string> deck;
+	[SerializeField]
+	internal Card myCard, teammateCard, rightOpponentCard, leftOpponentCard;
 
 
 	// Start is called before the first frame update
@@ -35,14 +29,7 @@ public class Burraco : MonoBehaviour
 
 	public void PlayCards()
 	{
-		//deck = GenerateDeck();
-		//Shuffle(deck);
-		////to remove, it's only for testing
-		//foreach(string card in deck)
-		//{
-		//	print(card);
-		//}
-		//BurracoDeal();
+
 		Shuffle(deck.myDeck);
 		foreach(Card card in deck.myDeck)
 		{
@@ -52,26 +39,6 @@ public class Burraco : MonoBehaviour
 
 	}
 
-	//public static List<string> GenerateDeck()
-	//{
-
-	//	List<string> newDeck = new List<string>();
-	//	foreach(string color in colors)
-	//	{
-	//		foreach(string suit in suits)
-	//		{
-	//			foreach(string value in values)
-	//			{
-	//				newDeck.Add(value + "_" + suit + "_" + color);
-	//			}
-	//		}
-	//	}
-	//	newDeck.Add("1_Jolly_Blue");
-	//	newDeck.Add("2_Jolly_Blue");
-	//	newDeck.Add("1_Jolly_Red");
-	//	newDeck.Add("2_Jolly_Red");
-	//	return newDeck;
-	//}
 
 	void Shuffle<T>(List<T> list)
 	{
@@ -87,19 +54,6 @@ public class Burraco : MonoBehaviour
 		}
 	}
 
-	//void BurracoDeal()
-	//{
-	//	float xOffset = 0;
-	//	float zOffset = 0.03f;
-	//	foreach(string card in deck)
-	//	{
-	//		GameObject newCard = Instantiate(cardPrefab, new Vector3(transform.position.x + xOffset, transform.position.y, transform.position.z + zOffset), Quaternion.identity);
-	//		newCard.name = card;
-
-	//		xOffset += 0.15f;
-	//		zOffset += 0.03f;
-	//	}
-	//}
 
 	void Deal()
 	{
@@ -108,7 +62,7 @@ public class Burraco : MonoBehaviour
 		foreach(Card card in deck.myDeck)
 		{
 			card.transform.position = new Vector3(transform.position.x + xOffset, transform.position.y, transform.position.z + zOffset);
-			card.IsVisible = false;
+			card.IsVisible = true;
 			xOffset += 0.3f;
 			zOffset += 0.03f;
 
