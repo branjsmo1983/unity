@@ -6,26 +6,47 @@ public class Card : MonoBehaviour
 {
 
 	[SerializeField]
-	private Sprite cardFace, cardBack;
+	internal Sprite cardFace, cardBack;
 
 	[SerializeField]
-	private SpriteRenderer spriteRenderer;
+	internal SpriteRenderer spriteRenderer;
 
 	[SerializeField]
 	private MySuits suit;
 
 	[SerializeField]
-	private MyColors colors;
+	private MyColors color;
 
 	[SerializeField]
 	private MyValues value;
 
-	private Selectable selectable;
-	private Burraco burraco;
+	public bool IsVisible { get; set; } = false;
 
 	public int Cost { get ; private set; }
 	public bool CanBeJolly { get; set; }
 	public bool CanBePin { get; set; }
+	public MySuits Suit
+	{
+		get
+		{
+			return suit;
+		}
+	}
+	public MyColors Color
+	{
+		get
+		{
+			return color;
+		}
+	}
+	public MyValues Value
+	{
+		get
+		{
+			return value;
+		}
+	}
+
 
 	private void CalculateProp()
 	{
@@ -71,28 +92,31 @@ public class Card : MonoBehaviour
 		}
 	}
 
+	void Awake()
+	{
+		CalculateProp();
+	}
+
 	// Start is called before the first frame update
 	void Start()
     {
-		CalculateProp();
-		List<string> deck = Burraco.GenerateDeck();
-		burraco = FindObjectOfType<Burraco>();
-
-		int i = 0;
-		foreach(string card in deck)
-		{
-			if(this.name == card)
-			{
-				cardFace = burraco.cardFaces[i];
-			}
-		}
+		spriteRenderer = GetComponent<SpriteRenderer>();
 
 	}
 
     // Update is called once per frame
     void Update()
     {
-        
+		//if (IsVisible)
+		//{
+		//	spriteRenderer.sprite = cardFace;
+		//}
+		//else
+		//{
+		//	spriteRenderer.sprite = cardBack;
+		//}
+
+		spriteRenderer.sprite = (IsVisible) ? cardFace : cardBack ;
     }
 
 	public enum MySuits
