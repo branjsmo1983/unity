@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Burraco : MonoBehaviour
 {
@@ -9,12 +10,15 @@ public class Burraco : MonoBehaviour
 	private Deck deck;
 
 	[SerializeField]
+	private DeckForStartGame deckForStartGame;
+
+	[SerializeField]
 	internal Hand myHand, teammateHand, rightOpponentHand, leftOpponentHand;
 
 	[SerializeField]
-	internal Card myCard, teammateCard, rightOpponentCard, leftOpponentCard;
+	internal Card[] cards = new Card[4];                                        //per sapere la transform
 
-
+	private List<CardForStartGame> myCardsForStart;
 	// Start is called before the first frame update
 	void Start()
     {
@@ -27,18 +31,44 @@ public class Burraco : MonoBehaviour
         
     }
 
+	
+
 	public void PlayCards()
 	{
 
 		Shuffle(deck.myDeck);
-		foreach(Card card in deck.myDeck)
-		{
-			print(card.name+"_"+card.Value+"_"+card.Suit+"_"+card.Color+"_"+card.Cost);
-		}
+		//foreach(Card card in deck.myDeck)
+		//{
+		//	print(card.name+"_"+card.Value+"_"+card.Suit+"_"+card.Color+"_"+card.Cost);
+		//}
 		Deal();
+		StartCoroutine(TestExtracCards());
 
 	}
 
+	IEnumerator TestExtracCards()
+	{
+		System.Random random = new System.Random();
+		for(int i = 0; i<4 ; i++)
+		{
+			yield return new WaitForSeconds(0.08f);
+			int index = random.Next(deckForStartGame.deck.Count);
+			CardForStartGame newCard = Instantiate(deckForStartGame.deck[index], new Vector3(cards[i].transform.position.x, cards[i].transform.position.y, cards[i].transform.position.z), Quaternion.identity, cards[i].transform);
+			newCard.AbsoluteValue = index;
+			myCardsForStart.Add(newCard);
+			print("la carta : " + deckForStartGame.deck[index].name);
+			print("diventata : " + newCard.name);
+			print("ha valore estratto : " + newCard.AbsoluteValue);
+
+
+		}
+		var mystartCard = myCardsForStart.Max(x => x.AbsoluteValue);
+		var myCard = myCardsForStart.OrderByDescending(i => i.AbsoluteValue).Take(1);
+
+		print("");
+		print("");
+		print("");
+		;	}
 
 	void Shuffle<T>(List<T> list)
 	{
