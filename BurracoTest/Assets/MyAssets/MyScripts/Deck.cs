@@ -6,7 +6,9 @@ public class Deck : MonoBehaviour
 {
 
 	[SerializeField]
-	internal Card[] deck = new Card[108];							// mazzo di carte completo
+	internal Card[] deck = new Card[108];                           // mazzo di carte completo
+
+	internal bool[] isAssigned = new bool[108];
 
 	[SerializeField]
 	internal List<Card> myDeck;										// lista di carte, inizialmente uguale al mazzo

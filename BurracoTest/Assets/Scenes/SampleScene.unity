@@ -124,6 +124,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: OpponentRight
       objectReference: {fileID: 0}
+    - target: {fileID: 5952955747447620747, guid: e2bed68da3825314cbff066998c7a32b,
+        type: 3}
+      propertyPath: m_TagString
+      value: rightOpponent
+      objectReference: {fileID: 0}
     - target: {fileID: 5745092872190574936, guid: e2bed68da3825314cbff066998c7a32b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -287,7 +292,7 @@ GameObject:
   - component: {fileID: 568534298}
   m_Layer: 0
   m_Name: DeckFake
-  m_TagString: Untagged
+  m_TagString: prestart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -389,6 +394,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: OppLeftCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491453529816751332, guid: f072641e80527e140bb27fcfbf1f75cf,
+        type: 3}
+      propertyPath: m_TagString
+      value: leftOpponent
       objectReference: {fileID: 0}
     - target: {fileID: 7491453529816751321, guid: f072641e80527e140bb27fcfbf1f75cf,
         type: 3}
@@ -498,10 +508,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deck: {fileID: 1716270529}
   deckForStartGame: {fileID: 7661997427944511067}
-  myHand: {fileID: 2553202956904232501}
-  teammateHand: {fileID: 1401111346}
-  rightOpponentHand: {fileID: 226123709}
-  leftOpponentHand: {fileID: 1337920749}
+  deckFake: {fileID: 568534297}
+  hands:
+  - {fileID: 2553202956904232501}
+  - {fileID: 1337920749}
+  - {fileID: 1401111346}
+  - {fileID: 226123709}
   cards:
   - {fileID: 680119952}
   - {fileID: 1190611871}
@@ -532,6 +544,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MyMateCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491453529816751332, guid: f072641e80527e140bb27fcfbf1f75cf,
+        type: 3}
+      propertyPath: m_TagString
+      value: myMate
       objectReference: {fileID: 0}
     - target: {fileID: 7491453529816751321, guid: f072641e80527e140bb27fcfbf1f75cf,
         type: 3}
@@ -725,6 +742,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: OpponentLeft
       objectReference: {fileID: 0}
+    - target: {fileID: 5952955747447620747, guid: e2bed68da3825314cbff066998c7a32b,
+        type: 3}
+      propertyPath: m_TagString
+      value: leftOpponent
+      objectReference: {fileID: 0}
     - target: {fileID: 5745092872190574936, guid: e2bed68da3825314cbff066998c7a32b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -806,6 +828,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MyMateHand
       objectReference: {fileID: 0}
+    - target: {fileID: 5952955747447620747, guid: e2bed68da3825314cbff066998c7a32b,
+        type: 3}
+      propertyPath: m_TagString
+      value: myMate
+      objectReference: {fileID: 0}
     - target: {fileID: 5745092872190574936, guid: e2bed68da3825314cbff066998c7a32b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -886,6 +913,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MyCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491453529816751332, guid: f072641e80527e140bb27fcfbf1f75cf,
+        type: 3}
+      propertyPath: m_TagString
+      value: me
       objectReference: {fileID: 0}
     - target: {fileID: 7491453529816751321, guid: f072641e80527e140bb27fcfbf1f75cf,
         type: 3}
@@ -975,6 +1007,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: OppRightCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491453529816751332, guid: f072641e80527e140bb27fcfbf1f75cf,
+        type: 3}
+      propertyPath: m_TagString
+      value: rightOpponent
       objectReference: {fileID: 0}
     - target: {fileID: 7491453529816751321, guid: f072641e80527e140bb27fcfbf1f75cf,
         type: 3}
@@ -1341,6 +1378,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MyHand
       objectReference: {fileID: 0}
+    - target: {fileID: 5952955747447620747, guid: e2bed68da3825314cbff066998c7a32b,
+        type: 3}
+      propertyPath: m_TagString
+      value: me
+      objectReference: {fileID: 0}
     - target: {fileID: 5745092872190574936, guid: e2bed68da3825314cbff066998c7a32b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1573,6 +1615,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DeckForStartGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 8563835472057746386, guid: 6f18f946c6c27cc40a656e59c089041d,
+        type: 3}
+      propertyPath: m_TagString
+      value: prestart
       objectReference: {fileID: 0}
     - target: {fileID: 436340920425370754, guid: 6f18f946c6c27cc40a656e59c089041d,
         type: 3}

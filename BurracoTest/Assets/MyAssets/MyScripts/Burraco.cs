@@ -13,12 +13,16 @@ public class Burraco : MonoBehaviour
 	private DeckForStartGame deckForStartGame;
 
 	[SerializeField]
-	internal Hand myHand, teammateHand, rightOpponentHand, leftOpponentHand;
+	GameObject deckFake;
+
+	[SerializeField]
+	internal Hand[] hands = new Hand[4];										//per sapere la transform
 
 	[SerializeField]
 	internal Card[] cards = new Card[4];                                        //per sapere la transform
 
-	private List<CardForStartGame> myCardsForStart;
+	private List<CardForStartGame> myCardsForStart = new List<CardForStartGame>();
+	private string playerstart;
 	// Start is called before the first frame update
 	void Start()
     {
@@ -37,38 +41,35 @@ public class Burraco : MonoBehaviour
 	{
 
 		Shuffle(deck.myDeck);
-		//foreach(Card card in deck.myDeck)
-		//{
-		//	print(card.name+"_"+card.Value+"_"+card.Suit+"_"+card.Color+"_"+card.Cost);
-		//}
 		Deal();
-		StartCoroutine(TestExtracCards());
+		StartCoroutine(SelectPlayerStartGame());
+		StopCoroutine(SelectPlayerStartGame());
+		//StartToPlay(playerstart);
 
 	}
 
-	IEnumerator TestExtracCards()
+	IEnumerator SelectPlayerStartGame()
 	{
 		System.Random random = new System.Random();
 		for(int i = 0; i<4 ; i++)
 		{
-			yield return new WaitForSeconds(0.08f);
+			yield return new WaitForSeconds(0.1f);
 			int index = random.Next(deckForStartGame.deck.Count);
 			CardForStartGame newCard = Instantiate(deckForStartGame.deck[index], new Vector3(cards[i].transform.position.x, cards[i].transform.position.y, cards[i].transform.position.z), Quaternion.identity, cards[i].transform);
 			newCard.AbsoluteValue = index;
+			newCard.gameObject.tag = cards[i].tag;
 			myCardsForStart.Add(newCard);
-			print("la carta : " + deckForStartGame.deck[index].name);
-			print("diventata : " + newCard.name);
-			print("ha valore estratto : " + newCard.AbsoluteValue);
-
 
 		}
-		var mystartCard = myCardsForStart.Max(x => x.AbsoluteValue);
-		var myCard = myCardsForStart.OrderByDescending(i => i.AbsoluteValue).Take(1);
+		int highestValue = myCardsForStart.Max(x => x.AbsoluteValue);
+		
+		CardForStartGame myCard = myCardsForStart.OrderByDescending(i => i.AbsoluteValue).FirstOrDefault();
+		playerstart = myCard.gameObject.tag;
+		print("il giocatore che inizia la partita è : " + playerstart);
 
-		print("");
-		print("");
-		print("");
-		;	}
+		StartCoroutine(RemovePreStartCards());
+
+	}
 
 	void Shuffle<T>(List<T> list)
 	{
@@ -84,7 +85,7 @@ public class Burraco : MonoBehaviour
 		}
 	}
 
-
+	//Serve solo per testare come creare un metodo che crei una carta vicino l'altra
 	void Deal()
 	{
 		float xOffset = 0;
@@ -99,7 +100,57 @@ public class Burraco : MonoBehaviour
 		}
 	}
 
-	
+	IEnumerator RemovePreStartCards()
+	{
+		yield return new WaitForSeconds(0.6f);
+
+		//	TO DO  : una scritta con chi inizia
+
+		foreach (CardForStartGame cardToDisable in myCardsForStart)
+		{
+			cardToDisable.gameObject.SetActive(false);
+		}
+		deckForStartGame.gameObject.SetActive(false);
+		deckFake.SetActive(false);
+
+	}
+
+	IEnumerator CreateAllDecks()
+	{
+		//una cosa simile a queste 2 parti commentate ma con l'altro deck
+
+		//float xOffset = 0;
+		//float zOffset = 0.03f;
+		//foreach (Card card in deck.myDeck)
+		//{
+		//	card.transform.position = new Vector3(transform.position.x + xOffset, transform.position.y, transform.position.z + zOffset);
+		//	card.IsVisible = true;
+		//	xOffset += 0.3f;
+		//	zOffset += 0.03f;
+
+		//}
+
+		//System.Random random = new System.Random();
+		//for (int i = 0; i < 4; i++)
+		//{
+		//	yield return new WaitForSeconds(0.1f);
+		//	int index = random.Next(deckForStartGame.deck.Count);
+		//	CardForStartGame newCard = Instantiate(deckForStartGame.deck[index], new Vector3(cards[i].transform.position.x, cards[i].transform.position.y, cards[i].transform.position.z), Quaternion.identity, cards[i].transform);
+		//	newCard.AbsoluteValue = index;
+		//	newCard.gameObject.tag = cards[i].tag;
+		//	myCardsForStart.Add(newCard);
+
+		//}
+
+		yield return new WaitForSeconds(0.1f);
+	}
+
+
+	void StartToPlay(string tagPlayerToStart)
+	{
+		
+
+	}
 
 	
 }
