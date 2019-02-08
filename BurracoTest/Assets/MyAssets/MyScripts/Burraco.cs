@@ -12,7 +12,7 @@ public class Burraco : MonoBehaviour
 	internal Hand myHand, teammateHand, rightOpponentHand, leftOpponentHand;
 
 	[SerializeField]
-	internal Card myCard, teammateCard, rightOpponentCard, leftOpponentCard;
+	internal Card[] cards = new Card[4];
 
 
 	// Start is called before the first frame update
@@ -27,18 +27,37 @@ public class Burraco : MonoBehaviour
         
     }
 
+	
+
 	public void PlayCards()
 	{
 
 		Shuffle(deck.myDeck);
-		foreach(Card card in deck.myDeck)
-		{
-			print(card.name+"_"+card.Value+"_"+card.Suit+"_"+card.Color+"_"+card.Cost);
-		}
+		//foreach(Card card in deck.myDeck)
+		//{
+		//	print(card.name+"_"+card.Value+"_"+card.Suit+"_"+card.Color+"_"+card.Cost);
+		//}
 		Deal();
+		StartCoroutine(TestExtracCards());
 
 	}
 
+	IEnumerator TestExtracCards()
+	{
+		System.Random random = new System.Random();
+		for(int i = 0; i<4 ; i++)
+		{
+			yield return new WaitForSeconds(0.05f);
+			int index = random.Next(deck.deck.Length);
+			Card newCard = Instantiate(deck.deck[index], new Vector3(cards[i].transform.position.x, cards[i].transform.position.y, cards[i].transform.position.z), Quaternion.identity, cards[i].transform);
+			newCard.IsVisible = true;
+			print("la carta : " + deck.deck[index].name);
+			print("diventata : " + newCard.name);
+			print("ha valore estratto : " + System.Convert.ToInt32(deck.deck[index].Value));
+
+
+		}
+	}
 
 	void Shuffle<T>(List<T> list)
 	{
