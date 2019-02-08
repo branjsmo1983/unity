@@ -8,7 +8,6 @@ public class Deck : MonoBehaviour
 	[SerializeField]
 	internal Card[] deck = new Card[108];							// mazzo di carte completo
 
-	[SerializeField]
 	internal List<Card> myDeck;										// lista di carte, inizialmente uguale al mazzo
 
 	private void FillDeck()
@@ -19,15 +18,10 @@ public class Deck : MonoBehaviour
 		}
 	}
 
-	private void Awake()
-	{
-		FillDeck();
-	}
-
 	// Start is called before the first frame update
 	void Start()
     {
-		
+		FillDeck();
     }
 
     // Update is called once per frame

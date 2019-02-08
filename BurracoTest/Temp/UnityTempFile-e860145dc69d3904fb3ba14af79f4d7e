@@ -78,9 +78,9 @@
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll"
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/myUnity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/myUnity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/myUnity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll
 /reference:"C:\Program Files\Unity\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\NetStandard\compat\2.0.0\shims\netstandard\Microsoft.Win32.Primitives.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\NetStandard\compat\2.0.0\shims\netstandard\System.AppContext.dll"
@@ -300,4 +300,3 @@
 Assets\MyAssets\MyScripts\Burraco.cs
 Assets\MyAssets\MyScripts\Card.cs
 Assets\MyAssets\MyScripts\Deck.cs
-Assets\MyAssets\MyScripts\Hand.cs

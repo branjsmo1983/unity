@@ -1,6 +1,6 @@
 /target:library
 /nowarn:0169
-/out:Temp/Unity.TextMeshPro.dll
+/out:Temp/Assembly-CSharp.dll
 /debug:portable
 /optimize-
 /nostdlib+
@@ -68,27 +68,19 @@
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.XRModule.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/UnityEditor.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/Unity.Locator.dll"
+/reference:Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll
+/reference:Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll
+/reference:Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll
+/reference:Library/ScriptAssemblies/Unity.TextMeshPro.dll
+/reference:Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll"
-/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll"
-/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/Editor/UnityEditor.Timeline.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll"
-/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll"
-/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/Editor/UnityEditor.GoogleAudioSpatializer.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll"
-/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/Editor/UnityEditor.SpatialTracking.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll"
-/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll"
-/reference:"C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll"
-/reference:"C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll"
-/reference:"C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll"
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.ads@2.0.8/UnityEngine.Advertisements.dll
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.purchasing@2.0.3/UnityEngine.Purchasing.dll
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/myUnity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/myUnity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/myUnity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll
 /reference:"C:\Program Files\Unity\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\NetStandard\compat\2.0.0\shims\netstandard\Microsoft.Win32.Primitives.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\NetStandard\compat\2.0.0\shims\netstandard\System.AppContext.dll"
@@ -305,48 +297,6 @@
 /define:ENABLE_VSTU
 /define:CSHARP_7_OR_LATER
 /define:CSHARP_7_3_OR_NEWER
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\FastAction.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\MaterialReferenceManager.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\PackageResourceImporterWindow.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TextContainer.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TextMeshPro.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TextMeshProUGUI.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_Asset.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_ColorGradient.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_Compatibility.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_CoroutineTween.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_DefaultControls.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_Dropdown.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_FontAsset.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_InputField.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_InputValidator.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_LineInfo.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_ListPool.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_MaterialManager.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_MeshInfo.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_ObjectPool.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_ScrollbarEventHandler.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_SelectionCaret.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_Settings.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_Sprite.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_SpriteAnimator.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_SpriteAsset.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_SpriteAssetImportFormats.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_Style.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_StyleSheet.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_SubMesh.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_SubMeshUI.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_Text.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_TextElement.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_TextInfo.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_TextUtilities.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_UpdateManager.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_UpdateRegistery.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_XmlTagStack.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMPro_EventManager.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMPro_ExtensionMethods.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMPro_FontUtilities.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMPro_MeshUtilities.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMPro_Private.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMPro_ShaderUtilities.cs
-C:\Users\Adamo\Desktop\Corso_Unity_Completo\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMPro_UGUI_Private.cs
+Assets\MyAssets\MyScripts\Burraco.cs
+Assets\MyAssets\MyScripts\Card.cs
+Assets\MyAssets\MyScripts\Deck.cs
