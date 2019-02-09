@@ -53,7 +53,7 @@ public class Burraco : MonoBehaviour
 		System.Random random = new System.Random();
 		for(int i = 0; i<4 ; i++)
 		{
-			yield return new WaitForSeconds(0.1f);
+			yield return new WaitForSeconds(0.5f);
 			int index = random.Next(deckForStartGame.deck.Count);
 			CardForStartGame newCard = Instantiate(deckForStartGame.deck[index], new Vector3(cards[i].transform.position.x, cards[i].transform.position.y, cards[i].transform.position.z), Quaternion.identity, cards[i].transform);
 			newCard.AbsoluteValue = index;
@@ -102,7 +102,7 @@ public class Burraco : MonoBehaviour
 
 	IEnumerator RemovePreStartCards()
 	{
-		yield return new WaitForSeconds(0.6f);
+		yield return new WaitForSeconds(1.5f);
 
 		//	TO DO  : una scritta con chi inizia
 
