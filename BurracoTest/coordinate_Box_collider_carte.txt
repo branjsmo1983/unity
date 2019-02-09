@@ -1,0 +1,4 @@
+offset 		x 	0,005330563
+offset 		y 	-0,015944
+size		x	4,973327
+size		y	7,161454
