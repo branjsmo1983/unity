@@ -5,12 +5,15 @@ using UnityEngine;
 public class Hand : MonoBehaviour
 {
 	[SerializeField]
-	internal List<Card> myHand;
+	internal List<Card> myHand = new List<Card>();
 
-	internal List<Collider2D> cardCollider;
+	internal Card[] initialHand = new Card[11];
+	
+	public int NumberOfPins { get; set; }
+	public int NumberOfJolly { get; set; }
 
-    // Start is called before the first frame update
-    void Start()
+	// Start is called before the first frame update
+	void Start()
     {
         
     }
@@ -23,12 +26,7 @@ public class Hand : MonoBehaviour
 
 	internal int CountNumbersOfCards()
 	{
-		int result = 0;
-
-
-#pragma warning disable CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
-		return result = (myHand.Count != null) ? 0 : myHand.Capacity;
-#pragma warning restore CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
+		return myHand.Count;
 	}
 
 }

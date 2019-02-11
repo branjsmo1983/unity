@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-	internal Hand myHand;
-	internal bool isMyRound;
+	internal Hand hand;
+	internal bool IsMyRound { get; set; }
+	internal bool CockpitAlreadyBeenTaken { get; set; }
+	internal bool Iwon { get; set; }
+	internal string Name { get; set; }
 
     // Start is called before the first frame update
     void Start()

@@ -20,6 +20,8 @@ public class Card : MonoBehaviour
 	[SerializeField]
 	private MyValues value;
 
+	internal BoxCollider2D cardCollider2D;
+
 	public bool IsVisible { get; set; } = false;
 
 	public int Cost { get ; private set; }

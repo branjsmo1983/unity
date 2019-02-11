@@ -24,6 +24,7 @@ public class Deck : MonoBehaviour
 	private void Awake()
 	{
 		FillDeck();
+		
 	}
 
 	// Start is called before the first frame update

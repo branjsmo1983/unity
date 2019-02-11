@@ -16,13 +16,15 @@ public class Burraco : MonoBehaviour
 	GameObject deckFake;
 
 	[SerializeField]
-	internal Hand[] hands = new Hand[4];										//per sapere la transform
+	internal GameObject[] hands = new GameObject[4];										//per sapere la transform
 
 	[SerializeField]
-	internal Card[] cards = new Card[4];                                        //per sapere la transform
+	internal GameObject[] cards = new GameObject[4];                                        //per sapere la transform
 
 	private List<CardForStartGame> myCardsForStart = new List<CardForStartGame>();
 	private string playerstart;
+	private Player[] players = new Player[4];
+	private string[] namesOfPlayers = new string[4];
 	// Start is called before the first frame update
 	void Start()
     {
@@ -35,7 +37,35 @@ public class Burraco : MonoBehaviour
         
     }
 
-	
+	void SetPlayersOrder()
+	{
+		namesOfPlayers[0] = playerstart;
+		if(playerstart == "me")
+		{
+			namesOfPlayers[1] = "leftOpponent";
+			namesOfPlayers[2] = "myMate";
+			namesOfPlayers[3] = "rightOpponent";
+		}else if(playerstart == "leftOpponent")
+		{
+			namesOfPlayers[1] = "myMate";
+			namesOfPlayers[2] = "rightOpponent";
+			namesOfPlayers[3] = "me";
+		}else if(playerstart == "myMate")
+		{
+			namesOfPlayers[1] = "rightOpponent";
+			namesOfPlayers[2] = "me";
+			namesOfPlayers[3] = "leftOpponent";
+		}else if(playerstart == "rightOpponent")
+		{
+			namesOfPlayers[1] = "me";
+			namesOfPlayers[2] = "leftOpponent";
+			namesOfPlayers[3] = "myMate";
+		}
+		else
+		{
+			print("Errore!!! non ha preso nessun nome corretto");
+		}
+	}
 
 	public void PlayCards()
 	{
@@ -44,6 +74,7 @@ public class Burraco : MonoBehaviour
 		Deal();
 		StartCoroutine(SelectPlayerStartGame());
 		StopCoroutine(SelectPlayerStartGame());
+		StartCoroutine(CreateAllDecks());
 		//StartToPlay(playerstart);
 
 	}
@@ -117,6 +148,35 @@ public class Burraco : MonoBehaviour
 
 	IEnumerator CreateAllDecks()
 	{
+		System.Random random = new System.Random();
+		float xOffset = 0;
+		float zOffset = 0.03f;
+		List<int> numbersDrawn = new List<int>();							//tengo in memoria i numeri già estratti
+		for(int indiceCarta = 0; indiceCarta < 11; indiceCarta++)			// per ognuna delle 11 carte della mano iniziale
+		{
+			for(int indicePlayer = 0; indicePlayer < 4; indicePlayer++)		// per ognuno dei 4 giocatori
+			{
+				yield return new WaitForSeconds(0.1f);
+				int index;
+				do index = random.Next(deck.deck.Length);
+				while (numbersDrawn.Contains(index));
+				deck.deck[index].transform.position = new Vector3(players[indicePlayer].hand.initialHand[indiceCarta].transform.position.x + xOffset, players[indicePlayer].hand.initialHand[indiceCarta].transform.position.y, players[indicePlayer].hand.initialHand[indiceCarta].transform.position.z +zOffset);
+				if(namesOfPlayers[indicePlayer] == "me")
+				{
+					deck.deck[index].IsVisible = true;			//le mie carte le vedo
+				}
+				else
+				{
+					deck.deck[index].IsVisible = false;			//quelle degli altri no
+				}
+				deck.isAssigned[index] = true;
+				players[indicePlayer].hand.initialHand[indiceCarta] = deck.deck[index];
+				xOffset += 0.3f;
+				zOffset += 0.03f;
+			}
+		}
+
+
 		//una cosa simile a queste 2 parti commentate ma con l'altro deck
 
 		//float xOffset = 0;
@@ -142,7 +202,7 @@ public class Burraco : MonoBehaviour
 
 		//}
 
-		yield return new WaitForSeconds(0.1f);
+		
 	}
 
 
