@@ -71,10 +71,11 @@ public class Burraco : MonoBehaviour
 	{
 
 		Shuffle(deck.myDeck);
-		Deal();
+		//Deal();
 		StartCoroutine(SelectPlayerStartGame());
 		StopCoroutine(SelectPlayerStartGame());
-		StartCoroutine(CreateAllDecks());
+		CreateMystartHand();
+		//StartCoroutine(CreateAllDecks());
 		//StartToPlay(playerstart);
 
 	}
@@ -129,6 +130,38 @@ public class Burraco : MonoBehaviour
 			zOffset += 0.03f;
 
 		}
+	}
+
+	void CreateMystartHand()
+	{
+		
+		int indexPlayer = 0;
+		for (indexPlayer = 0;indexPlayer < 4; indexPlayer++)
+		{
+			float xOffset = 0;
+			float zOffset = 0.03f;
+			float yOffset = 0;
+			for (int i = 0; i < 11; i++)
+			{
+				Card newCard;
+				if((indexPlayer == 0) || (indexPlayer == 2))
+				{ 
+					newCard = Instantiate(deck.myDeck[0], new Vector3(hands[indexPlayer].transform.position.x + xOffset, hands[indexPlayer].transform.position.y, hands[indexPlayer].transform.position.z + zOffset),Quaternion.identity, hands[indexPlayer].transform);
+					deck.myDeck.RemoveAt(0);
+				}
+				else
+				{
+					newCard = Instantiate(deck.myDeck[0], new Vector3(hands[indexPlayer].transform.position.x, hands[indexPlayer].transform.position.y - yOffset, hands[indexPlayer].transform.position.z + zOffset), Quaternion.Euler(0, 0, 90), hands[indexPlayer].transform);
+					deck.myDeck.RemoveAt(0);
+				}
+				newCard.IsVisible = true;
+				xOffset += 0.9f;
+				zOffset += 0.03f;
+				yOffset += 0.7f;
+			}
+			
+		}
+
 	}
 
 	IEnumerator RemovePreStartCards()
