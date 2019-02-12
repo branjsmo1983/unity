@@ -23,7 +23,10 @@ public class Burraco : MonoBehaviour
 
 	private List<CardForStartGame> myCardsForStart = new List<CardForStartGame>();
 	private string playerstart;
-	private Player[] players = new Player[4];
+	private Player me = new Player { Name = "me" };
+	private Player myMate = new Player { Name = "myMate" };
+	private Player leftOpponent = new Player { Name = "leftOpponent" };
+	private Player rightOpponent = new Player { Name = "rightOpponent" };
 
 	// Start is called before the first frame update
 	void Start()
@@ -37,41 +40,7 @@ public class Burraco : MonoBehaviour
         
     }
 
-	int GetOffset()
-	{
-		int offset;
-		if(playerstart == "me")
-		{
-
-			offset = 0;
-
-		}
-		else if(playerstart == "leftOpponent")
-		{
-			offset = 1;
-
-
-		}
-		else if(playerstart == "myMate")
-		{
-			offset = 2;
-
-
-		}
-		else if(playerstart == "rightOpponent")
-		{
-			offset = 3;
-
-		}
-		else
-		{
-			offset = -1;
-			print("Errore!!! non ha preso nessun nome corretto");
-		}
-		return offset;
-	}
-
-
+	
 	public void PlayCards()
 	{
 
@@ -81,28 +50,6 @@ public class Burraco : MonoBehaviour
 		StopCoroutine(SelectPlayerStartGame());
 		
 		
-
-	}
-
-	IEnumerator SelectPlayerStartGame()
-	{
-		System.Random random = new System.Random();
-		for(int i = 0; i<4 ; i++)
-		{
-			yield return new WaitForSeconds(0.5f);
-			int index = random.Next(deckForStartGame.deck.Count);
-			CardForStartGame newCard = Instantiate(deckForStartGame.deck[index], new Vector3(cards[i].transform.position.x, cards[i].transform.position.y, cards[i].transform.position.z), Quaternion.identity, cards[i].transform);
-			newCard.AbsoluteValue = index;
-			newCard.gameObject.tag = cards[i].tag;
-			myCardsForStart.Add(newCard);
-
-		}
-		int highestValue = myCardsForStart.Max(x => x.AbsoluteValue);
-		
-		CardForStartGame myCard = myCardsForStart.OrderByDescending(i => i.AbsoluteValue).FirstOrDefault();
-		playerstart = myCard.gameObject.tag;
-		
-		StartCoroutine(RemovePreStartCards());
 
 	}
 
@@ -125,7 +72,7 @@ public class Burraco : MonoBehaviour
 	{
 		float xOffset = 0;
 		float zOffset = 0.03f;
-		foreach(Card card in deck.myDeck)
+		foreach (Card card in deck.myDeck)
 		{
 			card.transform.position = new Vector3(transform.position.x + xOffset, transform.position.y, transform.position.z + zOffset);
 			card.IsVisible = true;
@@ -135,44 +82,25 @@ public class Burraco : MonoBehaviour
 		}
 	}
 
-	IEnumerator CreateMystartHand()
+	IEnumerator SelectPlayerStartGame()
 	{
-		int playerOffset = GetOffset();
-		int newIndex;
-		float xOffset = 0;
-		float zOffset = 0.03f;
-		float yOffset = 0;
-		for (int i = 0; i < 11; i++)  
+		System.Random random = new System.Random();
+		for(int i = 0; i<4 ; i++)
 		{
-			
-		
-			for (int indexPlayer = 0; indexPlayer < 4; indexPlayer++)
-			{
-				newIndex = (indexPlayer + playerOffset) % 4;
-				yield return new WaitForSeconds(0.7f);
-				Card newCard;
-				if((hands[indexPlayer].tag == "me") || (hands[indexPlayer].tag == "myMate"))
-				{ 
-					newCard = Instantiate(deck.myDeck[0], new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset),Quaternion.identity, hands[newIndex].transform);
-					deck.myDeck.RemoveAt(0);
-				}
-				else if((hands[indexPlayer].tag == "leftOpponent") || (hands[indexPlayer].tag == "rightOpponent"))
-				{
-					newCard = Instantiate(deck.myDeck[0], new Vector3(hands[newIndex].transform.position.x, hands[newIndex].transform.position.y - yOffset, hands[newIndex].transform.position.z - zOffset), Quaternion.Euler(0, 0, 90), hands[newIndex].transform);
-					deck.myDeck.RemoveAt(0);
-				}
-				else
-				{
-					print("Errore, non ha preso i tag");
-					newCard = null;
-				}
-				newCard.IsVisible = true;
-				
-			}
-			xOffset += 0.9f;
-			zOffset += 0.03f;
-			yOffset += 0.7f;
+			yield return new WaitForSeconds(0.5f);
+			int index = random.Next(deckForStartGame.deck.Count);
+			CardForStartGame newCard = Instantiate(deckForStartGame.deck[index], new Vector3(cards[i].transform.position.x, cards[i].transform.position.y, cards[i].transform.position.z), Quaternion.identity, cards[i].transform);
+			newCard.AbsoluteValue = index;
+			newCard.gameObject.tag = cards[i].tag;
+			myCardsForStart.Add(newCard);
+
 		}
+		int highestValue = myCardsForStart.Max(x => x.AbsoluteValue);
+		
+		CardForStartGame myCard = myCardsForStart.OrderByDescending(i => i.AbsoluteValue).FirstOrDefault();
+		playerstart = myCard.gameObject.tag;
+		print("il giocatore che inizia è : " + playerstart);
+		StartCoroutine(RemovePreStartCards());
 
 	}
 
@@ -193,8 +121,105 @@ public class Burraco : MonoBehaviour
 	}
 
 
+	IEnumerator CreateMystartHand()
+	{
 		
-	
+		int newIndex;
+		float xOffset = 0;
+		float zOffset = 0.03f;
+		float yOffset = 0;
+		for (int i = 0; i < 11; i++)  
+		{
+			
+		
+			for (int indexPlayer = 0; indexPlayer < 4; indexPlayer++)
+			{
+				newIndex = (indexPlayer + GetOffset()) % 4;
+				
+				yield return new WaitForSeconds(0.7f);
+				Card newCard;
+				if(hands[newIndex].tag == "me")
+				{ 
+					newCard = Instantiate(deck.myDeck[0], new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset),Quaternion.identity, hands[newIndex].transform);
+					me.myHand.Add(newCard);
+					deck.myDeck.RemoveAt(0);
+					if (newCard.CanBePin)
+					{
+						me.NumberOfPins++;
+					}
+					if (newCard.CanBeJolly)
+					{
+						me.NumberOfPins++;
+					}
+					
+				}
+				else if(hands[newIndex].tag == "myMate")
+				{
+					newCard = Instantiate(deck.myDeck[0], new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset), Quaternion.identity, hands[newIndex].transform);
+					myMate.myHand.Add(newCard);
+					deck.myDeck.RemoveAt(0);
+				}
+				else if(hands[newIndex].tag == "leftOpponent")
+				{
+					newCard = Instantiate(deck.myDeck[0], new Vector3(hands[newIndex].transform.position.x, hands[newIndex].transform.position.y - yOffset, hands[newIndex].transform.position.z - zOffset), Quaternion.Euler(0, 0, 90), hands[newIndex].transform);
+					leftOpponent.myHand.Add(newCard);
+					deck.myDeck.RemoveAt(0);
+				}
+				else
+				{
+					newCard = Instantiate(deck.myDeck[0], new Vector3(hands[newIndex].transform.position.x, hands[newIndex].transform.position.y - yOffset, hands[newIndex].transform.position.z - zOffset), Quaternion.Euler(0, 0, 90), hands[newIndex].transform);
+					rightOpponent.myHand.Add(newCard);
+					deck.myDeck.RemoveAt(0);
+				}
+
+				newCard.IsVisible = hands[newIndex].tag == "me" ? true : false;				//vedo solo le mie
+			}
+			xOffset += 0.9f;
+			zOffset += 0.03f;
+			yOffset += 0.7f;
+		}
+
+		print("La lista delle mie carte è : ");
+		foreach(Card card in me.myHand)
+		{
+			print(card.Value + " " + card.Suit + " " + card.Color);
+		}
+		print("Il numero di Jolly che ho è : " + me.NumberOfJolly);
+		print("Il numero di Pinelle che ho è : " + me.NumberOfPins);
+		// To Do : da qui inizia il gioco
+
+	}
+
+	int GetOffset()
+	{
+		int offset;
+		if (playerstart == "me")
+		{
+			offset = 0;
+		}
+		else if (playerstart == "leftOpponent")
+		{
+			offset = 1;
+		}
+		else if (playerstart == "myMate")
+		{
+			offset = 2;
+		}
+		else if (playerstart == "rightOpponent")
+		{
+			offset = 3;
+		}
+		else
+		{
+			offset = -1;
+			print("Errore!!! non ha preso nessun nome corretto");
+		}
+		return offset;
+	}
+
+
+
+
 
 
 	void StartToPlay(string tagPlayerToStart)
