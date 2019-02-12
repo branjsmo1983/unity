@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-	internal Hand hand;
+	[SerializeField]
+	internal List<Card> myHand = new List<Card>();
+
+	internal Card[] initialHand = new Card[11];
+	public int NumberOfPins { get; set; }
+	public int NumberOfJolly { get; set; }
 	internal bool IsMyRound { get; set; }
 	internal bool CockpitAlreadyBeenTaken { get; set; }
 	internal bool Iwon { get; set; }
