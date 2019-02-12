@@ -23,10 +23,14 @@ public class Burraco : MonoBehaviour
 
 	private List<CardForStartGame> myCardsForStart = new List<CardForStartGame>();
 	private string playerstart;
-	private Player me = new Player { Name = "me" };
-	private Player myMate = new Player { Name = "myMate" };
-	private Player leftOpponent = new Player { Name = "leftOpponent" };
-	private Player rightOpponent = new Player { Name = "rightOpponent" };
+	[SerializeField]
+	private Player me;
+	[SerializeField]
+	private Player myMate;
+	[SerializeField]
+	private Player leftOpponent;
+	[SerializeField]
+	private Player rightOpponent;
 
 	// Start is called before the first frame update
 	void Start()
@@ -143,14 +147,6 @@ public class Burraco : MonoBehaviour
 					newCard = Instantiate(deck.myDeck[0], new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset),Quaternion.identity, hands[newIndex].transform);
 					me.myHand.Add(newCard);
 					deck.myDeck.RemoveAt(0);
-					if (newCard.CanBePin)
-					{
-						me.NumberOfPins++;
-					}
-					if (newCard.CanBeJolly)
-					{
-						me.NumberOfPins++;
-					}
 					
 				}
 				else if(hands[newIndex].tag == "myMate")
@@ -184,8 +180,18 @@ public class Burraco : MonoBehaviour
 		{
 			print(card.Value + " " + card.Suit + " " + card.Color);
 		}
-		print("Il numero di Jolly che ho è : " + me.NumberOfJolly);
-		print("Il numero di Pinelle che ho è : " + me.NumberOfPins);
+		me.CountJolly();
+		me.CountPins();
+		myMate.CountJolly();
+		myMate.CountPins();
+		leftOpponent.CountJolly();
+		leftOpponent.CountPins();
+		rightOpponent.CountJolly();
+		rightOpponent.CountJolly();
+		print("Il numero di Jolly che ho io è : " + me.NumberOfJolly + " Il numero di Pinelle è : " + me.NumberOfPins);
+		print("Il numero di Jolly che ha Left è : " + leftOpponent.NumberOfJolly + " Il numero di Pinelle  è : " + leftOpponent.NumberOfPins);
+		print("Il numero di Jolly che ha myMate : " + myMate.NumberOfJolly + " Il numero di Pinelle è : " + myMate.NumberOfPins);
+		print("Il numero di Jolly che ha Right è : " + rightOpponent.NumberOfJolly + " Il numero di Pinelle  è : " + rightOpponent.NumberOfPins);
 		// To Do : da qui inizia il gioco
 
 	}
