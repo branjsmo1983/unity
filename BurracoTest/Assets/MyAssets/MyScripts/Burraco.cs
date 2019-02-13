@@ -133,7 +133,7 @@ public class Burraco : MonoBehaviour
 		}
 		deckForStartGame.gameObject.SetActive(false);
 		deckFake.SetActive(false);
-		//per adesso funziona ma non so come gestire le carte
+		//versione in cui creava nuove carte (no good)
 		//StartCoroutine(CreateMyStartHand());
 		StartCoroutine(InitialBunches());
 
@@ -244,6 +244,36 @@ public class Burraco : MonoBehaviour
 		print("Il numero di Jolly che ha myMate : " + myMate.NumberOfJolly + " Il numero di Pinelle è : " + myMate.NumberOfPins);
 		print("Il numero di Jolly che ha Right è : " + rightOpponent.NumberOfJolly + " Il numero di Pinelle  è : " + rightOpponent.NumberOfPins);
 		int numOfPins = 0, numOfJolly = 0, numOfRemainingCards = 0;
+		foreach(Card card in firstCockpit)
+		{
+			if (card.CanBePin)
+			{
+				numOfPins++;
+			}
+			if (card.CanBeJolly && !card.CanBePin)
+			{
+				numOfJolly++;
+			}
+		}
+		print("Il numero di Jolly primo pozzetto è : " + numOfJolly + " Il numero di Pinelle  è : " + numOfPins);
+		numOfJolly = 0;
+		numOfPins = 0;
+
+		foreach (Card card in secondCockpit)
+		{
+			if (card.CanBePin)
+			{
+				numOfPins++;
+			}
+			if (card.CanBeJolly && !card.CanBePin)
+			{
+				numOfJolly++;
+			}
+		}
+		print("Il numero di Jolly secondo pozzetto è : " + numOfJolly + " Il numero di Pinelle  è : " + numOfPins);
+		numOfJolly = 0;
+		numOfPins = 0;
+
 		foreach (Card card in deck.myDeck)
 		{
 			numOfRemainingCards++;
