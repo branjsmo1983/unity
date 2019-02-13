@@ -13,13 +13,13 @@ public class Burraco : MonoBehaviour
 	private DeckForStartGame deckForStartGame;
 
 	[SerializeField]
+	GameObject cockpitPosition;
+
+	[SerializeField]
 	GameObject deckFake;
 
 	[SerializeField]
 	GameObject playingDeckPosition;
-
-	[SerializeField]
-	GameObject cockpitPosition;
 
 	[SerializeField]
 	internal GameObject[] hands = new GameObject[4];										//per sapere la transform
@@ -27,7 +27,8 @@ public class Burraco : MonoBehaviour
 	[SerializeField]
 	internal GameObject[] cards = new GameObject[4];                                        //per sapere la transform
 
-	internal List<Card> firstCockpit, secondCockpit;
+	internal List<Card> firstCockpit = new List<Card>();
+	internal List<Card> secondCockpit = new List<Card>();
 
 	private List<CardForStartGame> myCardsForStart = new List<CardForStartGame>();
 	private string playerstart;
@@ -228,25 +229,61 @@ public class Burraco : MonoBehaviour
 			zOffset += 0.02f;
 		}
 
+		//------------------------- TEST sulle carte date ------------------------------------------------------
+
+		me.CountJolly();
+		me.CountPins();
+		myMate.CountJolly();
+		myMate.CountPins();
+		leftOpponent.CountJolly();
+		leftOpponent.CountPins();
+		rightOpponent.CountJolly();
+		rightOpponent.CountPins();
+		print("Il numero di Jolly che ho io è : " + me.NumberOfJolly + " Il numero di Pinelle è : " + me.NumberOfPins);
+		print("Il numero di Jolly che ha Left è : " + leftOpponent.NumberOfJolly + " Il numero di Pinelle  è : " + leftOpponent.NumberOfPins);
+		print("Il numero di Jolly che ha myMate : " + myMate.NumberOfJolly + " Il numero di Pinelle è : " + myMate.NumberOfPins);
+		print("Il numero di Jolly che ha Right è : " + rightOpponent.NumberOfJolly + " Il numero di Pinelle  è : " + rightOpponent.NumberOfPins);
+		int numOfPins = 0, numOfJolly = 0, numOfRemainingCards = 0;
+		foreach (Card card in deck.myDeck)
+		{
+			numOfRemainingCards++;
+			if (card.CanBePin)
+			{
+				numOfPins++;
 			}
+			if (card.CanBeJolly && !card.CanBePin)
+			{
+				numOfJolly++;
+			}
+
+		}
+		print("il numero delle carte rimasto è : " + numOfRemainingCards);
+		print("Il numero di Jolly rimasto è : " + numOfJolly + " Il numero di Pinelle rimaste  è : " + numOfPins);
+
+
+		//------------------------ fine TEST --------------------------------------------------------------------
+
+
+
+	}
 
 
 	//versione in cui clonavo le carte invece di spostarle dal deck
 	//IEnumerator CreateMyStartHand()
 	//{
-		
+
 	//	int newIndex;
 	//	float xOffset = 0;
 	//	float zOffset = 0.03f;
 	//	float yOffset = 0;
 	//	for (int i = 0; i < 11; i++)  
 	//	{
-			
-		
+
+
 	//		for (int indexPlayer = 0; indexPlayer < 4; indexPlayer++)
 	//		{
 	//			newIndex = (indexPlayer + GetOffset()) % 4;
-				
+
 	//			yield return new WaitForSeconds(0.7f);
 	//			Card newCard;
 	//			if(hands[newIndex].tag == "me")
@@ -254,7 +291,7 @@ public class Burraco : MonoBehaviour
 	//				newCard = Instantiate(deck.myDeck[0], new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset),Quaternion.identity, hands[newIndex].transform);
 	//				me.myHand.Add(newCard);
 	//				deck.myDeck.RemoveAt(0);
-					
+
 	//			}
 	//			else if(hands[newIndex].tag == "myMate")
 	//			{
