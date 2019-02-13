@@ -164,6 +164,9 @@ public class Burraco : MonoBehaviour
 				Card newCard = deck.myDeck[deck.myDeck.Count -1];
 				if (hands[newIndex].tag == "me")
 				{
+					//Vector3 destination = new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset);
+					//Vector3 start = newCard.transform.position; //forse devo fare new Vector3 con le posizioni di tuti gli assi
+					//newCard.transform.position = Vector3.Lerp(destination,start, 0.3f);
 					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.identity;
 					me.myHand.Add(newCard);
@@ -192,7 +195,8 @@ public class Burraco : MonoBehaviour
 					deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
 				}
 
-				newCard.IsVisible = hands[newIndex].tag == "me" ? true : false;				//vedo solo le mie
+				//adesso faccio un test, le nascondo e le faccio vedere solo con una coroutine successiva
+				//newCard.IsVisible = hands[newIndex].tag == "me" ? true : false;				//vedo solo le mie
 
 			}
 			xOffset += 0.9f;
@@ -211,6 +215,10 @@ public class Burraco : MonoBehaviour
 
 				if (index == 0)
 				{
+					
+					//Vector3 destination = new Vector3(cockpitPosition.transform.position.x, cockpitPosition.transform.position.y, cockpitPosition.transform.position.z - zOffset);
+					//Vector3 start = newCard.transform.position;
+					//newCard.transform.position = Vector3.Lerp( destination, start, 0.7f);
 					newCard.transform.position = new Vector3(cockpitPosition.transform.position.x, cockpitPosition.transform.position.y, cockpitPosition.transform.position.z -zOffset);
 					newCard.transform.rotation = Quaternion.identity;
 					firstCockpit.Add(newCard);
@@ -218,6 +226,9 @@ public class Burraco : MonoBehaviour
 				}
 				else
 				{
+					//Vector3 destination = new Vector3(cockpitPosition.transform.position.x, cockpitPosition.transform.position.y, cockpitPosition.transform.position.z - zOffset);
+					//Vector3 start = newCard.transform.position;
+					//newCard.transform.position = Vector3.Lerp( destination, start, 0.3f);
 					newCard.transform.position = new Vector3(cockpitPosition.transform.position.x, cockpitPosition.transform.position.y, cockpitPosition.transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.Euler(0, 0, 90);
 					secondCockpit.Add(newCard);
@@ -289,12 +300,25 @@ public class Burraco : MonoBehaviour
 		}
 		print("il numero delle carte rimasto è : " + numOfRemainingCards);
 		print("Il numero di Jolly rimasto è : " + numOfJolly + " Il numero di Pinelle rimaste  è : " + numOfPins);
+		print("L'indice della prima carta jolly o pinella è :" + Deck.IndexOfFirstJollyOrPin(me.myHand));
 
 
 		//------------------------ fine TEST --------------------------------------------------------------------
+		StartCoroutine(ShowMeCards());
 
 
+	}
 
+	IEnumerator ShowMeCards()
+	{
+
+
+		foreach(Card card in me.myHand)
+		{
+			yield return new WaitForSeconds(0.7f);
+			card.IsVisible = true;
+		}
+		
 	}
 
 

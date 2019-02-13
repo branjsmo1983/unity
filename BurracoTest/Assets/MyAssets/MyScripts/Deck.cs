@@ -38,4 +38,36 @@ public class Deck : MonoBehaviour
     {
         
     }
+
+	internal static int IndexOfFirstJollyOrPin(List<Card> cards)
+	{
+		int result = -1;
+		int index = 0;
+		foreach(Card card in cards)
+		{
+			if (card.CanBePin)
+			{
+				result = index;
+				break;
+			}
+			else
+			{
+				index++;
+			}
+
+		}
+		return result;
+	}
+
+	internal static void Swap2CardOf2list(List<Card> firstList,List<Card> secondList, int indexFirstList, int indexSecondList)
+	{
+		Card cardOfFirstList = firstList[indexFirstList];
+		Card cardOfSecondList = secondList[indexSecondList];
+		Vector3 positionCardFirstList = new Vector3(firstList[indexFirstList].transform.position.x, firstList[indexFirstList].transform.position.y, firstList[indexFirstList].transform.position.z);
+		Vector3 positionCardSecondList = new Vector3(secondList[indexFirstList].transform.position.x, secondList[indexFirstList].transform.position.y, secondList[indexFirstList].transform.position.z);
+		firstList[indexFirstList].transform.position = positionCardSecondList;
+		secondList[indexSecondList].transform.position = positionCardFirstList;
+		secondList[indexSecondList] = cardOfFirstList;
+		firstList[indexFirstList] = cardOfSecondList;
+	}
 }
