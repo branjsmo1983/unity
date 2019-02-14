@@ -10,6 +10,12 @@ TagManager:
   - rightOpponent
   - prestart
   - card
+  - ourTable
+  - theirTable
+  - myCard
+  - myMateCard
+  - leftOpponentCard
+  - rightOpponentCard
   layers:
   - Default
   - TransparentFX

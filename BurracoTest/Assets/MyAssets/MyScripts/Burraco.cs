@@ -44,7 +44,7 @@ public class Burraco : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		PlayCards();
+		StartCoroutine(PlayCards());
     }
 
     // Update is called once per frame
@@ -54,15 +54,16 @@ public class Burraco : MonoBehaviour
     }
 
 	
-	public void PlayCards()
+	IEnumerator PlayCards()
 	{
 
 		Shuffle(deck.myDeck);
 		//Deal();
-		StartCoroutine(SelectPlayerStartGame());
-		StopCoroutine(SelectPlayerStartGame());
-		
-		
+		yield return StartCoroutine(SelectPlayerStartGame());
+		yield return StartCoroutine(RemovePreStartCards());
+		yield return StartCoroutine(InitialBunches());
+		yield return StartCoroutine(ShowMeCards());
+
 
 	}
 
@@ -117,7 +118,7 @@ public class Burraco : MonoBehaviour
 		CardForStartGame myCard = myCardsForStart.OrderByDescending(i => i.AbsoluteValue).FirstOrDefault();
 		playerstart = myCard.gameObject.tag;
 		print("il giocatore che inizia è : " + playerstart);
-		StartCoroutine(RemovePreStartCards());
+		
 
 	}
 
@@ -133,9 +134,6 @@ public class Burraco : MonoBehaviour
 		}
 		deckForStartGame.gameObject.SetActive(false);
 		deckFake.SetActive(false);
-		//versione in cui creava nuove carte (no good)
-		//StartCoroutine(CreateMyStartHand());
-		StartCoroutine(InitialBunches());
 
 	}
 
@@ -169,6 +167,8 @@ public class Burraco : MonoBehaviour
 					//newCard.transform.position = Vector3.Lerp(destination,start, 0.3f);
 					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.identity;
+					newCard.tag = "myCard";
+					print("test sul tag delle mie carte : " + newCard.tag);
 					me.myHand.Add(newCard);
 					deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
 
@@ -177,6 +177,7 @@ public class Burraco : MonoBehaviour
 				{
 					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.identity;
+					newCard.tag = "myMateCard";
 					myMate.myHand.Add(newCard);
 					deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
 				}
@@ -184,6 +185,7 @@ public class Burraco : MonoBehaviour
 				{
 					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x , hands[newIndex].transform.position.y - yOffset, hands[newIndex].transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.Euler(0, 0, 90);
+					newCard.tag = "leftOpponentCard";
 					leftOpponent.myHand.Add(newCard);
 					deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
 				}
@@ -191,6 +193,7 @@ public class Burraco : MonoBehaviour
 				{
 					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x , hands[newIndex].transform.position.y -yOffset, hands[newIndex].transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.Euler(0, 0, 90);
+					newCard.tag = "rightOpponentCard";
 					rightOpponent.myHand.Add(newCard);
 					deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
 				}
@@ -304,8 +307,6 @@ public class Burraco : MonoBehaviour
 
 
 		//------------------------ fine TEST --------------------------------------------------------------------
-		StartCoroutine(ShowMeCards());
-
 
 	}
 

@@ -62,6 +62,7 @@
      <Compile Include="Assets\MyAssets\MyScripts\MyEventManager.cs" />
      <Compile Include="Assets\MyAssets\MyScripts\Player.cs" />
      <Compile Include="Assets\MyAssets\MyScripts\Table.cs" />
+     <Compile Include="Assets\MyAssets\MyScripts\UserInput.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
