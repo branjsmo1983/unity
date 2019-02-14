@@ -22,6 +22,9 @@ public class Burraco : MonoBehaviour
 	GameObject playingDeckPosition;
 
 	[SerializeField]
+	GameObject refusePosition;
+
+	[SerializeField]
 	internal GameObject[] hands = new GameObject[4];										//per sapere la transform
 
 	[SerializeField]
@@ -29,6 +32,7 @@ public class Burraco : MonoBehaviour
 
 	internal List<Card> firstCockpit = new List<Card>();
 	internal List<Card> secondCockpit = new List<Card>();
+	internal List<Card> refuseCards = new List<Card>();
 
 	private List<CardForStartGame> myCardsForStart = new List<CardForStartGame>();
 	private string playerstart;
@@ -213,7 +217,7 @@ public class Burraco : MonoBehaviour
 
 			for (int index = 0; index < 2; index++)
 			{
-
+				yield return new WaitForSeconds(0.7f);
 				Card newCard = deck.myDeck[0];
 
 				if (index == 0)
@@ -224,6 +228,7 @@ public class Burraco : MonoBehaviour
 					//newCard.transform.position = Vector3.Lerp( destination, start, 0.7f);
 					newCard.transform.position = new Vector3(cockpitPosition.transform.position.x, cockpitPosition.transform.position.y, cockpitPosition.transform.position.z -zOffset);
 					newCard.transform.rotation = Quaternion.identity;
+					newCard.tag = "firstCockpitCard";
 					firstCockpit.Add(newCard);
 					deck.myDeck.RemoveAt(0);
 				}
@@ -234,6 +239,7 @@ public class Burraco : MonoBehaviour
 					//newCard.transform.position = Vector3.Lerp( destination, start, 0.3f);
 					newCard.transform.position = new Vector3(cockpitPosition.transform.position.x, cockpitPosition.transform.position.y, cockpitPosition.transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.Euler(0, 0, 90);
+					newCard.tag = "secondCockpitCard";
 					secondCockpit.Add(newCard);
 					deck.myDeck.RemoveAt(0);
 				}
@@ -241,6 +247,12 @@ public class Burraco : MonoBehaviour
 
 			}
 			zOffset += 0.02f;
+			Card initCard = deck.myDeck[deck.myDeck.Count - 1];
+			initCard.transform.position = new Vector3(refusePosition.transform.position.x, refusePosition.transform.position.y, refusePosition.transform.position.z - zOffset);
+			initCard.transform.rotation = Quaternion.identity;
+			initCard.tag = "refuse";
+			refuseCards.Add(initCard);
+			deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
 		}
 
 		//------------------------- TEST sulle carte date ------------------------------------------------------

@@ -26,15 +26,22 @@ public class UserInput : MonoBehaviour
 			RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 			if (hit)
 			{
-				// what has been hit? Deck/Card/EmptySlot...
 				if (hit.collider.CompareTag("myCard"))
 				{
-
-				}else if (hit.collider.CompareTag("ourTable"))
-				{
-
+					//card in my hand selected 
 				}
-
+				else if (hit.collider.CompareTag("ourTable"))
+				{
+					//try to add one or more cards into table
+				}
+				else if (hit.collider.CompareTag("card"))
+				{
+					//draw a card from deck
+				}
+				else if (hit.collider.CompareTag("refuse")) //scrivere il tag da mettere
+				{
+					//collect from scraps
+				}
 			}
 
 		}
