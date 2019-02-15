@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class Burraco : MonoBehaviour
 {
@@ -35,7 +36,8 @@ public class Burraco : MonoBehaviour
 	internal List<Card> refuseCards = new List<Card>();
 
 	private List<CardForStartGame> myCardsForStart = new List<CardForStartGame>();
-	private string playerstart;
+	internal string playerstart;
+	internal bool isCanGetInput = false;
 	[SerializeField]
 	private Player me;
 	[SerializeField]
@@ -44,6 +46,37 @@ public class Burraco : MonoBehaviour
 	private Player leftOpponent;
 	[SerializeField]
 	private Player rightOpponent;
+
+
+	void Awake()
+	{
+		MyEventManager.instance.AddListener(MyIndexEvent.cardSelect, OnCardSelect);
+		MyEventManager.instance.AddListener(MyIndexEvent.cardsHang, OnCardsHang);
+		MyEventManager.instance.AddListener(MyIndexEvent.deckDraw, OnDeckDraw);
+		MyEventManager.instance.AddListener(MyIndexEvent.scrapsCollect, OnScrapsCollect);
+		MyEventManager.instance.AddListener(MyIndexEvent.cockpitTake, OnCockpitTake);
+		MyEventManager.instance.AddListener(MyIndexEvent.burracoMake, OnBurracoMake);
+		MyEventManager.instance.AddListener(MyIndexEvent.gameEnd, OnGameEnd);
+		MyEventManager.instance.AddListener(MyIndexEvent.gameStart, OnGameStart);
+	}
+
+
+
+	void OnDestroy()
+	{
+		if (MyEventManager.instance != null)
+		{
+			MyEventManager.instance.RemoveListener(MyIndexEvent.cardSelect, OnCardSelect);
+			MyEventManager.instance.RemoveListener(MyIndexEvent.cardsHang, OnCardsHang);
+			MyEventManager.instance.RemoveListener(MyIndexEvent.deckDraw, OnDeckDraw);
+			MyEventManager.instance.RemoveListener(MyIndexEvent.scrapsCollect, OnScrapsCollect);
+			MyEventManager.instance.RemoveListener(MyIndexEvent.cockpitTake, OnCockpitTake);
+			MyEventManager.instance.RemoveListener(MyIndexEvent.burracoMake, OnBurracoMake);
+			MyEventManager.instance.RemoveListener(MyIndexEvent.gameEnd, OnGameEnd);
+			MyEventManager.instance.RemoveListener(MyIndexEvent.gameStart, OnGameStart);
+		}
+	}
+	
 
 	// Start is called before the first frame update
 	void Start()
@@ -62,7 +95,6 @@ public class Burraco : MonoBehaviour
 	{
 
 		Shuffle(deck.myDeck);
-		//Deal();
 		yield return StartCoroutine(SelectPlayerStartGame());
 		yield return StartCoroutine(RemovePreStartCards());
 		yield return StartCoroutine(InitialBunches());
@@ -85,20 +117,6 @@ public class Burraco : MonoBehaviour
 		}
 	}
 
-	//Serve solo per testare come creare un metodo che crei una carta vicino l'altra
-	void Deal()
-	{
-		float xOffset = 0;
-		float zOffset = 0.03f;
-		foreach (Card card in deck.myDeck)
-		{
-			card.transform.position = new Vector3(transform.position.x + xOffset, transform.position.y, transform.position.z + zOffset);
-			card.IsVisible = true;
-			xOffset += 0.3f;
-			zOffset += 0.03f;
-
-		}
-	}
 
 	IEnumerator SelectPlayerStartGame()
 	{
@@ -111,16 +129,10 @@ public class Burraco : MonoBehaviour
 			do index = random.Next(deckForStartGame.deck.Count);
 			while (randomNumbers.Contains(index));
 			randomNumbers.Add(index);
-			//card.transform.position = new Vector3(playingDeckPosition.transform.position.x , playingDeckPosition.transform.position.y, playingDeckPosition.transform.position.z - z);
 			deckForStartGame.deck[index].transform.position = new Vector3(cards[i].transform.position.x, cards[i].transform.position.y, cards[i].transform.position.z);
 			deckForStartGame.deck[index].AbsoluteValue = index;
 			deckForStartGame.deck[index].tag = cards[i].tag;
 			myCardsForStart.Add(deckForStartGame.deck[index]);
-			//CardForStartGame newCard = Instantiate(deckForStartGame.deck[index], new Vector3(cards[i].transform.position.x, cards[i].transform.position.y, cards[i].transform.position.z), Quaternion.identity, cards[i].transform);
-			//newCard.AbsoluteValue = index;
-			//newCard.gameObject.tag = cards[i].tag;
-			//myCardsForStart.Add(newCard);
-
 		}
 		int highestValue = myCardsForStart.Max(x => x.AbsoluteValue);
 		
@@ -171,9 +183,6 @@ public class Burraco : MonoBehaviour
 				Card newCard = deck.myDeck[deck.myDeck.Count -1];
 				if (hands[newIndex].tag == "me")
 				{
-					//Vector3 destination = new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset);
-					//Vector3 start = newCard.transform.position; //forse devo fare new Vector3 con le posizioni di tuti gli assi
-					//newCard.transform.position = Vector3.Lerp(destination,start, 0.3f);
 					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.identity;
 					newCard.tag = "myCard";
@@ -207,7 +216,7 @@ public class Burraco : MonoBehaviour
 				}
 
 				//adesso faccio un test, le nascondo e le faccio vedere solo con una coroutine successiva
-				newCard.IsVisible = hands[newIndex].tag == "me" ? true : false;				//vedo solo le mie
+				//newCard.IsVisible = hands[newIndex].tag == "me" ? true : false;				//vedo solo le mie
 				
 			}
 			xOffset += 0.9f;
@@ -215,21 +224,21 @@ public class Burraco : MonoBehaviour
 			yOffset += 0.7f;
 		}
 		zOffset = 0;
+		float zOffsetCockpit = 0.24f;
+		float xOffsetCockpit = 0.05f;
+		float yOffsetCockpit = 0.05f;
 		for (int i = 0; i < 11; i++)
 		{
 
 
 			for (int index = 0; index < 2; index++)
 			{
-				yield return new WaitForSeconds(0.7f);
+				yield return new WaitForSeconds(0.5f);
 				Card newCard = deck.myDeck[0];
 
 				if (index == 0)
 				{
-					
-					//Vector3 destination = new Vector3(cockpitPosition.transform.position.x, cockpitPosition.transform.position.y, cockpitPosition.transform.position.z - zOffset);
-					//Vector3 start = newCard.transform.position;
-					//newCard.transform.position = Vector3.Lerp( destination, start, 0.7f);
+
 					newCard.transform.position = new Vector3(cockpitPosition.transform.position.x, cockpitPosition.transform.position.y, cockpitPosition.transform.position.z -zOffset);
 					newCard.transform.rotation = Quaternion.identity;
 					newCard.tag = "firstCockpitCard";
@@ -238,10 +247,8 @@ public class Burraco : MonoBehaviour
 				}
 				else
 				{
-					//Vector3 destination = new Vector3(cockpitPosition.transform.position.x, cockpitPosition.transform.position.y, cockpitPosition.transform.position.z - zOffset);
-					//Vector3 start = newCard.transform.position;
-					//newCard.transform.position = Vector3.Lerp( destination, start, 0.3f);
-					newCard.transform.position = new Vector3(cockpitPosition.transform.position.x, cockpitPosition.transform.position.y, cockpitPosition.transform.position.z - zOffset);
+
+					newCard.transform.position = new Vector3(cockpitPosition.transform.position.x + xOffsetCockpit, cockpitPosition.transform.position.y + yOffsetCockpit, cockpitPosition.transform.position.z + zOffsetCockpit - zOffset);
 					newCard.transform.rotation = Quaternion.Euler(0, 0, 90);
 					newCard.tag = "secondCockpitCard";
 					secondCockpit.Add(newCard);
@@ -265,70 +272,76 @@ public class Burraco : MonoBehaviour
 
 		//------------------------- TEST sulle carte date ------------------------------------------------------
 
-		me.CountJolly();
-		me.CountPins();
-		myMate.CountJolly();
-		myMate.CountPins();
-		leftOpponent.CountJolly();
-		leftOpponent.CountPins();
-		rightOpponent.CountJolly();
-		rightOpponent.CountPins();
-		print("Il numero di Jolly che ho io è : " + me.NumberOfJolly + " Il numero di Pinelle è : " + me.NumberOfPins);
-		print("Il numero di Jolly che ha Left è : " + leftOpponent.NumberOfJolly + " Il numero di Pinelle  è : " + leftOpponent.NumberOfPins);
-		print("Il numero di Jolly che ha myMate : " + myMate.NumberOfJolly + " Il numero di Pinelle è : " + myMate.NumberOfPins);
-		print("Il numero di Jolly che ha Right è : " + rightOpponent.NumberOfJolly + " Il numero di Pinelle  è : " + rightOpponent.NumberOfPins);
-		int numOfPins = 0, numOfJolly = 0, numOfRemainingCards = 0;
-		foreach(Card card in firstCockpit)
-		{
-			if (card.CanBePin)
-			{
-				numOfPins++;
-			}
-			if (card.CanBeJolly && !card.CanBePin)
-			{
-				numOfJolly++;
-			}
-		}
-		print("Il numero di Jolly primo pozzetto è : " + numOfJolly + " Il numero di Pinelle  è : " + numOfPins);
-		numOfJolly = 0;
-		numOfPins = 0;
+		//me.CountJolly();
+		//me.CountPins();
+		//myMate.CountJolly();
+		//myMate.CountPins();
+		//leftOpponent.CountJolly();
+		//leftOpponent.CountPins();
+		//rightOpponent.CountJolly();
+		//rightOpponent.CountPins();
+		//print("Il numero di Jolly che ho io è : " + me.NumberOfJolly + " Il numero di Pinelle è : " + me.NumberOfPins);
+		//print("Il numero di Jolly che ha Left è : " + leftOpponent.NumberOfJolly + " Il numero di Pinelle  è : " + leftOpponent.NumberOfPins);
+		//print("Il numero di Jolly che ha myMate : " + myMate.NumberOfJolly + " Il numero di Pinelle è : " + myMate.NumberOfPins);
+		//print("Il numero di Jolly che ha Right è : " + rightOpponent.NumberOfJolly + " Il numero di Pinelle  è : " + rightOpponent.NumberOfPins);
+		//int numOfPins = 0, numOfJolly = 0, numOfRemainingCards = 0;
+		//foreach(Card card in firstCockpit)
+		//{
+		//	if (card.CanBePin)
+		//	{
+		//		numOfPins++;
+		//	}
+		//	if (card.CanBeJolly && !card.CanBePin)
+		//	{
+		//		numOfJolly++;
+		//	}
+		//}
+		//print("Il numero di Jolly primo pozzetto è : " + numOfJolly + " Il numero di Pinelle  è : " + numOfPins);
+		//numOfJolly = 0;
+		//numOfPins = 0;
 
-		foreach (Card card in secondCockpit)
-		{
-			if (card.CanBePin)
-			{
-				numOfPins++;
-			}
-			if (card.CanBeJolly && !card.CanBePin)
-			{
-				numOfJolly++;
-			}
-		}
-		print("Il numero di Jolly secondo pozzetto è : " + numOfJolly + " Il numero di Pinelle  è : " + numOfPins);
-		numOfJolly = 0;
-		numOfPins = 0;
+		//foreach (Card card in secondCockpit)
+		//{
+		//	if (card.CanBePin)
+		//	{
+		//		numOfPins++;
+		//	}
+		//	if (card.CanBeJolly && !card.CanBePin)
+		//	{
+		//		numOfJolly++;
+		//	}
+		//}
+		//print("Il numero di Jolly secondo pozzetto è : " + numOfJolly + " Il numero di Pinelle  è : " + numOfPins);
+		//numOfJolly = 0;
+		//numOfPins = 0;
 
-		foreach (Card card in deck.myDeck)
-		{
-			numOfRemainingCards++;
-			if (card.CanBePin)
-			{
-				numOfPins++;
-			}
-			if (card.CanBeJolly && !card.CanBePin)
-			{
-				numOfJolly++;
-			}
+		//foreach (Card card in deck.myDeck)
+		//{
+		//	numOfRemainingCards++;
+		//	if (card.CanBePin)
+		//	{
+		//		numOfPins++;
+		//	}
+		//	if (card.CanBeJolly && !card.CanBePin)
+		//	{
+		//		numOfJolly++;
+		//	}
 
-		}
-		print("il numero delle carte rimasto è : " + numOfRemainingCards);
-		print("Il numero di Jolly rimasto è : " + numOfJolly + " Il numero di Pinelle rimaste  è : " + numOfPins);
-		print("L'indice della prima carta jolly o pinella è :" + Deck.IndexOfFirstJollyOrPin(me.myHand));
-		print("la carta del mazzo è " + deck.myDeck[0].Value +" "+deck.myDeck[0].Suit+" "+deck.myDeck[0].Color);
-		print("la prima carta della mia mano è " + me.myHand[0].Value + " " + me.myHand[0].Suit + " " + me.myHand[0].Color);
-		Deck.Swap2CardOf2list(deck.myDeck, me.myHand, 0, 0);
-		print("adesso la carta del mazzo è " + deck.myDeck[0].Value + " " + deck.myDeck[0].Suit + " " + deck.myDeck[0].Color);
-		print("adesso la prima carta della mia mano è " + me.myHand[0].Value + " " + me.myHand[0].Suit + " " + me.myHand[0].Color);
+		//}
+		//print("il numero delle carte rimasto è : " + numOfRemainingCards);
+		//print("Il numero di Jolly rimasto è : " + numOfJolly + " Il numero di Pinelle rimaste  è : " + numOfPins);
+		//print("L'indice della prima carta jolly o pinella è :" + Deck.IndexOfFirstJollyOrPin(me.myHand));
+		//print("la carta del mazzo è " + deck.myDeck[0].Value +" "+deck.myDeck[0].Suit+" "+deck.myDeck[0].Color);
+		//print("la prima carta della mia mano è " + me.myHand[0].Value + " " + me.myHand[0].Suit + " " + me.myHand[0].Color);
+
+		// +++++++++++++++++++++++++ TESTATO E FUNZIONA ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		//Deck.Swap2CardOf2list(deck.myDeck, me.myHand, 0, 0);
+
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		//print("adesso la carta del mazzo è " + deck.myDeck[0].Value + " " + deck.myDeck[0].Suit + " " + deck.myDeck[0].Color);
+		//print("adesso la prima carta della mia mano è " + me.myHand[0].Value + " " + me.myHand[0].Suit + " " + me.myHand[0].Color);
 
 		//------------------------ fine TEST --------------------------------------------------------------------
 
@@ -340,102 +353,12 @@ public class Burraco : MonoBehaviour
 
 		foreach(Card card in me.myHand)
 		{
-			yield return new WaitForSeconds(0.7f);
+			yield return new WaitForSeconds(0.5f);
 			card.IsVisible = true;
 		}
-		
+		isCanGetInput = true;
+		MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, playerstart));
 	}
-
-
-	//versione in cui clonavo le carte invece di spostarle dal deck
-	//IEnumerator CreateMyStartHand()
-	//{
-
-	//	int newIndex;
-	//	float xOffset = 0;
-	//	float zOffset = 0.03f;
-	//	float yOffset = 0;
-	//	for (int i = 0; i < 11; i++)  
-	//	{
-
-
-	//		for (int indexPlayer = 0; indexPlayer < 4; indexPlayer++)
-	//		{
-	//			newIndex = (indexPlayer + GetOffset()) % 4;
-
-	//			yield return new WaitForSeconds(0.7f);
-	//			Card newCard;
-	//			if(hands[newIndex].tag == "me")
-	//			{ 
-	//				newCard = Instantiate(deck.myDeck[0], new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset),Quaternion.identity, hands[newIndex].transform);
-	//				me.myHand.Add(newCard);
-	//				deck.myDeck.RemoveAt(0);
-
-	//			}
-	//			else if(hands[newIndex].tag == "myMate")
-	//			{
-	//				newCard = Instantiate(deck.myDeck[0], new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset), Quaternion.identity, hands[newIndex].transform);
-	//				myMate.myHand.Add(newCard);
-	//				deck.myDeck.RemoveAt(0);
-	//			}
-	//			else if(hands[newIndex].tag == "leftOpponent")
-	//			{
-	//				newCard = Instantiate(deck.myDeck[0], new Vector3(hands[newIndex].transform.position.x, hands[newIndex].transform.position.y - yOffset, hands[newIndex].transform.position.z - zOffset), Quaternion.Euler(0, 0, 90), hands[newIndex].transform);
-	//				leftOpponent.myHand.Add(newCard);
-	//				deck.myDeck.RemoveAt(0);
-	//			}
-	//			else
-	//			{
-	//				newCard = Instantiate(deck.myDeck[0], new Vector3(hands[newIndex].transform.position.x, hands[newIndex].transform.position.y - yOffset, hands[newIndex].transform.position.z - zOffset), Quaternion.Euler(0, 0, 90), hands[newIndex].transform);
-	//				rightOpponent.myHand.Add(newCard);
-	//				deck.myDeck.RemoveAt(0);
-	//			}
-
-	//			//newCard.IsVisible = hands[newIndex].tag == "me" ? true : false;				//vedo solo le mie
-	//			//per test le mettop tutte a true
-	//			newCard.IsVisible = true;
-	//		}
-	//		xOffset += 0.9f;
-	//		zOffset += 0.03f;
-	//		yOffset += 0.7f;
-	//	}
-
-	//	print("La lista delle mie carte è : ");
-	//	foreach(Card card in me.myHand)
-	//	{
-	//		print(card.Value + " " + card.Suit + " " + card.Color);
-	//	}
-	//	me.CountJolly();
-	//	me.CountPins();
-	//	myMate.CountJolly();
-	//	myMate.CountPins();
-	//	leftOpponent.CountJolly();
-	//	leftOpponent.CountPins();
-	//	rightOpponent.CountJolly();
-	//	rightOpponent.CountPins();
-	//	print("Il numero di Jolly che ho io è : " + me.NumberOfJolly + " Il numero di Pinelle è : " + me.NumberOfPins);
-	//	print("Il numero di Jolly che ha Left è : " + leftOpponent.NumberOfJolly + " Il numero di Pinelle  è : " + leftOpponent.NumberOfPins);
-	//	print("Il numero di Jolly che ha myMate : " + myMate.NumberOfJolly + " Il numero di Pinelle è : " + myMate.NumberOfPins);
-	//	print("Il numero di Jolly che ha Right è : " + rightOpponent.NumberOfJolly + " Il numero di Pinelle  è : " + rightOpponent.NumberOfPins);
-	//	int numOfPins = 0, numOfJolly = 0, numOfRemainingCards = 0;
-	//	foreach(Card card in deck.myDeck)
-	//	{
-	//		numOfRemainingCards++;
-	//		if (card.CanBePin)
-	//		{
-	//			numOfPins++;
-	//		}
-	//		if (card.CanBeJolly && !card.CanBePin)
-	//		{
-	//			numOfJolly++;
-	//		}
-
-	//	}
-	//	print("il numero delle carte rimasto è : " + numOfRemainingCards);
-	//	print("Il numero di Jolly rimasto è : " + numOfJolly + " Il numero di Pinelle rimaste  è : " + numOfPins);
-	//	// To Do : da qui inizia il gioco
-
-	//}
 
 	int GetOffset()
 	{
@@ -464,17 +387,65 @@ public class Burraco : MonoBehaviour
 		return offset;
 	}
 
-
-
-
-
-
-	void StartToPlay(string tagPlayerToStart)
+	void CheckGamefinished()
 	{
-		
+		if((me.myHand.Count == 0 && (me.CockpitAlreadyBeenTaken || myMate.CockpitAlreadyBeenTaken))|| (myMate.myHand.Count == 0 && (me.CockpitAlreadyBeenTaken || myMate.CockpitAlreadyBeenTaken)))
+		{
+			MyEventManager.instance.CastEvent(MyIndexEvent.gameEnd, new MyEventArgs(this.gameObject, me.tag, myMate.tag));
+		}else if ((leftOpponent.myHand.Count == 0 && (leftOpponent.CockpitAlreadyBeenTaken || rightOpponent.CockpitAlreadyBeenTaken)) || (rightOpponent.myHand.Count == 0 && (leftOpponent.CockpitAlreadyBeenTaken || rightOpponent.CockpitAlreadyBeenTaken)))
+		{
+			MyEventManager.instance.CastEvent(MyIndexEvent.gameEnd, new MyEventArgs(this.gameObject, leftOpponent.tag, rightOpponent.tag));
+		}
 
 	}
 
-	
+
+	public void OnCardSelect(MyEventArgs e)
+	{
+		
+		print("Sono entrato nell'evento OnCardSelected");
+	}
+
+	public void OnCardsHang(MyEventArgs e)					//attaccare al tavolo
+	{
+		print("Sono entrato nell'evento OnCardsHang");
+	}
+
+	public void OnDeckDraw(MyEventArgs e)					//pescare dal mazzo di carte
+	{
+		print("Sono entrato nell'evento OnDeckDraw");
+	}
+
+	public void OnScrapsCollect(MyEventArgs e)				//raccogliere
+	{
+		print("Sono entrato nell'evento OnScrapsCollect");
+	}
+
+	public void OnCockpitTake(MyEventArgs e)				//prendere i pozzetti
+	{
+		print("Sono entrato nell'evento OnCockpitTake");
+	}
+
+	public void OnBurracoMake(MyEventArgs e)				//fare burraco
+	{
+		print("Sono entrato nell'evento OnBurracoMake");
+	}
+
+	public void OnGameEnd(MyEventArgs e)
+	{
+		print("Sono entrato nell'evento OnGameEnd");
+		string player1 = e.player1;		//non so se servono
+		string player2 = e.player2;
+
+		// TO DO -> metodo che conta i punti + coroutine che faccia qualche effetto
+
+	}
+
+	public void OnGameStart(MyEventArgs e)
+	{
+		string name = e.playerStart;	
+		print("Sono entrato nell'evento OnGameStart il giocatore che inizia è : " + name);
+	}
+
 }
 

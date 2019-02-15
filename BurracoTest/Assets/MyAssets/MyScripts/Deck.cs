@@ -64,12 +64,20 @@ public class Deck : MonoBehaviour
 		print(".....sono entrato nel metodo Swap2Card....");
 		Card cardOfFirstList = firstList[indexFirstList];
 		Card cardOfSecondList = secondList[indexSecondList];
+		bool cardOfFirstListIsVisible = firstList[indexFirstList].IsVisible;
+		bool cardOfSecondListIsVisible = secondList[indexFirstList].IsVisible;
+		string cardFirstListTag = firstList[indexFirstList].tag;
+		string cardSecondListTag = secondList[indexSecondList].tag;
 		Vector3 positionCardFirstList = new Vector3(firstList[indexFirstList].transform.position.x, firstList[indexFirstList].transform.position.y, firstList[indexFirstList].transform.position.z);
 		Vector3 positionCardSecondList = new Vector3(secondList[indexFirstList].transform.position.x, secondList[indexFirstList].transform.position.y, secondList[indexFirstList].transform.position.z);
 		firstList[indexFirstList].transform.position = positionCardSecondList;
 		secondList[indexSecondList].transform.position = positionCardFirstList;
 		secondList[indexSecondList] = cardOfFirstList;
+		firstList[indexFirstList].IsVisible = cardOfSecondListIsVisible;
+		secondList[indexSecondList].IsVisible = cardOfFirstListIsVisible;
 		firstList[indexFirstList] = cardOfSecondList;
+		secondList[indexSecondList].tag = cardFirstListTag;
+		firstList[indexFirstList].tag = cardSecondListTag;
 		print(".....sto uscendo dal metodo.....");
 	}
 }

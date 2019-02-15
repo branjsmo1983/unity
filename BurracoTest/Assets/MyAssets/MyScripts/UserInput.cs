@@ -18,12 +18,17 @@ public class UserInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
+		GetMouseClick();
+
+	}
 
 
 	void GetMouseClick()
 	{
+		if(!burraco.isCanGetInput)
+		{
+			return;
+		}
 
 		if (Input.GetMouseButtonDown(0))
 		{
@@ -34,18 +39,22 @@ public class UserInput : MonoBehaviour
 				if (hit.collider.CompareTag("myCard"))
 				{
 					//card in my hand selected 
+					MyEventManager.instance.CastEvent(MyIndexEvent.cardSelect, new MyEventArgs());
 				}
 				else if (hit.collider.CompareTag("ourTable"))
 				{
 					//try to add one or more cards into table
+					MyEventManager.instance.CastEvent(MyIndexEvent.cardsHang, new MyEventArgs());
 				}
 				else if (hit.collider.CompareTag("card"))
 				{
 					//draw a card from deck
+					MyEventManager.instance.CastEvent(MyIndexEvent.deckDraw, new MyEventArgs());
 				}
 				else if (hit.collider.CompareTag("refuse")) //scrivere il tag da mettere
 				{
 					//collect from scraps
+					MyEventManager.instance.CastEvent(MyIndexEvent.scrapsCollect, new MyEventArgs());
 				}
 			}
 

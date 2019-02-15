@@ -70,6 +70,9 @@ public class MyEventArgs
 
 	public GameObject sender;
 	public int myInt;
+	public string playerStart;
+	public string player1;
+	public string player2;
 	//public LevelData myLevelData;
 
 	public MyEventArgs()
@@ -88,6 +91,20 @@ public class MyEventArgs
 		this.myInt = myInt;
 	}
 
+	public MyEventArgs(GameObject sender, string playerStart)
+	{
+		this.sender = sender;
+		this.playerStart = playerStart;
+	}
+
+	public MyEventArgs(GameObject sender, string player1, string player2)
+	{
+		this.player1 = player1;
+		this.player2 = player2;
+	}
+
+
+	//devo ancora creare il LevelData 
 	//public MyEventArgs(GameObject sender, LevelData myLevelData)
 	//{
 	//	this.sender = sender;
@@ -99,11 +116,13 @@ public class MyEventArgs
 //Enumerazione degli eventi
 public enum MyIndexEvent
 {
-	//changeClip = 0,
-	//initializeScene = 1,
-	//defeat = 2,
-	//victory = 3,
-	//lockMouse = 4,
-	//unLockMouse = 5,
-	//collectableTaked = 6,
+	cardSelect = 0,
+	cardsHang = 1,
+	deckDraw = 2,
+	scrapsCollect = 3,
+	cockpitTake = 4,
+	burracoMake = 5,
+	gameEnd = 6,
+	gameStart = 7,
+
 }
