@@ -111,7 +111,17 @@ public class Card : MonoBehaviour
     {
 
 		spriteRenderer.sprite = (IsVisible) ? cardFace : cardBack ;
-    }
+		if (!IsVisible && gameObject.tag != "Respawn" && gameObject.tag != "prestart")
+		{
+			gameObject.transform.localScale = new Vector3(0.24f, 0.24f, 1);
+
+		}
+		else if (IsVisible && gameObject.tag != "Respawn" && gameObject.tag != "prestart")
+		{
+			gameObject.transform.localScale = new Vector3(0.2f, 0.2f, 1);
+
+		}
+	}
 
 	public enum MySuits
 	{

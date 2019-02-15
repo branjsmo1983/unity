@@ -111,10 +111,15 @@ public class Burraco : MonoBehaviour
 			do index = random.Next(deckForStartGame.deck.Count);
 			while (randomNumbers.Contains(index));
 			randomNumbers.Add(index);
-			CardForStartGame newCard = Instantiate(deckForStartGame.deck[index], new Vector3(cards[i].transform.position.x, cards[i].transform.position.y, cards[i].transform.position.z), Quaternion.identity, cards[i].transform);
-			newCard.AbsoluteValue = index;
-			newCard.gameObject.tag = cards[i].tag;
-			myCardsForStart.Add(newCard);
+			//card.transform.position = new Vector3(playingDeckPosition.transform.position.x , playingDeckPosition.transform.position.y, playingDeckPosition.transform.position.z - z);
+			deckForStartGame.deck[index].transform.position = new Vector3(cards[i].transform.position.x, cards[i].transform.position.y, cards[i].transform.position.z);
+			deckForStartGame.deck[index].AbsoluteValue = index;
+			deckForStartGame.deck[index].tag = cards[i].tag;
+			myCardsForStart.Add(deckForStartGame.deck[index]);
+			//CardForStartGame newCard = Instantiate(deckForStartGame.deck[index], new Vector3(cards[i].transform.position.x, cards[i].transform.position.y, cards[i].transform.position.z), Quaternion.identity, cards[i].transform);
+			//newCard.AbsoluteValue = index;
+			//newCard.gameObject.tag = cards[i].tag;
+			//myCardsForStart.Add(newCard);
 
 		}
 		int highestValue = myCardsForStart.Max(x => x.AbsoluteValue);
@@ -172,7 +177,6 @@ public class Burraco : MonoBehaviour
 					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.identity;
 					newCard.tag = "myCard";
-					print("test sul tag delle mie carte : " + newCard.tag);
 					me.myHand.Add(newCard);
 					deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
 
@@ -204,7 +208,7 @@ public class Burraco : MonoBehaviour
 
 				//adesso faccio un test, le nascondo e le faccio vedere solo con una coroutine successiva
 				//newCard.IsVisible = hands[newIndex].tag == "me" ? true : false;				//vedo solo le mie
-
+				
 			}
 			xOffset += 0.9f;
 			zOffset += 0.03f;
@@ -247,13 +251,17 @@ public class Burraco : MonoBehaviour
 
 			}
 			zOffset += 0.02f;
-			Card initCard = deck.myDeck[deck.myDeck.Count - 1];
-			initCard.transform.position = new Vector3(refusePosition.transform.position.x, refusePosition.transform.position.y, refusePosition.transform.position.z - zOffset);
-			initCard.transform.rotation = Quaternion.identity;
-			initCard.tag = "refuse";
-			refuseCards.Add(initCard);
-			deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
+			
 		}
+
+		Card initCard = deck.myDeck[deck.myDeck.Count - 1];
+		initCard.transform.position = new Vector3(refusePosition.transform.position.x, refusePosition.transform.position.y, refusePosition.transform.position.z - zOffset);
+		initCard.transform.rotation = Quaternion.identity;
+		initCard.IsVisible = true;
+		initCard.tag = "refuse";
+		refuseCards.Add(initCard);
+		deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
+
 
 		//------------------------- TEST sulle carte date ------------------------------------------------------
 

@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class UserInput : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+	public GameObject slot1;
+	private Burraco burraco;
+
+	// Start is called before the first frame update
+	void Start()
     {
-        
-    }
+		burraco = FindObjectOfType<Burraco>();
+		slot1 = this.gameObject;
+	}
 
     // Update is called once per frame
     void Update()

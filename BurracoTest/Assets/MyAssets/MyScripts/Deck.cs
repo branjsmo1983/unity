@@ -45,7 +45,7 @@ public class Deck : MonoBehaviour
 		int index = 0;
 		foreach(Card card in cards)
 		{
-			if (card.CanBePin)
+			if (card.CanBeJolly)
 			{
 				result = index;
 				break;
