@@ -20,6 +20,10 @@ TagManager:
   - secondCockpitCard
   - refuse
   - cockpit
+  - mePlayer
+  - leftOpponentPlayer
+  - myMatePlayer
+  - rightOpponentPlayer
   layers:
   - Default
   - TransparentFX

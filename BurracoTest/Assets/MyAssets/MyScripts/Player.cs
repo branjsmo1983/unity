@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
 	public int NumberOfJolly { get; set; }
 	internal bool IsMyRound { get; set; }
 	internal bool CockpitAlreadyBeenTaken { get; set; }
+	public bool HasFished { get; set; }
+	public bool HasCollected { get; set; }
+	public bool HasDiscarded { get; set; }
 	internal bool Iwon { get; set; }
 	internal string Name { get; set; }
 

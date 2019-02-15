@@ -6,6 +6,10 @@ using System;
 
 public class Burraco : MonoBehaviour
 {
+	private const string ME = "mePlayer";
+	private const string MYMATE = "myMatePlayer";
+	private const string LEFTOPPONENT = "leftOpponentPlayer";
+	private const string RIGHTOPPONENT = "rightOpponentPlayer";
 
 	[SerializeField]
 	private Deck deck;
@@ -37,6 +41,7 @@ public class Burraco : MonoBehaviour
 
 	private List<CardForStartGame> myCardsForStart = new List<CardForStartGame>();
 	internal string playerstart;
+	internal string playernext;
 	internal bool isCanGetInput = false;
 	[SerializeField]
 	private Player me;
@@ -137,7 +142,7 @@ public class Burraco : MonoBehaviour
 		int highestValue = myCardsForStart.Max(x => x.AbsoluteValue);
 		
 		CardForStartGame myCard = myCardsForStart.OrderByDescending(i => i.AbsoluteValue).FirstOrDefault();
-		playerstart = myCard.gameObject.tag;
+		playerstart = myCard.gameObject.tag + "Player";
 		print("il giocatore che inizia è : " + playerstart);
 		
 
@@ -233,7 +238,7 @@ public class Burraco : MonoBehaviour
 
 			for (int index = 0; index < 2; index++)
 			{
-				yield return new WaitForSeconds(0.5f);
+				yield return new WaitForSeconds(0.3f);
 				Card newCard = deck.myDeck[0];
 
 				if (index == 0)
@@ -353,29 +358,28 @@ public class Burraco : MonoBehaviour
 
 		foreach(Card card in me.myHand)
 		{
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(0.4f);
 			card.IsVisible = true;
 		}
-		isCanGetInput = true;
 		MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, playerstart));
 	}
 
 	int GetOffset()
 	{
 		int offset;
-		if (playerstart == "me")
+		if (playerstart == ME)
 		{
 			offset = 0;
 		}
-		else if (playerstart == "leftOpponent")
+		else if (playerstart == LEFTOPPONENT)
 		{
 			offset = 1;
 		}
-		else if (playerstart == "myMate")
+		else if (playerstart == MYMATE)
 		{
 			offset = 2;
 		}
-		else if (playerstart == "rightOpponent")
+		else if (playerstart == RIGHTOPPONENT)
 		{
 			offset = 3;
 		}
@@ -443,8 +447,14 @@ public class Burraco : MonoBehaviour
 
 	public void OnGameStart(MyEventArgs e)
 	{
-		string name = e.playerStart;	
+		string name = e.playerStart;
+		Player player =  GameObject.FindGameObjectWithTag(name).GetComponent<Player>();
 		print("Sono entrato nell'evento OnGameStart il giocatore che inizia è : " + name);
+		if(name == ME)
+		{
+			isCanGetInput = true;           //abilito l'input utente
+			playernext = LEFTOPPONENT;
+		}
 	}
 
 }
