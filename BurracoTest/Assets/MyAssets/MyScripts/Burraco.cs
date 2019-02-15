@@ -207,7 +207,7 @@ public class Burraco : MonoBehaviour
 				}
 
 				//adesso faccio un test, le nascondo e le faccio vedere solo con una coroutine successiva
-				//newCard.IsVisible = hands[newIndex].tag == "me" ? true : false;				//vedo solo le mie
+				newCard.IsVisible = hands[newIndex].tag == "me" ? true : false;				//vedo solo le mie
 				
 			}
 			xOffset += 0.9f;
@@ -324,7 +324,11 @@ public class Burraco : MonoBehaviour
 		print("il numero delle carte rimasto è : " + numOfRemainingCards);
 		print("Il numero di Jolly rimasto è : " + numOfJolly + " Il numero di Pinelle rimaste  è : " + numOfPins);
 		print("L'indice della prima carta jolly o pinella è :" + Deck.IndexOfFirstJollyOrPin(me.myHand));
-
+		print("la carta del mazzo è " + deck.myDeck[0].Value +" "+deck.myDeck[0].Suit+" "+deck.myDeck[0].Color);
+		print("la prima carta della mia mano è " + me.myHand[0].Value + " " + me.myHand[0].Suit + " " + me.myHand[0].Color);
+		Deck.Swap2CardOf2list(deck.myDeck, me.myHand, 0, 0);
+		print("adesso la carta del mazzo è " + deck.myDeck[0].Value + " " + deck.myDeck[0].Suit + " " + deck.myDeck[0].Color);
+		print("adesso la prima carta della mia mano è " + me.myHand[0].Value + " " + me.myHand[0].Suit + " " + me.myHand[0].Color);
 
 		//------------------------ fine TEST --------------------------------------------------------------------
 

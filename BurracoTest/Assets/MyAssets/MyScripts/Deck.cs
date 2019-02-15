@@ -61,6 +61,7 @@ public class Deck : MonoBehaviour
 
 	internal static void Swap2CardOf2list(List<Card> firstList,List<Card> secondList, int indexFirstList, int indexSecondList)
 	{
+		print(".....sono entrato nel metodo Swap2Card....");
 		Card cardOfFirstList = firstList[indexFirstList];
 		Card cardOfSecondList = secondList[indexSecondList];
 		Vector3 positionCardFirstList = new Vector3(firstList[indexFirstList].transform.position.x, firstList[indexFirstList].transform.position.y, firstList[indexFirstList].transform.position.z);
@@ -69,5 +70,6 @@ public class Deck : MonoBehaviour
 		secondList[indexSecondList].transform.position = positionCardFirstList;
 		secondList[indexSecondList] = cardOfFirstList;
 		firstList[indexFirstList] = cardOfSecondList;
+		print(".....sto uscendo dal metodo.....");
 	}
 }
