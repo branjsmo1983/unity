@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -73,6 +74,9 @@ public class MyEventArgs
 	public string playerStart;
 	public string player1;
 	public string player2;
+	public Vector3 lastCardPosition;
+	public List<Card> deck;
+	public Card cardSelected;
 	//public LevelData myLevelData;
 
 	public MyEventArgs()
@@ -91,6 +95,12 @@ public class MyEventArgs
 		this.myInt = myInt;
 	}
 
+	public MyEventArgs(GameObject sender, Card cardSelected)
+	{
+		this.sender = sender;
+		this.cardSelected = cardSelected;
+	}
+
 	public MyEventArgs(GameObject sender, string playerStart)
 	{
 		this.sender = sender;
@@ -101,6 +111,12 @@ public class MyEventArgs
 	{
 		this.player1 = player1;
 		this.player2 = player2;
+	}
+
+	public MyEventArgs(GameObject sender, Vector3 lastCardPosition, List<Card> deck)
+	{
+		this.lastCardPosition = lastCardPosition;
+		this.deck = deck;
 	}
 
 

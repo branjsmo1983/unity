@@ -38,7 +38,7 @@ public class Burraco : MonoBehaviour
 	internal List<Card> firstCockpit = new List<Card>();
 	internal List<Card> secondCockpit = new List<Card>();
 	internal List<Card> refuseCards = new List<Card>();
-
+	internal List<Card> cardsSelected = new List<Card>();
 	private List<CardForStartGame> myCardsForStart = new List<CardForStartGame>();
 	internal string playerstart;
 	internal bool alreadyGetBurraco = false;
@@ -46,13 +46,13 @@ public class Burraco : MonoBehaviour
 	internal bool alreadyFished = false;
 	internal bool alreadyCollected = false;
 	[SerializeField]
-	private Player me;
+	internal Player me;
 	[SerializeField]
-	private Player myMate;
+	internal Player myMate;
 	[SerializeField]
-	private Player leftOpponent;
+	internal Player leftOpponent;
 	[SerializeField]
-	private Player rightOpponent;
+	internal Player rightOpponent;
 
 
 	void Awake()
@@ -409,7 +409,22 @@ public class Burraco : MonoBehaviour
 	public void OnCardSelect(MyEventArgs e)
 	{
 		
-		print("Sono entrato nell'evento OnCardSelected");
+		print("Sono entrato nell'evento OnCardSelect");
+		e.cardSelected.IsSelected = !e.cardSelected.IsSelected;
+		if (e.cardSelected.IsSelected)
+		{
+			print("ho selezionato la carta : " + e.cardSelected.Value +" "+e.cardSelected.Suit+" "+e.cardSelected.Color);
+			e.cardSelected.transform.position = new Vector3(e.cardSelected.transform.position.x, e.cardSelected.transform.position.y + 0.2f, e.cardSelected.transform.position.z);
+			cardsSelected.Add(e.cardSelected);
+		}
+		else
+		{
+			print("ho de-selezionato la carta : " + e.cardSelected.Value + " " + e.cardSelected.Suit + " " + e.cardSelected.Color);
+			e.cardSelected.transform.position = new Vector3(e.cardSelected.transform.position.x, e.cardSelected.transform.position.y - 0.2f, e.cardSelected.transform.position.z);
+			cardsSelected.Remove(e.cardSelected);
+		}
+		
+
 	}
 
 	public void OnCardsHang(MyEventArgs e)					//attaccare al tavolo
@@ -420,11 +435,16 @@ public class Burraco : MonoBehaviour
 	public void OnDeckDraw(MyEventArgs e)					//pescare dal mazzo di carte
 	{
 		print("Sono entrato nell'evento OnDeckDraw");
-		Vector3 lastCardPosition = new Vector3(me.myHand[me.myHand.Count - 1].transform.position.x, me.myHand[me.myHand.Count - 1].transform.position.y, me.myHand[me.myHand.Count - 1].transform.position.z);
+		Vector3 lastCardPosition = e.lastCardPosition;
+		List<Card> currentDeck = e.deck;
 		deck.myDeck[deck.myDeck.Count - 1].transform.position = new Vector3(lastCardPosition.x + 0.9f, lastCardPosition.y, lastCardPosition.z);
-		deck.myDeck[deck.myDeck.Count - 1].tag = "myCard";
-		me.myHand.Add(deck.myDeck[deck.myDeck.Count - 1]);
+		deck.myDeck[deck.myDeck.Count - 1].IsVisible = true;
+		deck.myDeck[currentDeck.Count - 1].tag = currentDeck[0].tag;
+		currentDeck.Add(deck.myDeck[currentDeck.Count - 1]);
 		deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
+		print(" ho pescato la carta : " + currentDeck[currentDeck.Count - 1].Value + " "+ currentDeck[currentDeck.Count - 1].Suit + " " + currentDeck[currentDeck.Count - 1].Color);
+		print(" la carta ha tag : " + currentDeck[currentDeck.Count - 1].tag);
+
 
 	}
 
@@ -457,7 +477,7 @@ public class Burraco : MonoBehaviour
 	{
 		string name = e.playerStart;
 		Player player =  GameObject.FindGameObjectWithTag(name).GetComponent<Player>();
-		print("Sono entrato nell'evento OnGameStart il giocatore che inizia è : " + name);
+		print("Sono entrato nell'evento OnGameStart il giocatore che inizia è : " + player.tag);
 		if(name == ME)
 		{
 			print(" tocca a me ");
@@ -465,7 +485,7 @@ public class Burraco : MonoBehaviour
 			
 
 			//alla fine scateno l'evento del prossimo giocatore
-			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, LEFTOPPONENT));
+			//MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, LEFTOPPONENT));
 		}else if(name == LEFTOPPONENT)
 		{
 			print(" tocca al giocatore di sinistra ");
@@ -490,7 +510,14 @@ public class Burraco : MonoBehaviour
 			//alla fine
 			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, ME));
 		}
+		else
+		{
+			print(" ERRORE! non mi ha preso il giocatore ");
+		}
 	}
+
+
+
 
 }
 

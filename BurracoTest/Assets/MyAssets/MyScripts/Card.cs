@@ -23,7 +23,7 @@ public class Card : MonoBehaviour
 	internal BoxCollider2D cardCollider2D;
 
 	public bool IsVisible { get; set; } = false;
-
+	public bool IsSelected { get; set; } = false;
 	public int Cost { get ; private set; }
 	public bool CanBeJolly { get; set; }
 	public bool CanBePin { get; set; }
@@ -110,7 +110,8 @@ public class Card : MonoBehaviour
     void Update()
     {
 
-		spriteRenderer.sprite = (IsVisible) ? cardFace : cardBack ;
+		spriteRenderer.sprite = IsVisible ? cardFace : cardBack ;
+		spriteRenderer.color = IsSelected ? UnityEngine.Color.yellow : UnityEngine.Color.white;
 		if (!IsVisible && gameObject.tag != "Respawn" && gameObject.tag != "prestart")
 		{
 			gameObject.transform.localScale = new Vector3(0.24f, 0.24f, 1);

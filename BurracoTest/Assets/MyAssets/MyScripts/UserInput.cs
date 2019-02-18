@@ -6,7 +6,7 @@ public class UserInput : MonoBehaviour
 {
 
 	public GameObject slot1;
-	private Burraco burraco;
+	internal Burraco burraco;
 
 	// Start is called before the first frame update
 	void Start()
@@ -39,7 +39,8 @@ public class UserInput : MonoBehaviour
 				if (hit.collider.CompareTag("myCard"))
 				{
 					//card in my hand selected 
-					MyEventManager.instance.CastEvent(MyIndexEvent.cardSelect, new MyEventArgs());
+					Card newCardSelected = hit.collider.GetComponent<Card>();
+					MyEventManager.instance.CastEvent(MyIndexEvent.cardSelect, new MyEventArgs(this.gameObject,newCardSelected));
 				}
 				else if (hit.collider.CompareTag("ourTable"))
 				{
@@ -48,6 +49,7 @@ public class UserInput : MonoBehaviour
 				}
 				else if (hit.collider.CompareTag("card"))
 				{
+					
 					//draw a card from deck
 					if (burraco.alreadyCollected)
 					{
@@ -59,8 +61,11 @@ public class UserInput : MonoBehaviour
 					else
 					{
 						print("scateno l'evento di pescare una carta dal mazzo");
-						MyEventManager.instance.CastEvent(MyIndexEvent.deckDraw, new MyEventArgs());
+						hit.collider.tag = "myCard";
+						Vector3 lastCardPosition = new Vector3(burraco.me.myHand[burraco.me.myHand.Count - 1].transform.position.x, burraco.me.myHand[burraco.me.myHand.Count - 1].transform.position.y, burraco.me.myHand[burraco.me.myHand.Count - 1].transform.position.z);
+						MyEventManager.instance.CastEvent(MyIndexEvent.deckDraw, new MyEventArgs(this.gameObject,lastCardPosition,burraco.me.myHand));
 						burraco.alreadyFished = true;
+						
 					}
 					
 				}
