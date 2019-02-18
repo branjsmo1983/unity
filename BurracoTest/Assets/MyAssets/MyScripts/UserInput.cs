@@ -49,7 +49,20 @@ public class UserInput : MonoBehaviour
 				else if (hit.collider.CompareTag("card"))
 				{
 					//draw a card from deck
-					MyEventManager.instance.CastEvent(MyIndexEvent.deckDraw, new MyEventArgs());
+					if (burraco.alreadyCollected)
+					{
+						print(" hai già raccolto");
+					}else if (burraco.alreadyFished)
+					{
+						print(" hai già pescato");
+					}
+					else
+					{
+						print("scateno l'evento di pescare una carta dal mazzo");
+						MyEventManager.instance.CastEvent(MyIndexEvent.deckDraw, new MyEventArgs());
+						burraco.alreadyFished = true;
+					}
+					
 				}
 				else if (hit.collider.CompareTag("refuse")) //scrivere il tag da mettere
 				{

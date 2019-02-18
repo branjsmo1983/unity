@@ -41,8 +41,10 @@ public class Burraco : MonoBehaviour
 
 	private List<CardForStartGame> myCardsForStart = new List<CardForStartGame>();
 	internal string playerstart;
-	internal string playernext;
+	internal bool alreadyGetBurraco = false;
 	internal bool isCanGetInput = false;
+	internal bool alreadyFished = false;
+	internal bool alreadyCollected = false;
 	[SerializeField]
 	private Player me;
 	[SerializeField]
@@ -418,6 +420,12 @@ public class Burraco : MonoBehaviour
 	public void OnDeckDraw(MyEventArgs e)					//pescare dal mazzo di carte
 	{
 		print("Sono entrato nell'evento OnDeckDraw");
+		Vector3 lastCardPosition = new Vector3(me.myHand[me.myHand.Count - 1].transform.position.x, me.myHand[me.myHand.Count - 1].transform.position.y, me.myHand[me.myHand.Count - 1].transform.position.z);
+		deck.myDeck[deck.myDeck.Count - 1].transform.position = new Vector3(lastCardPosition.x + 0.9f, lastCardPosition.y, lastCardPosition.z);
+		deck.myDeck[deck.myDeck.Count - 1].tag = "myCard";
+		me.myHand.Add(deck.myDeck[deck.myDeck.Count - 1]);
+		deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
+
 	}
 
 	public void OnScrapsCollect(MyEventArgs e)				//raccogliere
@@ -452,8 +460,35 @@ public class Burraco : MonoBehaviour
 		print("Sono entrato nell'evento OnGameStart il giocatore che inizia è : " + name);
 		if(name == ME)
 		{
+			print(" tocca a me ");
 			isCanGetInput = true;           //abilito l'input utente
-			playernext = LEFTOPPONENT;
+			
+
+			//alla fine scateno l'evento del prossimo giocatore
+			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, LEFTOPPONENT));
+		}else if(name == LEFTOPPONENT)
+		{
+			print(" tocca al giocatore di sinistra ");
+			isCanGetInput = false;
+
+			//alla fine
+			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, MYMATE));
+		}
+		else if (name == MYMATE)
+		{
+			print(" tocca al mio compagna ");
+			isCanGetInput = false;
+
+			//alla fine
+			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, RIGHTOPPONENT));
+		}
+		else if (name == RIGHTOPPONENT)
+		{
+			print(" tocca al giocatore di destra ");
+			isCanGetInput = false;
+
+			//alla fine
+			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, ME));
 		}
 	}
 
