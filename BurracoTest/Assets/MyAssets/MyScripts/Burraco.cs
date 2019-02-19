@@ -413,13 +413,11 @@ public class Burraco : MonoBehaviour
 		e.cardSelected.IsSelected = !e.cardSelected.IsSelected;
 		if (e.cardSelected.IsSelected)
 		{
-			print("ho selezionato la carta : " + e.cardSelected.Value +" "+e.cardSelected.Suit+" "+e.cardSelected.Color);
 			e.cardSelected.transform.position = new Vector3(e.cardSelected.transform.position.x, e.cardSelected.transform.position.y + 0.2f, e.cardSelected.transform.position.z);
 			cardsSelected.Add(e.cardSelected);
 		}
 		else
 		{
-			print("ho de-selezionato la carta : " + e.cardSelected.Value + " " + e.cardSelected.Suit + " " + e.cardSelected.Color);
 			e.cardSelected.transform.position = new Vector3(e.cardSelected.transform.position.x, e.cardSelected.transform.position.y - 0.2f, e.cardSelected.transform.position.z);
 			cardsSelected.Remove(e.cardSelected);
 		}
@@ -451,6 +449,20 @@ public class Burraco : MonoBehaviour
 	public void OnScrapsCollect(MyEventArgs e)				//raccogliere
 	{
 		print("Sono entrato nell'evento OnScrapsCollect");
+		if(!alreadyCollected && !alreadyFished)
+		{
+			alreadyCollected = true;
+			Vector3 myLastCardPosition = new Vector3(me.myHand[me.myHand.Count - 1].transform.position.x, me.myHand[me.myHand.Count - 1].transform.position.y, me.myHand[me.myHand.Count - 1].transform.position.z);
+			float xOffset = 0.9f;
+			for(int index = 0;index < refuseCards.Count(); index++)
+			{
+				refuseCards[index].transform.position = new Vector3(myLastCardPosition.x + xOffset, myLastCardPosition.y, myLastCardPosition.z);
+				refuseCards[index].tag = "myCard";
+				me.myHand.Add(refuseCards[index]);
+				refuseCards.Remove(refuseCards[index]);
+				xOffset += 0.9f;
+			}
+		}
 	}
 
 	public void OnCockpitTake(MyEventArgs e)				//prendere i pozzetti
@@ -481,6 +493,7 @@ public class Burraco : MonoBehaviour
 		if(name == ME)
 		{
 			print(" tocca a me ");
+			OrderHand(me.myHand);
 			isCanGetInput = true;           //abilito l'input utente
 			
 
@@ -516,8 +529,32 @@ public class Burraco : MonoBehaviour
 		}
 	}
 
-
-
-
+	private void OrderHand(List<Card> hand)
+	{
+		Vector3[] oldPositions = new Vector3[hand.Count()];
+		int[] indexPositions = new int[hand.Count()];
+		for (int i = 0; i < hand.Count(); i++)
+		{
+			oldPositions[i] = new Vector3(hand[i].transform.position.x, hand[i].transform.position.y, hand[i].transform.position.z);
+		}
+		IEnumerable<Card> query = hand.OrderBy(card => card.Suit).OrderBy(card => card.Value);
+		foreach(Card card in query)
+		{
+			print("  "+ card.Value + card.Suit + card.Color);
+		}
+		for (int i = 0; i < hand.Count(); i++)
+		{
+			indexPositions[i] = hand.IndexOf(query.ElementAt(i));
+		}
+		for (int i = 0; i < hand.Count(); i++)
+		{
+			hand[i].transform.position = new Vector3(oldPositions[indexPositions[i]].x, oldPositions[indexPositions[i]].y, oldPositions[indexPositions[i]].z);
+		}
+		hand = query.ToList();
+		foreach (Card card in hand)
+		{
+			print("  " + card.Value + card.Suit + card.Color);
+		}
+	}
 }
 
