@@ -493,7 +493,7 @@ public class Burraco : MonoBehaviour
 		if(name == ME)
 		{
 			print(" tocca a me ");
-			OrderHand(me.myHand);
+			OrderHand(me.myHand, hands[0].transform.position);
 			isCanGetInput = true;           //abilito l'input utente
 			
 
@@ -529,32 +529,25 @@ public class Burraco : MonoBehaviour
 		}
 	}
 
-	private void OrderHand(List<Card> hand)
+	private void OrderHand(List<Card> hand, Vector3 position)
 	{
-		Vector3[] oldPositions = new Vector3[hand.Count()];
-		int[] indexPositions = new int[hand.Count()];
-		for (int i = 0; i < hand.Count(); i++)
-		{
-			oldPositions[i] = new Vector3(hand[i].transform.position.x, hand[i].transform.position.y, hand[i].transform.position.z);
-		}
+
 		IEnumerable<Card> query = hand.OrderBy(card => card.Suit).OrderBy(card => card.Value);
-		foreach(Card card in query)
-		{
-			print("  "+ card.Value + card.Suit + card.Color);
-		}
-		for (int i = 0; i < hand.Count(); i++)
-		{
-			indexPositions[i] = hand.IndexOf(query.ElementAt(i));
-		}
-		for (int i = 0; i < hand.Count(); i++)
-		{
-			hand[i].transform.position = new Vector3(oldPositions[indexPositions[i]].x, oldPositions[indexPositions[i]].y, oldPositions[indexPositions[i]].z);
-		}
 		hand = query.ToList();
+		float xOffSet = 0;
+		float zOffset = 0;
+		foreach(Card card in hand)
+		{
+			card.transform.position = new Vector3(position.x + xOffSet, position.y, position.z - zOffset);
+			xOffSet += 0.9f;
+			zOffset += 0.2f;
+		}
+
 		foreach (Card card in hand)
 		{
-			print("  " + card.Value + card.Suit + card.Color);
+			print("  " + card.Value + "  "+ card.Suit + "  "+ card.Color);
 		}
+
 	}
 }
 
