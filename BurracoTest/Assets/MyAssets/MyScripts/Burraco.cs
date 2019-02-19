@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using TMPro;
 
 public class Burraco : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class Burraco : MonoBehaviour
 	private const string MYMATE = "myMatePlayer";
 	private const string LEFTOPPONENT = "leftOpponentPlayer";
 	private const string RIGHTOPPONENT = "rightOpponentPlayer";
+
+	[SerializeField]
+	private TextMeshProUGUI text;
 
 	[SerializeField]
 	private Deck deck;
@@ -45,6 +49,7 @@ public class Burraco : MonoBehaviour
 	internal bool isCanGetInput = false;
 	internal bool alreadyFished = false;
 	internal bool alreadyCollected = false;
+	internal bool orderbyValue = false;
 	[SerializeField]
 	internal Player me;
 	[SerializeField]
@@ -110,6 +115,13 @@ public class Burraco : MonoBehaviour
 
 	}
 
+	public void ChangeOrder()
+	{
+		print("ho cliccato il bottone per cambiare l'ordine");
+		orderbyValue = !orderbyValue;
+		OrderHand(me.myHand, hands[0].transform.position);
+	}
+
 	void Shuffle<T>(List<T> list)
 	{
 		System.Random random = new System.Random();
@@ -145,9 +157,30 @@ public class Burraco : MonoBehaviour
 		
 		CardForStartGame myCard = myCardsForStart.OrderByDescending(i => i.AbsoluteValue).FirstOrDefault();
 		playerstart = myCard.gameObject.tag + "Player";
-		print("il giocatore che inizia è : " + playerstart);
-		
+		print("il giocatore che inizia è : " + myCard.gameObject.tag);
+		string namePlayer;
+		if(playerstart == ME)
+		{
+			namePlayer = "io";
+		}else if(playerstart == LEFTOPPONENT)
+		{
+			namePlayer = "l'avversario di sinistra";
+		}else if(playerstart == MYMATE)
+		{
+			namePlayer = "il mio compagno";
+		}else if(playerstart == RIGHTOPPONENT)
+		{
+			namePlayer = "l'avversario di destra";
+		}
+		else
+		{
+			namePlayer = "";
+			print("non ha preso il controllo sul giocatore");
+		}
 
+		text.text = "Inizia : \r\n" + namePlayer;
+		yield return new WaitForSeconds(1.2f);
+		text.text = "";
 	}
 
 	IEnumerator RemovePreStartCards()
@@ -532,7 +565,7 @@ public class Burraco : MonoBehaviour
 	private void OrderHand(List<Card> hand, Vector3 position)
 	{
 
-		IEnumerable<Card> query = hand.OrderBy(card => card.Suit).OrderBy(card => card.Value);
+		IEnumerable<Card> query = orderbyValue? hand.OrderBy(card => card.Suit).OrderBy(card => card.Value) : hand.OrderBy(card => card.Value).OrderBy(card => card.Suit);
 		hand = query.ToList();
 		float xOffSet = 0;
 		float zOffset = 0;
@@ -543,10 +576,10 @@ public class Burraco : MonoBehaviour
 			zOffset += 0.2f;
 		}
 
-		foreach (Card card in hand)
-		{
-			print("  " + card.Value + "  "+ card.Suit + "  "+ card.Color);
-		}
+		//foreach (Card card in hand)
+		//{
+		//	print("  " + card.Value + "  "+ card.Suit + "  "+ card.Color);
+		//}
 
 	}
 }
