@@ -117,7 +117,7 @@ public class Burraco : MonoBehaviour
 
 	public void ChangeOrder()
 	{
-		print("ho cliccato il bottone per cambiare l'ordine");
+		//print("ho cliccato il bottone per cambiare l'ordine");
 		orderbyValue = !orderbyValue;
 		OrderHand(me.myHand, hands[0].transform.position);
 	}
@@ -157,7 +157,7 @@ public class Burraco : MonoBehaviour
 		
 		CardForStartGame myCard = myCardsForStart.OrderByDescending(i => i.AbsoluteValue).FirstOrDefault();
 		playerstart = myCard.gameObject.tag + "Player";
-		print("il giocatore che inizia è : " + myCard.gameObject.tag);
+		//print("il giocatore che inizia è : " + myCard.gameObject.tag);
 		string namePlayer;
 		if(playerstart == ME)
 		{
@@ -187,7 +187,6 @@ public class Burraco : MonoBehaviour
 	{
 		yield return new WaitForSeconds(1.5f);
 
-		//	TO DO  : una scritta con chi inizia
 
 		foreach (CardForStartGame cardToDisable in myCardsForStart)
 		{
@@ -576,10 +575,6 @@ public class Burraco : MonoBehaviour
 			zOffset += 0.2f;
 		}
 
-		//foreach (Card card in hand)
-		//{
-		//	print("  " + card.Value + "  "+ card.Suit + "  "+ card.Color);
-		//}
 
 	}
 }
