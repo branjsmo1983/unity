@@ -305,7 +305,7 @@ public class Burraco : MonoBehaviour
 		initCard.tag = "refuse";
 		refuseCards.Add(initCard);
 		deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
-		nextRefusePosition.transform.position = new Vector3(refusePosition.transform.position.x + 0.9f, refusePosition.transform.position.y, refusePosition.transform.position.z - 0.2f);
+		nextRefusePosition.transform.position = new Vector3(refusePosition.transform.position.x, refusePosition.transform.position.y, refusePosition.transform.position.z - 0.2f);
 
 
 		//------------------------- TEST sulle carte date ------------------------------------------------------
@@ -508,15 +508,21 @@ public class Burraco : MonoBehaviour
 		}else if ((me.HasCollected && me.cardsSelected.Count() ==1)|| (me.HasFished && me.cardsSelected.Count() == 1))
 		{
 			print("O avevo raccolto, o avevo pescato, con una sola carta selezionata");
-			me.cardsSelected.ElementAt(0).spriteRenderer.color = Color.white;
+			foreach(Card card in me.myHand)
+			{
+				card.IsSelected = false;
+			}
+			me.cardsSelected.ElementAt(0).spriteRenderer.color = UnityEngine.Color.white;
 			me.cardsSelected.ElementAt(0).tag = "refuse";
-			me.cardsSelected.ElementAt(0).transform.position = new Vector3(nextRefusePosition.transform.transform.position.x, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z);
+			me.cardsSelected.ElementAt(0).transform.position = new Vector3(nextRefusePosition.transform.position.x, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z);
 			refuseCards.Add(me.cardsSelected.ElementAt(0));
 			me.myHand.Remove(me.cardsSelected.ElementAt(0));
 			me.cardsSelected.Clear();
 			OrderHand(me.myHand, hands[0].transform.position);
 			nextRefusePosition.transform.position = new Vector3(nextRefusePosition.transform.position.x + 0.9f, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z - 0.2f);
 			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, LEFTOPPONENT));
+			me.HasCollected = false;
+			me.HasFished = false;
 		}
 		else
 		{
