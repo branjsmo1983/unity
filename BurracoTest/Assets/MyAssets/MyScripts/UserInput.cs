@@ -36,25 +36,25 @@ public class UserInput : MonoBehaviour
 			RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 			if (hit)
 			{
-				if (hit.collider.CompareTag("myCard"))
+				if (hit.collider.CompareTag("myCard"))											//sto selezionando una carta ddella mia mano
 				{
 					//card in my hand selected 
 					Card newCardSelected = hit.collider.GetComponent<Card>();
 					MyEventManager.instance.CastEvent(MyIndexEvent.cardSelect, new MyEventArgs(this.gameObject,newCardSelected));
 				}
-				else if (hit.collider.CompareTag("ourTable"))
+				else if (hit.collider.CompareTag("ourTable"))									//sto cercando di calare carta/canasta sul tavolo
 				{
 					//try to add one or more cards into table
 					MyEventManager.instance.CastEvent(MyIndexEvent.cardsHang, new MyEventArgs());
 				}
-				else if (hit.collider.CompareTag("card"))
+				else if (hit.collider.CompareTag("card"))										//sto cercando di pescare
 				{
 					
 					//draw a card from deck
-					if (burraco.alreadyCollected)
+					if (burraco.me.HasCollected)
 					{
 						print(" hai già raccolto");
-					}else if (burraco.alreadyFished)
+					}else if (burraco.me.HasFished)
 					{
 						print(" hai già pescato");
 					}
@@ -64,14 +64,15 @@ public class UserInput : MonoBehaviour
 						hit.collider.tag = "myCard";
 						Vector3 lastCardPosition = new Vector3(burraco.me.myHand[burraco.me.myHand.Count - 1].transform.position.x, burraco.me.myHand[burraco.me.myHand.Count - 1].transform.position.y, burraco.me.myHand[burraco.me.myHand.Count - 1].transform.position.z);
 						MyEventManager.instance.CastEvent(MyIndexEvent.deckDraw, new MyEventArgs(this.gameObject,lastCardPosition,burraco.me.myHand));
-						burraco.alreadyFished = true;
+						burraco.me.HasFished = true;
 						
 					}
 					
 				}
-				else if (hit.collider.CompareTag("refuse")) //scrivere il tag da mettere
+				else if (hit.collider.CompareTag("refuse"))											//sto cercando di raccogliere
 				{
-					//collect from scraps
+					print("scateno l'evento di pescare una carta dal mazzo");
+					hit.collider.tag = "refuse";
 					MyEventManager.instance.CastEvent(MyIndexEvent.scrapsCollect, new MyEventArgs());
 				}
 			}

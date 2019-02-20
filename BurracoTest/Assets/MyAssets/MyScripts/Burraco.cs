@@ -13,43 +13,41 @@ public class Burraco : MonoBehaviour
 	private const string RIGHTOPPONENT = "rightOpponentPlayer";
 
 	[SerializeField]
-	private TextMeshProUGUI text;
+	private TextMeshProUGUI text;															//testo durante il gioco
 
 	[SerializeField]
-	private Deck deck;
+	private Deck deck;																		//mazzo di gioco
 
 	[SerializeField]
-	private DeckForStartGame deckForStartGame;
+	private DeckForStartGame deckForStartGame;												//mazzo iniziale per estrarre le 4 carte
 
 	[SerializeField]
-	GameObject cockpitPosition;
+	GameObject cockpitPosition;																// per sapere la transform dei pozzetti
 
 	[SerializeField]
-	GameObject deckFake;
+	GameObject deckFake;																	//posizione della sprite cardback che uso come finto mazzo iniziale
 
 	[SerializeField]
-	GameObject playingDeckPosition;
+	GameObject playingDeckPosition;															//per sapere la transform del mazzo di carte
 
 	[SerializeField]
-	GameObject refusePosition;
+	GameObject refusePosition;                                                              // per sapere la transform degli scarti
+	[SerializeField]
+	GameObject nextRefusePosition;
 
 	[SerializeField]
-	internal GameObject[] hands = new GameObject[4];										//per sapere la transform
+	internal GameObject[] hands = new GameObject[4];										//per sapere la transform delle 4 mani dei 4  giocatori
 
 	[SerializeField]
-	internal GameObject[] cards = new GameObject[4];                                        //per sapere la transform
+	internal GameObject[] cards = new GameObject[4];                                        //per sapere la transform delle 4 carte iniziali per sapere chi inizia il gioco
 
-	internal List<Card> firstCockpit = new List<Card>();
-	internal List<Card> secondCockpit = new List<Card>();
-	internal List<Card> refuseCards = new List<Card>();
-	internal List<Card> cardsSelected = new List<Card>();
-	private List<CardForStartGame> myCardsForStart = new List<CardForStartGame>();
-	internal string playerstart;
-	internal bool alreadyGetBurraco = false;
-	internal bool isCanGetInput = false;
-	internal bool alreadyFished = false;
-	internal bool alreadyCollected = false;
-	internal bool orderbyValue = false;
+	internal List<Card> firstCockpit = new List<Card>();									// primo pozzetto
+	internal List<Card> secondCockpit = new List<Card>();									// secondo pozzetto
+	internal List<Card> refuseCards = new List<Card>();										// lista delle carte negli scarti
+	private List<CardForStartGame> myCardsForStart = new List<CardForStartGame>();			// mi serve per ordinare le 4 carte e prendere la maggiore con linq
+	internal string playerstart;															// stringa del giocatore iniziale											
+	internal bool isCanGetInput = false;													// per abilitare l'input all'utente o meno												
+	internal bool orderbyValue = false;														//ordino solo per valore o anche per suit
 	[SerializeField]
 	internal Player me;
 	[SerializeField]
@@ -301,12 +299,13 @@ public class Burraco : MonoBehaviour
 		}
 
 		Card initCard = deck.myDeck[deck.myDeck.Count - 1];
-		initCard.transform.position = new Vector3(refusePosition.transform.position.x, refusePosition.transform.position.y, refusePosition.transform.position.z - zOffset);
+		initCard.transform.position = new Vector3(refusePosition.transform.position.x, refusePosition.transform.position.y, refusePosition.transform.position.z);
 		initCard.transform.rotation = Quaternion.identity;
 		initCard.IsVisible = true;
 		initCard.tag = "refuse";
 		refuseCards.Add(initCard);
 		deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
+		nextRefusePosition.transform.position = new Vector3(refusePosition.transform.position.x + 0.9f, refusePosition.transform.position.y, refusePosition.transform.position.z - 0.2f);
 
 
 		//------------------------- TEST sulle carte date ------------------------------------------------------
@@ -446,12 +445,12 @@ public class Burraco : MonoBehaviour
 		if (e.cardSelected.IsSelected)
 		{
 			e.cardSelected.transform.position = new Vector3(e.cardSelected.transform.position.x, e.cardSelected.transform.position.y + 0.2f, e.cardSelected.transform.position.z);
-			cardsSelected.Add(e.cardSelected);
+			me.cardsSelected.Add(e.cardSelected);
 		}
 		else
 		{
 			e.cardSelected.transform.position = new Vector3(e.cardSelected.transform.position.x, e.cardSelected.transform.position.y - 0.2f, e.cardSelected.transform.position.z);
-			cardsSelected.Remove(e.cardSelected);
+			me.cardsSelected.Remove(e.cardSelected);
 		}
 		
 
@@ -465,9 +464,8 @@ public class Burraco : MonoBehaviour
 	public void OnDeckDraw(MyEventArgs e)					//pescare dal mazzo di carte
 	{
 		print("Sono entrato nell'evento OnDeckDraw");
-		Vector3 lastCardPosition = e.lastCardPosition;
 		List<Card> currentDeck = e.deck;
-		deck.myDeck[deck.myDeck.Count - 1].transform.position = new Vector3(lastCardPosition.x + 0.9f, lastCardPosition.y, lastCardPosition.z);
+		deck.myDeck[deck.myDeck.Count - 1].transform.position = new Vector3(hands[0].transform.position.x + (0.9f * me.myHand.Count), hands[0].transform.position.y, hands[0].transform.position.z - (0.2f * me.myHand.Count));
 		deck.myDeck[deck.myDeck.Count - 1].IsVisible = true;
 		deck.myDeck[currentDeck.Count - 1].tag = currentDeck[0].tag;
 		currentDeck.Add(deck.myDeck[currentDeck.Count - 1]);
@@ -480,20 +478,49 @@ public class Burraco : MonoBehaviour
 
 	public void OnScrapsCollect(MyEventArgs e)				//raccogliere
 	{
+		//per testare se entro nell'evento
 		print("Sono entrato nell'evento OnScrapsCollect");
-		if(!alreadyCollected && !alreadyFished)
+		//se non ho già raccolto o pescato
+		if(!me.HasCollected && !me.HasFished)
 		{
-			alreadyCollected = true;
-			Vector3 myLastCardPosition = new Vector3(me.myHand[me.myHand.Count - 1].transform.position.x, me.myHand[me.myHand.Count - 1].transform.position.y, me.myHand[me.myHand.Count - 1].transform.position.z);
+			print("Non avevo nè raccolto nè pescato");
+			//allora vuol dire che adesso sto raccogliendo
+			nextRefusePosition.transform.position = new Vector3(refusePosition.transform.position.x, refusePosition.transform.position.y, refusePosition.transform.position.z);
+			me.HasCollected = true;
+			//prendo la posizione della mia ultima carta
 			float xOffset = 0.9f;
-			for(int index = 0;index < refuseCards.Count(); index++)
+			float zOffset = 0.2f;
+			Vector3 myLastCardPosition = new Vector3(hands[0].transform.position.x + (xOffset * me.myHand.Count), hands[0].transform.position.y, hands[0].transform.position.z - (zOffset * me.myHand.Count));
+
+			//per ogni carta presente negli scarti
+			xOffset = 0;
+			zOffset = 0;
+			for (int index = 0;index < refuseCards.Count; index++)
 			{
-				refuseCards[index].transform.position = new Vector3(myLastCardPosition.x + xOffset, myLastCardPosition.y, myLastCardPosition.z);
+			
+				refuseCards[index].transform.position = new Vector3(myLastCardPosition.x + xOffset, myLastCardPosition.y, myLastCardPosition.z - zOffset);
 				refuseCards[index].tag = "myCard";
 				me.myHand.Add(refuseCards[index]);
 				refuseCards.Remove(refuseCards[index]);
 				xOffset += 0.9f;
+				zOffset += 0.2f;
 			}
+		}else if ((me.HasCollected && me.cardsSelected.Count() ==1)|| (me.HasFished && me.cardsSelected.Count() == 1))
+		{
+			print("O avevo raccolto, o avevo pescato, con una sola carta selezionata");
+			me.cardsSelected.ElementAt(0).spriteRenderer.color = Color.white;
+			me.cardsSelected.ElementAt(0).tag = "refuse";
+			me.cardsSelected.ElementAt(0).transform.position = new Vector3(nextRefusePosition.transform.transform.position.x, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z);
+			refuseCards.Add(me.cardsSelected.ElementAt(0));
+			me.myHand.Remove(me.cardsSelected.ElementAt(0));
+			me.cardsSelected.Clear();
+			OrderHand(me.myHand, hands[0].transform.position);
+			nextRefusePosition.transform.position = new Vector3(nextRefusePosition.transform.position.x + 0.9f, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z - 0.2f);
+			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, LEFTOPPONENT));
+		}
+		else
+		{
+			print("ERRORE!! : pe entare in questo ramo o ho selezionato 0 carte ");
 		}
 	}
 
