@@ -63,7 +63,7 @@ public class UserInput : MonoBehaviour
 						print("scateno l'evento di pescare una carta dal mazzo");
 						Card cardFished = hit.collider.GetComponent<Card>();
 						cardFished.tag = "myCard";
-						cardFished.IsVisible = true;
+						print("la carta è : " + cardFished.name);
 						Vector3 lastCardPosition = new Vector3(burraco.me.myHand[burraco.me.myHand.Count - 1].transform.position.x, burraco.me.myHand[burraco.me.myHand.Count - 1].transform.position.y, burraco.me.myHand[burraco.me.myHand.Count - 1].transform.position.z);
 						MyEventManager.instance.CastEvent(MyIndexEvent.deckDraw, new MyEventArgs(this.gameObject,lastCardPosition,burraco.me.myHand,cardFished));
 						burraco.me.HasFished = true;

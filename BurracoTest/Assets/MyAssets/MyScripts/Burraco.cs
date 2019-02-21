@@ -305,7 +305,7 @@ public class Burraco : MonoBehaviour
 		initCard.tag = "refuse";
 		refuseCards.Add(initCard);
 		deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
-		nextRefusePosition.transform.position = new Vector3(refusePosition.transform.position.x, refusePosition.transform.position.y, refusePosition.transform.position.z - 0.2f);
+		nextRefusePosition.transform.position = new Vector3(refusePosition.transform.position.x +0.9f, refusePosition.transform.position.y, refusePosition.transform.position.z - 0.2f);
 
 
 		//------------------------- TEST sulle carte date ------------------------------------------------------
@@ -467,68 +467,58 @@ public class Burraco : MonoBehaviour
 		List<Card> currentDeck = e.deck;
 		Card cardFished = e.cardFished;
 		cardFished.transform.position = new Vector3(hands[0].transform.position.x + (0.9f * me.myHand.Count), hands[0].transform.position.y, hands[0].transform.position.z - (0.2f * me.myHand.Count));
+		cardFished.IsVisible = true;
 		currentDeck.Add(cardFished);
 		deck.myDeck.Remove(cardFished);
-		//deck.myDeck[deck.myDeck.Count - 1].transform.position = new Vector3(hands[0].transform.position.x + (0.9f * me.myHand.Count), hands[0].transform.position.y, hands[0].transform.position.z - (0.2f * me.myHand.Count));
-		//deck.myDeck[currentDeck.Count - 1].tag = currentDeck[0].tag;
-		//deck.myDeck[currentDeck.Count - 1].IsVisible = true;
-		//currentDeck[currentDeck.Count - 1].IsVisible = true;
-		//currentDeck.Add(deck.myDeck[currentDeck.Count - 1]);
-		//deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
-		print(" ho pescato la carta : " + cardFished.Value + " "+ cardFished.Suit + " " + cardFished.Color);
-		print(" la carta ha tag : " + cardFished.tag);
-		print("la carta è visibile? : " + cardFished.IsVisible);
 
 
 	}
 
 	public void OnScrapsCollect(MyEventArgs e)				//raccogliere
 	{
-		//per testare se entro nell'evento
+		
 		print("Sono entrato nell'evento OnScrapsCollect");
-		//se non ho già raccolto o pescato
+		
 		if(!me.HasCollected && !me.HasFished)
 		{
-			print("Non avevo nè raccolto nè pescato");
-			//allora vuol dire che adesso sto raccogliendo
+			print("Sono nel ramo in cui sto raccogliendo");
+			
 			nextRefusePosition.transform.position = new Vector3(refusePosition.transform.position.x, refusePosition.transform.position.y, refusePosition.transform.position.z);
 			me.HasCollected = true;
-			//prendo la posizione della mia ultima carta
+		
 			float xOffset = 0.9f;
 			float zOffset = 0.2f;
 			Vector3 myLastCardPosition = new Vector3(hands[0].transform.position.x + (xOffset * me.myHand.Count), hands[0].transform.position.y, hands[0].transform.position.z - (zOffset * me.myHand.Count));
 
-			//per ogni carta presente negli scarti
+			
 			xOffset = 0;
 			zOffset = 0;
-			for (int index = 0;index < refuseCards.Count; index++)
+			print("il numero di carte negli scarti prima di raccogliere è : " + refuseCards.Count);
+			int length = refuseCards.Count;
+			for (int index = 0;index < length; index++)
 			{
-			
+				print(refuseCards[index].name);
 				refuseCards[index].transform.position = new Vector3(myLastCardPosition.x + xOffset, myLastCardPosition.y, myLastCardPosition.z - zOffset);
 				refuseCards[index].tag = "myCard";
 				me.myHand.Add(refuseCards[index]);
-				refuseCards.Remove(refuseCards[index]);
 				xOffset += 0.9f;
 				zOffset += 0.2f;
 			}
-		}else if ((me.HasCollected && me.cardsSelected.Count() ==1)|| (me.HasFished && me.cardsSelected.Count() == 1))
+			refuseCards.Clear();
+			print("il numero di carte negli scarti dopo aver raccolto è : " + refuseCards.Count);
+		}
+		else if ((me.HasCollected && me.cardsSelected.Count() ==1)|| (me.HasFished && me.cardsSelected.Count() == 1))
 		{
-			print("O avevo raccolto, o avevo pescato, con una sola carta selezionata");
+			print("Sono nel ramo in cui devo scartare");
 			me.myHand.Find(c => c.IsSelected == true).transform.position = new Vector3(nextRefusePosition.transform.position.x, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z);
 			me.myHand.Find(c => c.IsSelected == true).tag = "refuse";
-			refuseCards.Add(me.myHand.Find(c => c.IsSelected == true));
-			me.myHand.Remove(me.myHand.Find(c => c.IsSelected == true));
+			me.cardsSelected.ElementAt(0).tag = "refuse";
+			me.myHand.Find(c => c.IsSelected == true).IsSelected = false;
+			refuseCards.Add( me.cardsSelected.ElementAt(0));
+			print("Ho scartato la carta : " + me.cardsSelected.ElementAt(0));
+			me.myHand.Remove(me.cardsSelected.ElementAt(0));
 			me.cardsSelected.Clear();
-			//foreach(Card card in me.myHand)
-			//{
-			//	card.IsSelected = false;
-			//}
-			//me.cardsSelected.ElementAt(0).spriteRenderer.color = UnityEngine.Color.white;
-			//me.cardsSelected.ElementAt(0).tag = "refuse";
-			//me.cardsSelected.ElementAt(0).transform.position = new Vector3(nextRefusePosition.transform.position.x, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z);
-			//refuseCards.Add(me.cardsSelected.ElementAt(0));
-			//me.myHand.Remove(me.cardsSelected.ElementAt(0));
-			//me.cardsSelected.Clear();
+			print("la carta scartata ha tag :" + refuseCards.ElementAt(0).tag);
 			OrderHand(me.myHand, hands[0].transform.position);
 			nextRefusePosition.transform.position = new Vector3(nextRefusePosition.transform.position.x + 0.9f, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z - 0.2f);
 			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, LEFTOPPONENT));
