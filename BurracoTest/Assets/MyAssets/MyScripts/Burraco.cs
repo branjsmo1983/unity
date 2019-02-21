@@ -464,10 +464,7 @@ public class Burraco : MonoBehaviour
 
 	}
 
-	public void OnCardsHang(MyEventArgs e)					//attaccare al tavolo
-	{
-		print("Sono entrato nell'evento OnCardsHang");
-	}
+
 
 	public void OnDeckDraw(MyEventArgs e)					//pescare dal mazzo di carte
 	{
@@ -480,6 +477,11 @@ public class Burraco : MonoBehaviour
 		deck.myDeck.Remove(cardFished);
 
 
+	}
+
+	public void OnCardsHang(MyEventArgs e)                  //attaccare al tavolo
+	{
+		print("Sono entrato nell'evento OnCardsHang");
 	}
 
 	public void OnScrapsCollect(MyEventArgs e)				//raccogliere
@@ -515,7 +517,7 @@ public class Burraco : MonoBehaviour
 			refuseCards.Clear();
 			print("il numero di carte negli scarti dopo aver raccolto è : " + refuseCards.Count);
 		}
-		else if ((me.HasCollected && me.cardsSelected.Count() ==1)|| (me.HasFished && me.cardsSelected.Count() == 1))
+		else if ((me.HasCollected && me.cardsSelected.Count() == 1)|| (me.HasFished && me.cardsSelected.Count() == 1))
 		{
 			print("Sono nel ramo in cui devo scartare");
 			me.myHand.Find(c => c.IsSelected == true).transform.position = new Vector3(nextRefusePosition.transform.position.x, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z);
@@ -570,15 +572,12 @@ public class Burraco : MonoBehaviour
 			OrderHand(me.myHand, hands[0].transform.position);
 			isCanGetInput = true;           //abilito l'input utente
 			
-
-			//alla fine scateno l'evento del prossimo giocatore
-			//MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, LEFTOPPONENT));
 		}else if(name == LEFTOPPONENT)
 		{
 			print(" tocca al giocatore di sinistra ");
 			isCanGetInput = false;
 
-			//alla fine
+			//da rimuovere, mi serve per adesso per giocare sempre io
 			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, MYMATE));
 		}
 		else if (name == MYMATE)
@@ -586,7 +585,7 @@ public class Burraco : MonoBehaviour
 			print(" tocca al mio compagna ");
 			isCanGetInput = false;
 
-			//alla fine
+			//da rimuovere, mi serve per adesso per giocare sempre io
 			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, RIGHTOPPONENT));
 		}
 		else if (name == RIGHTOPPONENT)
@@ -594,7 +593,7 @@ public class Burraco : MonoBehaviour
 			print(" tocca al giocatore di destra ");
 			isCanGetInput = false;
 
-			//alla fine
+			//da rimuovere, mi serve per adesso per giocare sempre io
 			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, ME));
 		}
 		else
@@ -615,9 +614,7 @@ public class Burraco : MonoBehaviour
 			card.transform.position = new Vector3(position.x + xOffSet, position.y, position.z - zOffset);
 			card.IsVisible = true;
 			xOffSet = hand.Count < MAXCARDSFULLFACE ? xOffSet += X_OFFSET : xOffSet += X_OFFSET_MID;
-			//xOffSet += 0.9f;
 			zOffset += Z_OFFSET;
-			//zOffset += 0.2f;
 		}
 
 
@@ -633,15 +630,6 @@ public class Burraco : MonoBehaviour
 		{
 			ResizeHand(hand, startPosition.transform.position, X_OFFSET_SMALL);
 		}
-
-		//if((me.myHand.Count > MAXCARDSFULLFACE) && (me.myHand.Count <= MAXCARDHALFFECE))
-		//{
-		//	ResizeHand(me.myHand, hands[0].transform.position,X_OFFSET_MID);
-		//}
-		//else if (me.myHand.Count > MAXCARDHALFFECE)
-		//{
-		//	ResizeHand(me.myHand, hands[0].transform.position,X_OFFSET_SMALL);
-		//}
 	}
 
 	private void ResizeHand(List<Card> hand, Vector3 position,float gap)

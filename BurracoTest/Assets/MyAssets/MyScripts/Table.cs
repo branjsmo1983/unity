@@ -16,8 +16,17 @@ public class Table : MonoBehaviour
 		return result;
 	}
 
-    // Start is called before the first frame update
-    void Start()
+	internal bool IsAddable(Card card)
+	{
+		bool result = false;
+
+		//TO DO logica di controllo sul fatto di poter calare la canasta o meno
+
+		return result;
+	}
+
+	// Start is called before the first frame update
+	void Start()
     {
         
     }
