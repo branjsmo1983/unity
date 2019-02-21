@@ -465,13 +465,19 @@ public class Burraco : MonoBehaviour
 	{
 		print("Sono entrato nell'evento OnDeckDraw");
 		List<Card> currentDeck = e.deck;
-		deck.myDeck[deck.myDeck.Count - 1].transform.position = new Vector3(hands[0].transform.position.x + (0.9f * me.myHand.Count), hands[0].transform.position.y, hands[0].transform.position.z - (0.2f * me.myHand.Count));
-		deck.myDeck[deck.myDeck.Count - 1].IsVisible = true;
-		deck.myDeck[currentDeck.Count - 1].tag = currentDeck[0].tag;
-		currentDeck.Add(deck.myDeck[currentDeck.Count - 1]);
-		deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
-		print(" ho pescato la carta : " + currentDeck[currentDeck.Count - 1].Value + " "+ currentDeck[currentDeck.Count - 1].Suit + " " + currentDeck[currentDeck.Count - 1].Color);
-		print(" la carta ha tag : " + currentDeck[currentDeck.Count - 1].tag);
+		Card cardFished = e.cardFished;
+		cardFished.transform.position = new Vector3(hands[0].transform.position.x + (0.9f * me.myHand.Count), hands[0].transform.position.y, hands[0].transform.position.z - (0.2f * me.myHand.Count));
+		currentDeck.Add(cardFished);
+		deck.myDeck.Remove(cardFished);
+		//deck.myDeck[deck.myDeck.Count - 1].transform.position = new Vector3(hands[0].transform.position.x + (0.9f * me.myHand.Count), hands[0].transform.position.y, hands[0].transform.position.z - (0.2f * me.myHand.Count));
+		//deck.myDeck[currentDeck.Count - 1].tag = currentDeck[0].tag;
+		//deck.myDeck[currentDeck.Count - 1].IsVisible = true;
+		//currentDeck[currentDeck.Count - 1].IsVisible = true;
+		//currentDeck.Add(deck.myDeck[currentDeck.Count - 1]);
+		//deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
+		print(" ho pescato la carta : " + cardFished.Value + " "+ cardFished.Suit + " " + cardFished.Color);
+		print(" la carta ha tag : " + cardFished.tag);
+		print("la carta è visibile? : " + cardFished.IsVisible);
 
 
 	}
@@ -508,16 +514,21 @@ public class Burraco : MonoBehaviour
 		}else if ((me.HasCollected && me.cardsSelected.Count() ==1)|| (me.HasFished && me.cardsSelected.Count() == 1))
 		{
 			print("O avevo raccolto, o avevo pescato, con una sola carta selezionata");
-			foreach(Card card in me.myHand)
-			{
-				card.IsSelected = false;
-			}
-			me.cardsSelected.ElementAt(0).spriteRenderer.color = UnityEngine.Color.white;
-			me.cardsSelected.ElementAt(0).tag = "refuse";
-			me.cardsSelected.ElementAt(0).transform.position = new Vector3(nextRefusePosition.transform.position.x, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z);
-			refuseCards.Add(me.cardsSelected.ElementAt(0));
-			me.myHand.Remove(me.cardsSelected.ElementAt(0));
+			me.myHand.Find(c => c.IsSelected == true).transform.position = new Vector3(nextRefusePosition.transform.position.x, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z);
+			me.myHand.Find(c => c.IsSelected == true).tag = "refuse";
+			refuseCards.Add(me.myHand.Find(c => c.IsSelected == true));
+			me.myHand.Remove(me.myHand.Find(c => c.IsSelected == true));
 			me.cardsSelected.Clear();
+			//foreach(Card card in me.myHand)
+			//{
+			//	card.IsSelected = false;
+			//}
+			//me.cardsSelected.ElementAt(0).spriteRenderer.color = UnityEngine.Color.white;
+			//me.cardsSelected.ElementAt(0).tag = "refuse";
+			//me.cardsSelected.ElementAt(0).transform.position = new Vector3(nextRefusePosition.transform.position.x, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z);
+			//refuseCards.Add(me.cardsSelected.ElementAt(0));
+			//me.myHand.Remove(me.cardsSelected.ElementAt(0));
+			//me.cardsSelected.Clear();
 			OrderHand(me.myHand, hands[0].transform.position);
 			nextRefusePosition.transform.position = new Vector3(nextRefusePosition.transform.position.x + 0.9f, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z - 0.2f);
 			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, LEFTOPPONENT));
@@ -604,6 +615,7 @@ public class Burraco : MonoBehaviour
 		foreach(Card card in hand)
 		{
 			card.transform.position = new Vector3(position.x + xOffSet, position.y, position.z - zOffset);
+			card.IsVisible = true;
 			xOffSet += 0.9f;
 			zOffset += 0.2f;
 		}

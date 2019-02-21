@@ -61,9 +61,11 @@ public class UserInput : MonoBehaviour
 					else
 					{
 						print("scateno l'evento di pescare una carta dal mazzo");
-						hit.collider.tag = "myCard";
+						Card cardFished = hit.collider.GetComponent<Card>();
+						cardFished.tag = "myCard";
+						cardFished.IsVisible = true;
 						Vector3 lastCardPosition = new Vector3(burraco.me.myHand[burraco.me.myHand.Count - 1].transform.position.x, burraco.me.myHand[burraco.me.myHand.Count - 1].transform.position.y, burraco.me.myHand[burraco.me.myHand.Count - 1].transform.position.z);
-						MyEventManager.instance.CastEvent(MyIndexEvent.deckDraw, new MyEventArgs(this.gameObject,lastCardPosition,burraco.me.myHand));
+						MyEventManager.instance.CastEvent(MyIndexEvent.deckDraw, new MyEventArgs(this.gameObject,lastCardPosition,burraco.me.myHand,cardFished));
 						burraco.me.HasFished = true;
 						
 					}
@@ -72,7 +74,6 @@ public class UserInput : MonoBehaviour
 				else if (hit.collider.CompareTag("refuse"))											//sto cercando di raccogliere
 				{
 					print("scateno l'evento di pescare una carta dal mazzo");
-					hit.collider.tag = "refuse";
 					MyEventManager.instance.CastEvent(MyIndexEvent.scrapsCollect, new MyEventArgs());
 				}
 			}

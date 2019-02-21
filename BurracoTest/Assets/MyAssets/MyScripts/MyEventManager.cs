@@ -77,6 +77,7 @@ public class MyEventArgs
 	public Vector3 lastCardPosition;
 	public List<Card> deck;
 	public Card cardSelected;
+	public Card cardFished;
 	//public LevelData myLevelData;
 
 	public MyEventArgs()
@@ -113,10 +114,11 @@ public class MyEventArgs
 		this.player2 = player2;
 	}
 
-	public MyEventArgs(GameObject sender, Vector3 lastCardPosition, List<Card> deck)
+	public MyEventArgs(GameObject sender, Vector3 lastCardPosition, List<Card> deck, Card cardFished)
 	{
 		this.lastCardPosition = lastCardPosition;
 		this.deck = deck;
+		this.cardFished = cardFished;
 	}
 
 
