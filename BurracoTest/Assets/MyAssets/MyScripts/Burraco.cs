@@ -11,6 +11,12 @@ public class Burraco : MonoBehaviour
 	private const string MYMATE = "myMatePlayer";
 	private const string LEFTOPPONENT = "leftOpponentPlayer";
 	private const string RIGHTOPPONENT = "rightOpponentPlayer";
+	private const int MAXCARDSFULLFACE = 16;
+	private const int MAXCARDHALFFECE = 25;
+	private const float Z_OFFSET = 0.2f;
+	private const float X_OFFSET = 0.9f;
+	private const float X_OFFSET_MID = 0.6f;
+	private const float X_OFFSET_SMALL = 0.3f;
 
 	[SerializeField]
 	private TextMeshProUGUI text;															//testo durante il gioco
@@ -97,8 +103,10 @@ public class Burraco : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
+		CheckDistancePlayerCards(me.myHand,hands[0]);
+		CheckDistancePlayerCards(refuseCards, refusePosition);
+
+	}
 
 	
 	IEnumerator PlayCards()
@@ -305,7 +313,7 @@ public class Burraco : MonoBehaviour
 		initCard.tag = "refuse";
 		refuseCards.Add(initCard);
 		deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
-		nextRefusePosition.transform.position = new Vector3(refusePosition.transform.position.x +0.9f, refusePosition.transform.position.y, refusePosition.transform.position.z - 0.2f);
+		nextRefusePosition.transform.position = new Vector3(refusePosition.transform.position.x + X_OFFSET, refusePosition.transform.position.y, refusePosition.transform.position.z - Z_OFFSET);
 
 
 		//------------------------- TEST sulle carte date ------------------------------------------------------
@@ -466,7 +474,7 @@ public class Burraco : MonoBehaviour
 		print("Sono entrato nell'evento OnDeckDraw");
 		List<Card> currentDeck = e.deck;
 		Card cardFished = e.cardFished;
-		cardFished.transform.position = new Vector3(hands[0].transform.position.x + (0.9f * me.myHand.Count), hands[0].transform.position.y, hands[0].transform.position.z - (0.2f * me.myHand.Count));
+		cardFished.transform.position = new Vector3(hands[0].transform.position.x + (X_OFFSET * me.myHand.Count), hands[0].transform.position.y, hands[0].transform.position.z - (Z_OFFSET * me.myHand.Count));
 		cardFished.IsVisible = true;
 		currentDeck.Add(cardFished);
 		deck.myDeck.Remove(cardFished);
@@ -606,11 +614,48 @@ public class Burraco : MonoBehaviour
 		{
 			card.transform.position = new Vector3(position.x + xOffSet, position.y, position.z - zOffset);
 			card.IsVisible = true;
-			xOffSet += 0.9f;
-			zOffset += 0.2f;
+			xOffSet = hand.Count < MAXCARDSFULLFACE ? xOffSet += X_OFFSET : xOffSet += X_OFFSET_MID;
+			//xOffSet += 0.9f;
+			zOffset += Z_OFFSET;
+			//zOffset += 0.2f;
 		}
 
 
 	}
+
+	private void CheckDistancePlayerCards(List<Card> hand, GameObject startPosition)
+	{
+		if ((hand.Count > MAXCARDSFULLFACE) && (hand.Count <= MAXCARDHALFFECE))
+		{
+			ResizeHand(hand, startPosition.transform.position, X_OFFSET_MID);
+		}
+		else if (me.myHand.Count > MAXCARDHALFFECE)
+		{
+			ResizeHand(hand, startPosition.transform.position, X_OFFSET_SMALL);
+		}
+
+		//if((me.myHand.Count > MAXCARDSFULLFACE) && (me.myHand.Count <= MAXCARDHALFFECE))
+		//{
+		//	ResizeHand(me.myHand, hands[0].transform.position,X_OFFSET_MID);
+		//}
+		//else if (me.myHand.Count > MAXCARDHALFFECE)
+		//{
+		//	ResizeHand(me.myHand, hands[0].transform.position,X_OFFSET_SMALL);
+		//}
+	}
+
+	private void ResizeHand(List<Card> hand, Vector3 position,float gap)
+	{
+		float xOffSet = 0;
+		float zOffset = 0;
+		foreach (Card card in hand)
+		{
+			card.transform.position = new Vector3(position.x + xOffSet, position.y, position.z - zOffset);
+			card.IsVisible = true;
+			xOffSet += gap;
+			zOffset += 0.2f;
+		}
+	}
+
 }
 
