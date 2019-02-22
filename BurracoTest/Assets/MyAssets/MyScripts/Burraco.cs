@@ -47,6 +47,18 @@ public class Burraco : MonoBehaviour
 	[SerializeField]
 	internal GameObject[] cards = new GameObject[4];                                        //per sapere la transform delle 4 carte iniziali per sapere chi inizia il gioco
 
+	[SerializeField]
+	GameObject firstOurCanastaPosition;
+
+	[SerializeField]
+	GameObject firsTheirCanastaPosition;
+
+	[SerializeField]
+	internal Table ourTable;
+
+	[SerializeField]
+	internal Table theirTable;
+
 	internal List<Card> firstCockpit = new List<Card>();									// primo pozzetto
 	internal List<Card> secondCockpit = new List<Card>();									// secondo pozzetto
 	internal List<Card> refuseCards = new List<Card>();										// lista delle carte negli scarti
@@ -482,6 +494,17 @@ public class Burraco : MonoBehaviour
 	public void OnCardsHang(MyEventArgs e)                  //attaccare al tavolo
 	{
 		print("Sono entrato nell'evento OnCardsHang");
+
+		if (ourTable.canaste.Count == 0 && me.cardsSelected.Count >= 3)			//se non ho ancora nessuna canasta devo controllare di aver selezionato almeno 3 carte
+		{
+			if (Canasta.IsCanasta(me.cardsSelected))
+			{
+				//togliere lo spriterenderer giallo come quando scarto
+
+				//spostare la trsform delle carte come quando raccolgo
+			}
+
+		}
 	}
 
 	public void OnScrapsCollect(MyEventArgs e)				//raccogliere
@@ -606,6 +629,7 @@ public class Burraco : MonoBehaviour
 	{
 
 		IEnumerable<Card> query = orderbyValue? hand.OrderBy(card => card.Suit).OrderBy(card => card.Value) : hand.OrderBy(card => card.Value).OrderBy(card => card.Suit);
+		//hand.OrderByDescending		per ordinare nell'altro senso
 		hand = query.ToList();
 		float xOffSet = 0;
 		float zOffset = 0;

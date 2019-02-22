@@ -1437,6 +1437,10 @@ MonoBehaviour:
   - {fileID: 1552456000}
   - {fileID: 1011527925}
   - {fileID: 1876532607}
+  firstOurCanastaPosition: {fileID: 1506840431}
+  firsTheirCanastaPosition: {fileID: 141481100}
+  ourTable: {fileID: 911094657}
+  theirTable: {fileID: 1703234686}
   me: {fileID: 492238903}
   myMate: {fileID: 877984371}
   leftOpponent: {fileID: 1725297463}
