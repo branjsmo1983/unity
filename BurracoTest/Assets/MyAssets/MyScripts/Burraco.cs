@@ -135,7 +135,7 @@ public class Burraco : MonoBehaviour
 
 	public void ChangeOrder()
 	{
-		//print("ho cliccato il bottone per cambiare l'ordine");
+		print("ho cliccato il bottone per cambiare l'ordine");
 		orderbyValue = !orderbyValue;
 		OrderHand(me.myHand, hands[0].transform.position);
 	}
@@ -627,9 +627,8 @@ public class Burraco : MonoBehaviour
 
 	private void OrderHand(List<Card> hand, Vector3 position)
 	{
-
+		print("entro nell'OrderHand");
 		IEnumerable<Card> query = orderbyValue? hand.OrderBy(card => card.Suit).OrderBy(card => card.Value) : hand.OrderBy(card => card.Value).OrderBy(card => card.Suit);
-		//hand.OrderByDescending		per ordinare nell'altro senso
 		hand = query.ToList();
 		float xOffSet = 0;
 		float zOffset = 0;
@@ -658,6 +657,8 @@ public class Burraco : MonoBehaviour
 
 	private void ResizeHand(List<Card> hand, Vector3 position,float gap)
 	{
+		IEnumerable<Card> query = orderbyValue ? hand.OrderBy(card => card.Suit).OrderBy(card => card.Value) : hand.OrderBy(card => card.Value).OrderBy(card => card.Suit);
+		hand = query.ToList();
 		float xOffSet = 0;
 		float zOffset = 0;
 		foreach (Card card in hand)
@@ -667,6 +668,7 @@ public class Burraco : MonoBehaviour
 			xOffSet += gap;
 			zOffset += 0.2f;
 		}
+		
 	}
 
 }

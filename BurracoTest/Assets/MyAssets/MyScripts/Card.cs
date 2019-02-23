@@ -28,7 +28,7 @@ public class Card : MonoBehaviour
 	public bool CanBeJolly { get; set; }
 	public bool CanBePin { get; set; }
 	public int CurrentValue { get; set; }
-	public List<int> PossibleValues { get;private set; }
+	public List<int> PossibleValues = new List<int>();
 
 	public MySuits Suit
 	{
