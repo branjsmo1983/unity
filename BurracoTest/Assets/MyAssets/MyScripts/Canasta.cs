@@ -70,7 +70,7 @@ public class Canasta : MonoBehaviour
 		Card.MySuits mySuits = card.FirstOrDefault(c => !c.CanBeJolly).Suit;
 		if((card.All(c => (c.Suit == mySuits) || c.CanBeJolly)))				//controllo che siano tutte dello stesso seme (a meno che non sia un jolly)
 		{
-			IEnumerable<Card> query = card.OrderByDescending(c => c.CurrentValue);
+			IEnumerable<Card> query = card.OrderByDescending(c => c, new Specialcomparer());
 		}
 
 
@@ -95,6 +95,8 @@ public class Canasta : MonoBehaviour
 	{
 		public int Compare(Card x, Card y)
 		{
+			print("Sto comparando :" + x.Name);
+			print("");
 			if (x.PossibleValues.Max() > y.PossibleValues.Max())
 			{
 				return 1;

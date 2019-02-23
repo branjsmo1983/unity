@@ -24,6 +24,9 @@ TagManager:
   - leftOpponentPlayer
   - myMatePlayer
   - rightOpponentPlayer
+  - myCanasta
+  - ourCanasta
+  - theirCanasta
   layers:
   - Default
   - TransparentFX

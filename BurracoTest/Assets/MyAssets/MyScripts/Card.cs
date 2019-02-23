@@ -22,6 +22,17 @@ public class Card : MonoBehaviour
 
 	internal BoxCollider2D cardCollider2D;
 
+	private string _name;
+
+	public string Name
+	{
+		get
+		{
+			_name = value + " " + suit + " " + color;
+			return _name;
+		}
+
+	}
 	public bool IsVisible { get; set; } = false;
 	public bool IsSelected { get; set; } = false;
 	public int Cost { get ; private set; }

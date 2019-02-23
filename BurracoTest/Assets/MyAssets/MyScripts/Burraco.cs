@@ -11,6 +11,8 @@ public class Burraco : MonoBehaviour
 	private const string MYMATE = "myMatePlayer";
 	private const string LEFTOPPONENT = "leftOpponentPlayer";
 	private const string RIGHTOPPONENT = "rightOpponentPlayer";
+	private const string OURCANASTA = "ourCanasta";
+	private const string THEIRCANASTA = "theirCanasta";
 	private const int MAXCARDSFULLFACE = 16;
 	private const int MAXCARDHALFFECE = 25;
 	private const float Z_OFFSET = 0.2f;
@@ -109,6 +111,8 @@ public class Burraco : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
+		//ourTable.canaste.Add(GetComponent<Canasta>());
+		ourTable.canaste = new List<Canasta>();
 		StartCoroutine(PlayCards());
     }
 
@@ -328,7 +332,7 @@ public class Burraco : MonoBehaviour
 		nextRefusePosition.transform.position = new Vector3(refusePosition.transform.position.x + X_OFFSET, refusePosition.transform.position.y, refusePosition.transform.position.z - Z_OFFSET);
 
 
-		//------------------------- TEST sulle carte date ------------------------------------------------------
+		//------------------------- TEST sulle carte date (lascio commentato per futuri controlli su pinelle)------------------------------------------------------
 
 		//me.CountJolly();
 		//me.CountPins();
@@ -499,15 +503,42 @@ public class Burraco : MonoBehaviour
 		{
 			if (Canasta.IsCanasta(me.cardsSelected))
 			{
-				//togliere lo spriterenderer giallo come quando scarto
-
-				//spostare la trsform delle carte come quando raccolgo
+				print("le carte scelte formano una canasta");
+				float yOffset = 0;
+				float zOffset = 0;
+				//Canasta firstCanasta = GetComponent<Canasta>();
+				Canasta firstCanasta = new Canasta();
+				firstCanasta.cards = new List<Card>();
+				foreach(Card card in me.myHand.FindAll(c => c.IsSelected))
+				{
+					print("sto attacanado la carta : "+ card.Name);
+					print("con nome : " + card.name);
+					card.transform.position = new Vector3(firstOurCanastaPosition.transform.position.x,firstOurCanastaPosition.transform.position.y - yOffset,firstOurCanastaPosition.transform.position.z - zOffset);
+					yOffset += 0.4f;
+					zOffset += 0.2f;
+					card.IsSelected = false;
+					card.tag = OURCANASTA;
+					firstCanasta.cards.Add(card);
+					me.myHand.Remove(card);
+				}
+				OrderHand(me.myHand, hands[0].transform.position);
+				firstCanasta.cards.OrderByDescending(c => c,new Canasta.Specialcomparer());
+				ourTable.canaste.Add(firstCanasta);
+			}
+			else
+			{
+				print("le carte scelte non formano una canasta");
 			}
 
 		}
+		else
+		{
+			print("entro nel ramo in cui nel tavolo ho almeno una canasta oppure non ho selezionato almeno 3 carte dalla mia mano");
+		}
+
 	}
 
-	public void OnScrapsCollect(MyEventArgs e)				//raccogliere
+	public void OnScrapsCollect(MyEventArgs e)				//raccogliere o scartare
 	{
 		
 		print("Sono entrato nell'evento OnScrapsCollect");
@@ -526,7 +557,6 @@ public class Burraco : MonoBehaviour
 			
 			xOffset = 0;
 			zOffset = 0;
-			print("il numero di carte negli scarti prima di raccogliere è : " + refuseCards.Count);
 			int length = refuseCards.Count;
 			for (int index = 0;index < length; index++)
 			{
@@ -538,7 +568,7 @@ public class Burraco : MonoBehaviour
 				zOffset += 0.2f;
 			}
 			refuseCards.Clear();
-			print("il numero di carte negli scarti dopo aver raccolto è : " + refuseCards.Count);
+			
 		}
 		else if ((me.HasCollected && me.cardsSelected.Count() == 1)|| (me.HasFished && me.cardsSelected.Count() == 1))
 		{
@@ -560,7 +590,7 @@ public class Burraco : MonoBehaviour
 		}
 		else
 		{
-			print("ERRORE!! : pe entare in questo ramo o ho selezionato 0 carte ");
+			print("ho già raccolto o pescato ma il numero di carte selezionate è diverso da 1");
 		}
 	}
 
@@ -627,7 +657,7 @@ public class Burraco : MonoBehaviour
 
 	private void OrderHand(List<Card> hand, Vector3 position)
 	{
-		print("entro nell'OrderHand");
+		
 		IEnumerable<Card> query = orderbyValue? hand.OrderBy(card => card.Suit).OrderBy(card => card.Value) : hand.OrderBy(card => card.Value).OrderBy(card => card.Suit);
 		hand = query.ToList();
 		float xOffSet = 0;
