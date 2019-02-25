@@ -72,7 +72,7 @@ public class Card : MonoBehaviour
 				Cost = 30;
 				CanBePin = false;
 				CanBeJolly = true;
-				CurrentValue = 0;
+				CurrentValue = 16;
 				for(int i = 1; i < 15; i++)
 				{
 					PossibleValues.Add(i);
@@ -82,7 +82,7 @@ public class Card : MonoBehaviour
 				Cost = 15;
 				CanBePin = false;
 				CanBeJolly = false;
-				CurrentValue = 1;
+				CurrentValue = 14;
 				PossibleValues.Add(1);
 				PossibleValues.Add(14);
 				break;
@@ -90,7 +90,7 @@ public class Card : MonoBehaviour
 				Cost = 20;
 				CanBePin = true;
 				CanBeJolly = true;
-				CurrentValue = 2;
+				CurrentValue = 15;
 				for (int i = 1; i < 15; i++)
 				{
 					PossibleValues.Add(i);

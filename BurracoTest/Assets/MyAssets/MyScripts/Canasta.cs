@@ -54,23 +54,57 @@ public class Canasta : MonoBehaviour
 		//check sui giolly e pinelle
 		int numberOfJolly = card.Count(c => (c.CanBeJolly) && (!c.CanBePin));
 		print("numero di jolly : " + numberOfJolly);
-		if (numberOfJolly > 1) return false;
+		if (numberOfJolly > 1)
+		{
+			print("numero di jolly maggiore di 1");
+			return false;
+		}
+
 		int numberOfPin = card.Count(c => c.CanBePin);
 		print("numero di pinelle : " + numberOfPin);
-		if (numberOfPin > 2) return false;
-		if (numberOfJolly > 1 && numberOfPin > 1) return false;
+		if (numberOfPin > 2)
+		{
+			print("numero di pinelle maggiore di 2");
+			return false;
+		}
+
+		if (numberOfJolly > 1 && numberOfPin > 1)
+		{
+			print("più di un jolly e più di una pinella");
+			return false;
+		}
 
 		//check sui tris
-		if (card.Select(c => c.Value).Distinct().Count() == 1) return true;
-		int myValues = card.FirstOrDefault(c => !c.CanBeJolly).CurrentValue;
+		if (card.Select(c => c.Value).Distinct().Count() == 1)		//tris pulito senza jolly
+		{
+			return true;
+		}
+
+		int myValues = card.FirstOrDefault(c => !c.CanBeJolly).CurrentValue;	//tris con jolly
 		print(" il valore che ho trovato è : " + myValues);
-		if (card.All(c => c.PossibleValues.Contains(myValues))) return true;
+		if (card.All(c => c.PossibleValues.Contains(myValues)))
+		{
+			return true;       //il controllo lo faccio su PossibleValues e non sul current così becco anche i jolly o pinelle
+		}
 
 		//check sulla scala
 		Card.MySuits mySuits = card.FirstOrDefault(c => !c.CanBeJolly).Suit;
 		if((card.All(c => (c.Suit == mySuits) || c.CanBeJolly)))				//controllo che siano tutte dello stesso seme (a meno che non sia un jolly)
 		{
-			IEnumerable<Card> query = card.OrderByDescending(c => c, new Specialcomparer());
+			print("sono tutte dello stesso seme (a meno che non ci sia un jolly)");
+			//IEnumerable<Card> query = card.OrderByDescending(c => c, new Specialcomparer());
+			IEnumerable<Card> query = card.OrderByDescending(c => c.CurrentValue);
+			card = query.ToList<Card>();
+			bool jollyAlreadyUsed = false;              // check su quando uso il jolly (se c'è)
+			bool pinAlreadyUsed = false;				// check su quando uso la pin (se c'è)
+			bool jollyFounded = false;					// controllo se c'è un jolly
+			bool pinFounded = false;					// controllo se c'è una pinella
+			for(int index = 0; index < query.Count() -1; index++)		// dati 'n' elementi devo fare 'n-1' controlli
+			{
+				print("entro nel ciclo for in cui controllo le cards");
+				jollyFounded = (card[index].CanBeJolly)&&(!card[index].CanBePin);
+				pinFounded = card[index].CanBePin;
+			}
 		}
 
 
