@@ -47,7 +47,7 @@ public class Canasta : MonoBehaviour
 		return check;
 	}
 
-	internal static bool IsCanasta(List<Card> card)
+	internal static bool IsCanasta(ref List<Card> card)
 	{
 		bool check = false;
 		
@@ -77,6 +77,7 @@ public class Canasta : MonoBehaviour
 		//check sui tris
 		if (card.Select(c => c.Value).Distinct().Count() == 1)		//tris pulito senza jolly
 		{
+			print("tris pulito");
 			return true;
 		}
 
@@ -84,6 +85,7 @@ public class Canasta : MonoBehaviour
 		print(" il valore che ho trovato è : " + myValues);
 		if (card.All(c => c.PossibleValues.Contains(myValues)))
 		{
+			print("tris con jolly");
 			return true;       //il controllo lo faccio su PossibleValues e non sul current così becco anche i jolly o pinelle
 		}
 
@@ -94,16 +96,33 @@ public class Canasta : MonoBehaviour
 			print("sono tutte dello stesso seme (a meno che non ci sia un jolly)");
 			//IEnumerable<Card> query = card.OrderByDescending(c => c, new Specialcomparer());
 			IEnumerable<Card> query = card.OrderByDescending(c => c.CurrentValue);
-			card = query.ToList<Card>();
+			//card = query.ToList<Card>();
+			List<Card> myCards = query.ToList<Card>();
 			bool jollyAlreadyUsed = false;              // check su quando uso il jolly (se c'è)
 			bool pinAlreadyUsed = false;				// check su quando uso la pin (se c'è)
 			bool jollyFounded = false;					// controllo se c'è un jolly
 			bool pinFounded = false;					// controllo se c'è una pinella
 			for(int index = 0; index < query.Count() -1; index++)		// dati 'n' elementi devo fare 'n-1' controlli
 			{
+				// TO DO: implementare meglio il controllo sulla scala
+
 				print("entro nel ciclo for in cui controllo le cards");
 				jollyFounded = (card[index].CanBeJolly)&&(!card[index].CanBePin);
 				pinFounded = card[index].CanBePin;
+				if((int) card[index].Value == 1)
+				{
+					print("se è un asso: ");
+					if(myCards.Exists(x=>((x.Suit == myCards[index].Suit)&&((int)x.Value == 13)))
+						&&
+						myCards.Exists(x => ((x.Suit == myCards[index].Suit) && ((int)x.Value == 12))) ||
+						myCards.Exists(x => ((x.Suit == myCards[index].Suit) && ((int)x.Value == 2)))
+						&&
+						myCards.Exists(x => ((x.Suit == myCards[index].Suit) && ((int)x.Value == 3))))
+					{
+						print("sono nel ramo in cui ho il K e il Q oppure il 2 e il 3");
+						continue;
+					}
+				}
 			}
 		}
 

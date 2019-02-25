@@ -501,7 +501,7 @@ public class Burraco : MonoBehaviour
 
 		if (ourTable.canaste.Count == 0 && me.cardsSelected.Count >= 3)			//se non ho ancora nessuna canasta devo controllare di aver selezionato almeno 3 carte
 		{
-			if (Canasta.IsCanasta(me.cardsSelected))
+			if (Canasta.IsCanasta(ref me.cardsSelected))
 			{
 				print("le carte scelte formano una canasta");
 				float yOffset = 0;
