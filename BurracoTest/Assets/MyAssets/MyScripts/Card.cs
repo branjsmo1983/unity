@@ -188,7 +188,7 @@ public class Card : MonoBehaviour
 		diamonds = 1,
 		hearts = 2,
 		spades = 3,
-		none = 4,
+		none = 4,				//per i Jolly
 	}
 
 	public enum MyColors

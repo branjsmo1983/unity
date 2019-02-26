@@ -528,6 +528,16 @@ public class Burraco : MonoBehaviour
 			else
 			{
 				print("le carte scelte non formano una canasta");
+				foreach(Card card in me.cardsSelected)
+				{
+					if(card.Value == Card.MyValues.due)
+					{
+						//rimetto a true perchè nei vari controlli precedenti alcune le avrei potute mettere a false
+						card.CanBeJolly = true;
+						card.CanBePin = true;
+					}
+
+				}
 			}
 
 		}
