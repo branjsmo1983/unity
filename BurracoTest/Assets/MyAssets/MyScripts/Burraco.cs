@@ -253,7 +253,7 @@ public class Burraco : MonoBehaviour
 				}
 				else if (hands[newIndex].tag == "myMate")
 				{
-					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset);
+					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x + (xOffset * 2/3), hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.identity;
 					newCard.tag = "myMateCard";
 					myMate.myHand.Add(newCard);
@@ -261,7 +261,7 @@ public class Burraco : MonoBehaviour
 				}
 				else if (hands[newIndex].tag == "leftOpponent")
 				{
-					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x , hands[newIndex].transform.position.y - yOffset, hands[newIndex].transform.position.z - zOffset);
+					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x , hands[newIndex].transform.position.y - (yOffset *2/3), hands[newIndex].transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.Euler(0, 0, 90);
 					newCard.tag = "leftOpponentCard";
 					leftOpponent.myHand.Add(newCard);
@@ -269,7 +269,7 @@ public class Burraco : MonoBehaviour
 				}
 				else
 				{
-					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x , hands[newIndex].transform.position.y -yOffset, hands[newIndex].transform.position.z - zOffset);
+					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x , hands[newIndex].transform.position.y - (yOffset * 2/3), hands[newIndex].transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.Euler(0, 0, 90);
 					newCard.tag = "rightOpponentCard";
 					rightOpponent.myHand.Add(newCard);
@@ -507,7 +507,7 @@ public class Burraco : MonoBehaviour
 
 				print("le carte scelte formano una canasta");
 				float yOffset = 0;
-				float zOffset = 0;
+				float zOffset = 0.2f;
 				float xOffset = 0.9f;
 
 				//Canasta firstCanasta = GetComponent<Canasta>();			DA ERRORE, perchè?
@@ -516,7 +516,7 @@ public class Burraco : MonoBehaviour
 				{
 					cards = new List<Card>()
 				};
-				foreach (Card card in me.myHand.FindAll(c => c.IsSelected))
+				foreach (Card card in me.myHand.FindAll(c => c.IsSelected).OrderByDescending(c=> c.CurrentValue))
 				{
 					print("sto attacanado la carta : "+ card.Name);
 					print("con nome : " + card.name);
@@ -529,8 +529,9 @@ public class Burraco : MonoBehaviour
 					me.myHand.Remove(card);
 				}
 				OrderHand(me.myHand, hands[0].transform.position);
-				firstCanasta.cards.OrderByDescending(c => c,new Canasta.Specialcomparer());
+				firstCanasta.cards.OrderByDescending(c => c.CurrentValue);
 				ourTable.canaste.Add(firstCanasta);
+				me.cardsSelected.Clear();
 			}
 			else
 			{
@@ -613,6 +614,13 @@ public class Burraco : MonoBehaviour
 		else
 		{
 			print("ho già raccolto o pescato ma il numero di carte selezionate è diverso da 1");
+			if(me.cardsSelected.Count() > 0)
+			{
+				foreach(Card c in me.cardsSelected)
+				{
+					print("carta che mi vede ancora selezionata: " + c.name);
+				}
+			}
 		}
 	}
 

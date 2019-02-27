@@ -54,7 +54,7 @@ public class Canasta : MonoBehaviour
 		//check sui giolly e pinelle
 		int numberOfJolly = card.Count(c => (c.CanBeJolly) && (!c.CanBePin));
 		print("numero di jolly : " + numberOfJolly);
-		if (numberOfJolly > 1)
+		if (numberOfJolly > 1)										//se ho + di 1 Jolly NON va bene
 		{
 			print("numero di jolly maggiore di 1");
 			return false;
@@ -62,13 +62,13 @@ public class Canasta : MonoBehaviour
 
 		int numberOfPin = card.Count(c => c.CanBePin);
 		print("numero di pinelle : " + numberOfPin);
-		if (numberOfPin > 2)
+		if (numberOfPin > 2)										//se ho + di 2 pinelle NON va bene
 		{
 			print("numero di pinelle maggiore di 2");
 			return false;
 		}
 
-		if (numberOfJolly > 1 && numberOfPin > 1)
+		if (numberOfJolly > 1 && numberOfPin > 1)					//se ho + di 1 jolly e 1 pinella
 		{
 			print("più di un jolly e più di una pinella");
 			return false;
@@ -83,10 +83,18 @@ public class Canasta : MonoBehaviour
 
 		int myValues = card.FirstOrDefault(c => !c.CanBeJolly).CurrentValue;    //tris con jolly
 		print(" il valore che ho trovato è : " + myValues);
-		if (card.All(c => c.PossibleValues.Contains(myValues)))
+		if (card.All(c => c.PossibleValues.Contains(myValues)))					//coi possible values 
 		{
-			print("tris con jolly");
-			return true;       //il controllo lo faccio su PossibleValues e non sul current così becco anche i jolly o pinelle
+			if(card.Where(c=>c.CanBeJolly).Count() < 2)
+			{
+				print("tris con jolly");
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+			      
 		}
 
 		//check sulla scala
@@ -114,6 +122,7 @@ public class Canasta : MonoBehaviour
 				CheckPinIs2(ref card);
 			}
 			
+			if (card.Where(c => c.CanBePin).Count() > 1) return false;
 
 			//metto a posto l'asso
 			if(card.Exists(c => c.Value == Card.MyValues.A))
@@ -121,53 +130,24 @@ public class Canasta : MonoBehaviour
 				print("sono entrato nel metodo in cui controllo l'asso");
 				CheckAcePosition(ref card);
 			}
-
-			IEnumerable<Card> query = card.OrderByDescending(c => c.CurrentValue);
-
-			List<Card> myCards = query.ToList<Card>();
-
-
+			List<Card> temp = card.OrderByDescending(c => c.CurrentValue).ToList();
+			card = temp;
 
 			bool jollyAlreadyUsed = false;              // check su quando uso il jolly (se c'è)
 			bool jollyFounded = false;                  // controllo se c'è un jolly
-			bool pinFounded = false;                    // controllo se c'è una pinella
-			for (int index = 0; index < query.Count() - 1; index++)     // dati 'n' elementi devo fare 'n-1' controlli
+			for (int index = 0; index < card.Count() - 1; index++)     // dati 'n' elementi devo fare 'n-1' controlli
 			{
-				// TO DO: implementare meglio il controllo sulla scala
+				
 
 				print("entro nel ciclo for in cui controllo le cards");
-				jollyFounded = (card[index].CanBeJolly) && (!card[index].CanBePin);
-				if (jollyFounded) continue;
-				Card.MySuits mySuit1 = Card.MySuits.none;
-				Card.MySuits mySuit2 = Card.MySuits.none;
-				int pins = 0;
-				pinFounded = card[index].CanBePin;
-				if (pinFounded)
+				jollyFounded = (card[index].CanBeJolly);
+				print(" sono su un jolly? : " + jollyFounded);
+				if (jollyFounded)
 				{
-					if (mySuit1 == Card.MySuits.none)
-					{
-						mySuit1 = card[index].Suit;
-						pins++;
-					}
-					else
-					{
-						mySuit2 = card[index].Suit;
-						pins++;
-					}
-
+					print("ho trovato un jolly/pinella, eseguo il continue per skippare un index");
 					continue;
 				}
 				// se ho più di una pinella allora una delle 2 deve avere la stessa suite delle altre carte
-				if (pins > 1)
-				{
-					print("ho più di una pinella");
-					List<Card> myPins = myCards.FindAll(c => c.CanBePin);
-					if (myPins.All(c => c.Suit != myCards[index].Suit))         //se le 2 suite sono diverse allora non è una combinazione valida
-					{
-						print("le 2 pinelle hanno semi diversi");
-						return false;
-					}
-				}
 				if(card[index].CurrentValue - card[index + 1].CurrentValue == 1)
 				{
 					print("la differenza tra " +card[index].name + " e " + card[index + 1].name + " è : " + card[index].CurrentValue + " - " + card[index + 1].CurrentValue + (card[index].CurrentValue - card[index + 1].CurrentValue));
@@ -176,16 +156,20 @@ public class Canasta : MonoBehaviour
 				}else if(card[index].CurrentValue - card[index + 1].CurrentValue == 2 && !jollyAlreadyUsed)
 				{
 					print(" sono entrato nel ramo in cui uso il jolly ");
+					card.First(c => c.CanBeJolly).CurrentValue = card[index].CurrentValue - 1;
 					jollyAlreadyUsed = true;
 					check = true;
 					continue;
 				}
 				else
 				{
+					print("la differenza tra il valore corrente e il prossimo è maggiore di 1 oppure ho già usato il jolly");
+					print("valore corrente = " + card[index].CurrentValue + " valore prossimo = " + card[index + 1].CurrentValue);
 					return false;
 				}
 				
 			}
+
 		}
 
 
