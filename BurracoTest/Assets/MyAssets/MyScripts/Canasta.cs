@@ -168,51 +168,23 @@ public class Canasta : MonoBehaviour
 						return false;
 					}
 				}
-				//if (card[index].CurrentValue == 14)               //faccio i controlli sull'asso
-				//{
-				//	print("se è un asso: ");
-				//	if (myCards.Exists(x => ((x.Suit == myCards[index].Suit) && ((int)x.Value == 13)))
-				//		&&
-				//		myCards.Exists(x => ((x.Suit == myCards[index].Suit) && ((int)x.Value == 12))))
-				//	{
-				//		print("sono nel ramo in cui ho il K e il Q");
-				//		continue;
-				//	}
-				//	else if(myCards.Exists(x => ((x.Suit == myCards[index].Suit) && ((int)x.Value == 12)))
-				//		&&
-				//		myCards.Exists(x => x.CanBeJolly))
-				//	{
-				//		print("sono nel ramo in cui ho il Q e un jolly");
-				//		jollyAlreadyUsed = true;
-				//		continue;
-				//	}
-				//	else if (myCards.Exists(x => ((x.Suit == myCards[index].Suit) && ((int)x.Value == 2)))
-				//			&&
-				//			myCards.Exists(x => ((x.Suit == myCards[index].Suit) && ((int)x.Value == 3))))
-				//	{
-				//		print("sono nel ramo in cui ho il 2 e il 3");
-				//		card[index].CurrentValue = 1;
-				//		card = myCards;
-				//		return IsCanasta(ref card);
-				//	}
-				//}
-				//else
-				//{
-					if(card[index].CurrentValue - card[index + 1].CurrentValue == 1)
-					{
-						check = true;
-						continue;
-					}else if(card[index].CurrentValue - card[index + 1].CurrentValue == 2 && !jollyAlreadyUsed)
-					{
-						jollyAlreadyUsed = true;
-						check = true;
-						continue;
-					}
-					else
-					{
-						return false;
-					}
-				//}
+				if(card[index].CurrentValue - card[index + 1].CurrentValue == 1)
+				{
+					print("la differenza tra " +card[index].name + " e " + card[index + 1].name + " è : " + card[index].CurrentValue + " - " + card[index + 1].CurrentValue + (card[index].CurrentValue - card[index + 1].CurrentValue));
+					check = true;
+					continue;
+				}else if(card[index].CurrentValue - card[index + 1].CurrentValue == 2 && !jollyAlreadyUsed)
+				{
+					print(" sono entrato nel ramo in cui uso il jolly ");
+					jollyAlreadyUsed = true;
+					check = true;
+					continue;
+				}
+				else
+				{
+					return false;
+				}
+				
 			}
 		}
 
@@ -246,7 +218,7 @@ public class Canasta : MonoBehaviour
 		//Card.MySuits aceSuits = myCards.FirstOrDefault(c => c.Value == Card.MyValues.A).Suit;
 		if ((myCards.Exists(c => c.Value == Card.MyValues.due) && myCards.Exists(c => c.Value == Card.MyValues.tre)) ||
 			(myCards.Exists(c => c.Value == Card.MyValues.due) && myCards.Exists(c => c.Value == Card.MyValues.jolly)) ||
-			(myCards.Exists(c => c.Value == Card.MyValues.jolly) && myCards.Exists(c => c.Value == Card.MyValues.tre))||
+			(myCards.Exists(c => c.Value == Card.MyValues.jolly) && myCards.Exists(c => c.Value == Card.MyValues.tre)) ||
 			(myCards.Where(c => c.Value == Card.MyValues.due).Count() == 2))
 		{
 			ace.CurrentValue = 1;

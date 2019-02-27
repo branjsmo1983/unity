@@ -499,14 +499,19 @@ public class Burraco : MonoBehaviour
 	{
 		print("Sono entrato nell'evento OnCardsHang");
 
-		if (ourTable.canaste.Count == 0 && me.cardsSelected.Count >= 3)			//se non ho ancora nessuna canasta devo controllare di aver selezionato almeno 3 carte
+		if (me.cardsSelected.Count >= 3)			//se non ho ancora nessuna canasta devo controllare di aver selezionato almeno 3 carte
 		{
 			if (Canasta.IsCanasta(ref me.cardsSelected))
 			{
+				//	TO DO: metodo che veda in che posizione inserire il Jolly
+
 				print("le carte scelte formano una canasta");
 				float yOffset = 0;
 				float zOffset = 0;
-				//Canasta firstCanasta = GetComponent<Canasta>();
+				float xOffset = 0.9f;
+
+				//Canasta firstCanasta = GetComponent<Canasta>();			DA ERRORE, perchè?
+
 				Canasta firstCanasta = new Canasta
 				{
 					cards = new List<Card>()
@@ -515,7 +520,7 @@ public class Burraco : MonoBehaviour
 				{
 					print("sto attacanado la carta : "+ card.Name);
 					print("con nome : " + card.name);
-					card.transform.position = new Vector3(firstOurCanastaPosition.transform.position.x,firstOurCanastaPosition.transform.position.y - yOffset,firstOurCanastaPosition.transform.position.z - zOffset);
+					card.transform.position = new Vector3(firstOurCanastaPosition.transform.position.x + (xOffset * ourTable.canaste.Count),firstOurCanastaPosition.transform.position.y - yOffset,firstOurCanastaPosition.transform.position.z - zOffset);
 					yOffset += 0.4f;
 					zOffset += 0.2f;
 					card.IsSelected = false;
@@ -535,8 +540,13 @@ public class Burraco : MonoBehaviour
 					if(card.Value == Card.MyValues.due)
 					{
 						//rimetto a true perchè nei vari controlli precedenti alcune le avrei potute mettere a false
+						card.CurrentValue = 15;
 						card.CanBeJolly = true;
 						card.CanBePin = true;
+					}
+					else if(card.Value == Card.MyValues.A)
+					{
+						card.CurrentValue = 14;
 					}
 
 				}
