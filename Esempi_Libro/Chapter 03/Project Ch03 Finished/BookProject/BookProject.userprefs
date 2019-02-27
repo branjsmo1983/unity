@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\My Scripts\MousePick.js">
+    <Files>
+      <File FileName="Assets\My Scripts\SimpleMove.js" Line="11" Column="2" />
+      <File FileName="Assets\My Scripts\SimpleRotateToggle.js" Line="24" Column="5" />
+      <File FileName="Assets\My Scripts\MousePick.js" Line="7" Column="38" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

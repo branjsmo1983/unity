@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Start Scripts\StartMenu.js">
+    <Files>
+      <File FileName="Assets\Adventure Scripts\SaveLoad.js" Line="11" Column="45" />
+      <File FileName="Assets\Adventure Scripts_F\GameManager_F.js" Line="1" Column="1" />
+      <File FileName="Assets\Start Scripts\Fade.js" Line="18" Column="1" />
+      <File FileName="Assets\Adventure Scripts\MenuManager.js" Line="1" Column="1" />
+      <File FileName="Assets\Adventure Scripts_F\SaveLoad_F.js" Line="10" Column="45" />
+      <File FileName="Assets\Start Scripts\StartMenu.js" Line="4" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

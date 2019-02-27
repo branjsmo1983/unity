@@ -1,0 +1,16 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Adventure Scripts\Interactor.js">
+    <Files>
+      <File FileName="Assets\Adventure Scripts\Interactor.js" Line="76" Column="1" />
+      <File FileName="Assets\Adventure Scripts\GameNotes.txt" Line="12" Column="10" />
+      <File FileName="Assets\Adventure Scripts\ObjectLookup.js" Line="84" Column="1" />
+      <File FileName="Assets\My Scripts\AniTwoState.js" Line="43" Column="1" />
+      <File FileName="Assets\Adventure Scripts\GameManager.js" Line="38" Column="26" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

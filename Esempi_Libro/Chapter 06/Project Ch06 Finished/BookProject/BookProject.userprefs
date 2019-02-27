@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Adventure Scripts\Interactor.js">
+    <Files>
+      <File FileName="Assets\Adventure Scripts\PlatformMover.js" Line="13" Column="1" />
+      <File FileName="Assets\My Scripts\ToggleIsTrigger.js" Line="30" Column="1" />
+      <File FileName="Assets\My Scripts\HideCursor.js" Line="4" Column="1" />
+      <File FileName="Assets\Adventure Scripts\GameManager.js" Line="6" Column="9" />
+      <File FileName="Assets\Adventure Scripts\CustomCursor.js" Line="4" Column="9" />
+      <File FileName="Assets\Adventure Scripts\Interactor.js" Line="6" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -1,0 +1,27 @@
+Game Notes
+
+ObjectLookup script:
+
+For each Action Object and each of its states, 
+the Lookup data will be in the following format:
+
+cursor,new state,auxiliary object1, its new state, auxiliary object2, its new state, etc. 
+
+auxiliary objects are optional.
+
+Location:
+3D Objects
+  0: Object is not in scene.
+  1: Object is in scene and pickable.
+  2: Object is not pickable (in scene).
+2D Objects
+  0: Object is not in scene.
+  1: Object is in Inventory.
+  2: Object is Cursor.
+
+Visibility Type:
+  0: N/A.
+  1: Show at start.
+  2: Hide at start.
+  3: Show at start, hide at end.
+  4: Hide at end.

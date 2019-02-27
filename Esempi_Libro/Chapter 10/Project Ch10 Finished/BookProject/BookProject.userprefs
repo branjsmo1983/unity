@@ -1,0 +1,19 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Adventure Scripts\ObjectLookup.js">
+    <Files>
+      <File FileName="Assets\Adventure Scripts\CameraMatch.js" Line="27" Column="1" />
+      <File FileName="Assets\Adventure Scripts\CameraMatchTest.js" Line="35" Column="37" />
+      <File FileName="Assets\Adventure Scripts\CameraMatchData.js" Line="31" Column="2" />
+      <File FileName="Assets\Standard Assets\Character Controllers\Sources\Scripts\MouseLookRestricted.cs" Line="67" Column="2" />
+      <File FileName="Assets\Adventure Scripts\GameManager.js" Line="29" Column="2" />
+      <File FileName="Assets\Adventure Scripts\FPAdventureInputController.js" Line="24" Column="16" />
+      <File FileName="Assets\Adventure Scripts\Interactor.js" Line="202" Column="45" />
+      <File FileName="Assets\Adventure Scripts\ObjectLookup.js" Line="126" Column="20" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

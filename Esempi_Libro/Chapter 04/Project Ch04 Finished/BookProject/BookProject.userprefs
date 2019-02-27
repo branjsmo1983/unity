@@ -1,0 +1,16 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonController.js">
+    <Files>
+      <File FileName="Assets\My Scripts\SimpleMove.js" Line="5" Column="10" />
+      <File FileName="Assets\My Scripts\SimpleRotateToggle.js" Line="14" Column="1" />
+      <File FileName="Assets\My Scripts\MousePick.js" Line="7" Column="4" />
+      <File FileName="Assets\My Scripts\SimpleRotate.js" Line="11" Column="1" />
+      <File FileName="Assets\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonController.js" Line="193" Column="41" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

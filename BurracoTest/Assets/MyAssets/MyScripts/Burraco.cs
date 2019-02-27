@@ -507,9 +507,11 @@ public class Burraco : MonoBehaviour
 				float yOffset = 0;
 				float zOffset = 0;
 				//Canasta firstCanasta = GetComponent<Canasta>();
-				Canasta firstCanasta = new Canasta();
-				firstCanasta.cards = new List<Card>();
-				foreach(Card card in me.myHand.FindAll(c => c.IsSelected))
+				Canasta firstCanasta = new Canasta
+				{
+					cards = new List<Card>()
+				};
+				foreach (Card card in me.myHand.FindAll(c => c.IsSelected))
 				{
 					print("sto attacanado la carta : "+ card.Name);
 					print("con nome : " + card.name);

@@ -1,0 +1,147 @@
+1
+(396.7, 51.1, 285.1)
+(0.0, 85.7, 0.0)
+10
+20
+True
+True
+1
+0.2
+0.2
+1
+0
+0
+1
+1
+(281.3, 55.6, 173.5)
+(270.0, 0.0, 0.0)
+1
+1
+2
+0
+2
+0
+0
+1
+1
+1
+0
+0
+0
+1
+0
+1
+0
+2
+0
+1
+1
+0
+(404.2, 52.8, 284.7)
+(0.0, 0.0, 0.0)
+0
+0
+1
+0
+0
+0
+0
+0
+1
+0
+0
+0
+0
+0
+0
+0
+0
+1
+1
+100 null
+101 Hi
+102 Where am I?
+003 How do  I get out of the maze?
+104 What happened to me?
+005 Why was I transported here?
+006 Is there a way to acquire the topi fruit?
+007 Can you help me with a replacement?
+108 Gotta go
+109 OK, thanks
+000 null
+101 Hi
+102 What happened to the other guy?
+103 I got the topi fruit, what am I supposed to do with it?
+004 Where do I find the Tree of Life?
+005 How do I find the tunnels?
+006 Can you help me?
+007 I keep blacking out in the tunnels, any idea where I can find a lantern?
+108 The maze looks different, how do I get out of it?
+109 See you around
+110 Thanks for your help
+0000 0 0000 You shouldn't see this
+0001 0 0001^I've been expecting you^You have questions, perhaps?^Hello again^reset
+3030 0 0004 You are in the Maze
+0009 0 0005^Trial and error?^Sorry, can't help you with that^It is ever changing, there is no map^No idea, I've been stuck here for ages^I wish I knew
+2050 1 0010 You were transported here
+2060 1 0011 You tried to steal the golden Topi fruit
+2070 1 0012 Yes, you must replace it with something of similar size and weight
+0001 1 0113^Try using this rock^You haven't tried the rock?^Sorry, you're on your own now
+9000 0 0016 Good luck
+0000 0 0017 No problem
+0000 0 0000 You shouldn't see this
+0000 0 0001 Greetings, adventurer
+0000 0 0002 He's on break
+2040 1 0003 You must replace the dying Tree of Life by planting the new fruit
+2050 1 0004 You will find a way to it in the tunnels
+2060 1 0005 The tunnels are in the rock dome, there used to be a map of them in the temple
+0001 1 0206^I have marked a trail to the top for you and cleared the entrance^There's nothing more I can do for you
+0000 0 0008 The flower of a local, but rare plant is said to be quite illuminating
+0009 0 0009^Trial and error^I cannot help you with that^It is ever changing, there is no map^No idea, I've been stuck here for ages
+9009 0 0013^I wish you success^See you around^Good luck^May your quest bear fruit
+0000 0 0017 Any time
+0
+0
+180
+0
+0
+180
+180
+89.99999
+89.99999
+180
+270
+89.99999
+89.99999
+180
+270
+89.99999
+180
+89.99999
+89.99999
+180
+89.99999
+89.99999
+89.99999
+89.99999
+180
+180
+89.99999
+180
+270
+0
+89.99999
+89.99999
+270
+180
+0
+89.99999
+270
+180
+0
+89.99999
+180
+270
+0
+True
+False

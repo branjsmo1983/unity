@@ -1,0 +1,14 @@
+#pragma strict
+
+//function OnMouseDown () {
+//	  if(animation.IsPlaying("music drawer")) return;
+//   CloseDrawer();
+//}
+
+function DoTheJob() {
+  //animation.Play();
+  yield new WaitForSeconds(1.75);
+   GameObject.Find("Point Light FX2").animation.Play();
+   audio.Play();
+   GameObject.Find("MazeWalls").SendMessage("ResetMaze");// reset the maze
+}

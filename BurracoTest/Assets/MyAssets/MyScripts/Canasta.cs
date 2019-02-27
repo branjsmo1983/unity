@@ -108,10 +108,19 @@ public class Canasta : MonoBehaviour
 			//IEnumerable<Card> query = card.OrderByDescending(c => c, new Specialcomparer());
 
 			//metto a posto in caso di pinella dello stesso seme
-			CheckPinIs2(ref card);
+			if (card.Exists(c => c.CanBePin))
+			{
+				print("sono entrato nel metodo in cui controllo la pinella");
+				CheckPinIs2(ref card);
+			}
+			
 
 			//metto a posto l'asso
-
+			if(card.Exists(c => c.Value == Card.MyValues.A))
+			{
+				print("sono entrato nel metodo in cui controllo l'asso");
+				CheckAcePosition(ref card);
+			}
 
 			IEnumerable<Card> query = card.OrderByDescending(c => c.CurrentValue);
 
@@ -217,12 +226,11 @@ public class Canasta : MonoBehaviour
 		if(myCards.Exists(c => c.Value == Card.MyValues.due && c.Suit == mySuits))
 		{
 			Card pin = myCards.FirstOrDefault(c => c.Value == Card.MyValues.due && c.Suit == mySuits);
-			if (myCards.Exists(c => c.Value == Card.MyValues.A || c.Value == Card.MyValues.tre) ||
-				myCards.Exists(c => c.Value == Card.MyValues.tre || c.Value == Card.MyValues.quattro)||
-				myCards.Exists(c => c.Value == Card.MyValues.A || c.CanBeJolly && c != pin) ||
-				myCards.Exists(c => c.Value == Card.MyValues.tre || c.CanBeJolly && c != pin) ||
-				myCards.Exists(c => c.Value == Card.MyValues.quattro || c.CanBeJolly && c != pin)
-				)
+			if ((myCards.Exists(c => c.Value == Card.MyValues.A) && myCards.Exists(c => c.Value == Card.MyValues.tre)) ||
+				(myCards.Exists(c => c.Value == Card.MyValues.tre) && myCards.Exists(c => c.Value == Card.MyValues.quattro)) ||
+				(myCards.Exists(c => c.Value == Card.MyValues.A) && myCards.Exists(c => c.CanBeJolly && c != pin)) ||
+				(myCards.Exists(c => c.Value == Card.MyValues.tre) && myCards.Exists(c => c.CanBeJolly && c != pin)) ||
+				(myCards.Exists(c => c.Value == Card.MyValues.quattro) && myCards.Exists(c => c.CanBeJolly && c != pin)))
 			{
 				pin.CurrentValue = 2;
 				pin.CanBeJolly = false;
@@ -234,6 +242,16 @@ public class Canasta : MonoBehaviour
 
 	private static void CheckAcePosition(ref List<Card> myCards)
 	{
+		Card ace = myCards.FirstOrDefault(c => c.Value == Card.MyValues.A);
+		//Card.MySuits aceSuits = myCards.FirstOrDefault(c => c.Value == Card.MyValues.A).Suit;
+		if ((myCards.Exists(c => c.Value == Card.MyValues.due) && myCards.Exists(c => c.Value == Card.MyValues.tre)) ||
+			(myCards.Exists(c => c.Value == Card.MyValues.due) && myCards.Exists(c => c.Value == Card.MyValues.jolly)) ||
+			(myCards.Exists(c => c.Value == Card.MyValues.jolly) && myCards.Exists(c => c.Value == Card.MyValues.tre))||
+			(myCards.Where(c => c.Value == Card.MyValues.due).Count() == 2))
+		{
+			ace.CurrentValue = 1;
+		}
+
 
 	}
 

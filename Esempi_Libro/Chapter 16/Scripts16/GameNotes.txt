@@ -1,0 +1,74 @@
+Game Notes
+
+ObjectLookup script:
+
+For each Action Object and each of its states, 
+the Lookup data will be in the following format:
+
+cursor,new state,auxiliary object1, its new state, auxiliary object2, its new state, etc. 
+
+auxiliary objects are optional.
+
+Location:
+3D Objects
+  0: Object is not in scene.
+  1: Object is in scene and pickable.
+  2: Object is not pickable (in scene).
+2D Objects
+  0: Object is not in scene.
+  1: Object is in Inventory.
+  2: Object is Cursor.
+
+Visibility Type:
+  0: N/A.
+  1: Show at start.
+  2: Show at start, hide at end.
+  3: Hide at end.
+
+Special case assignments:  
+   "a" trigger animation only on the auxiliary object
+   "b" change the state on the object only- no animations
+   "c" send a message to "DoCameraMatch" function a script on the auxiliary object
+   "s" send a message to the "DoTheJob" function on a script on the auxiliary object 
+   "p" instantiate a prefab
+   "d" character dialogue is called for
+In the ObjectLookup function, a transition into a state of -1 will keep the picked object from being processed.
+
+
+Cursor States:
+	0: not in scene
+	1: in Inventory
+	2: is Cursor
+
+Dialogue Tree Conventions-
+Topic format =  000 000 The text for the topic here
+  1- topic's active state, 1 is active, 0 is not, 9 will mean exit the conversation
+  2 & 3 - element number of audio clip for the topic	
+  
+Reply Conventions-
+Repliles Format=  0000 0 0000 The text for the reply here
+   1- how to process the reply:
+        0 is no change
+        1 is turn off the topic
+        2 is turn it off and turn on another topic
+        3 is turn on a different topic
+   2 & 3 - element number of the topic to turn on or off
+   4- Reply Types
+  		0, a simple reply, no processing required
+   		1-8, a sequential reply, the current position in the sequence, a reply of "reset" causes it to loop
+   		9, a random reply
+    5- blank
+    6-which topic tree to use- 0 is root, 1 is branch
+    7- blank    
+    8 & 9 - for special cases
+    10 & 11- audio clip element number for the reply
+
+Simple AI, progress definitions:
+
+0  = not started
+1  = walking toward the target (the First Person Controller)
+-1 = paused while walking toward the target
+2  = at the target and waiting for player to initiate a conversation
+-2 = engaged in conversation
+3  = starting to head back to base
+4  = waiting back at base

@@ -1,0 +1,13 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\NPC Assets\NPC Scripts\DialogueManager.js">
+    <Files>
+      <File FileName="Assets\NPC Assets\NPC Scripts\DialogueManager.js" Line="539" Column="25" />
+      <File FileName="Assets\Adventure Scripts\ToggleFog.js" Line="38" Column="8" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
