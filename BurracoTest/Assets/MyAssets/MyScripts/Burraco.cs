@@ -500,6 +500,10 @@ public class Burraco : MonoBehaviour
 	public void OnAddCardsToCanasta(MyEventArgs e)
 	{
 		print(" Sono entrato nel metodo per aggiungere una carta alla canasta ");
+		foreach(Card c in e.canastaSelected.cards)
+		{
+			print("" + c.name);
+		}
 	}
 
 	public void OnCardsHang(MyEventArgs e)                  //attaccare al tavolo

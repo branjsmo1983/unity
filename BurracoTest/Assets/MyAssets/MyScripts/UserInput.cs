@@ -59,37 +59,20 @@ public class UserInput : MonoBehaviour
 						print(" La canasta numero " + numOfCan + " ha " + c.cards.Count + " carte");
 					}
 					Canasta selected = burraco.ourTable.canaste.Find(canasta => canasta.cards.Find(c => c == cardOnTable));
-					//Canasta selected = new Canasta();
-					//foreach(Canasta c in burraco.ourTable.canaste)
+					//if(selected.cards != null)
 					//{
-					//	if (c.cards.Contains(cardOnTable))
+					//	print(" ho trovato la canasta con carte : ");
+					//	foreach (Card card in selected.cards)
 					//	{
-					//		print("ho trovato la canasta");
-					//		selected = c;
-					//		foreach(Card card in selected.cards)
-					//		{
-					//			print(" " + card.name);
-					//		}
-					//	}
-					//	else
-					//	{
-					//		print("non ho trovato la canasta");
+					//		print(" " + card.name);
 					//	}
 					//}
-					if(selected.cards != null)
-					{
-						print(" ho trovato la canasta con carte : ");
-						foreach (Card card in selected.cards)
-						{
-							print(" " + card.name);
-						}
-					}
-					else
-					{
-						print("non ho trovato nessuna canasta!");
-					}
+					//else
+					//{
+					//	print("non ho trovato nessuna canasta!");
+					//}
 					
-					MyEventManager.instance.CastEvent(MyIndexEvent.cardsAddToCanasta, new MyEventArgs());
+					MyEventManager.instance.CastEvent(MyIndexEvent.cardsAddToCanasta, new MyEventArgs(this.gameObject, selected));
 				}
 				else if (hit.collider.CompareTag("card"))										//sto cercando di pescare
 				{
