@@ -47,6 +47,50 @@ public class UserInput : MonoBehaviour
 					//try to add one or more cards into table
 					MyEventManager.instance.CastEvent(MyIndexEvent.cardsHang, new MyEventArgs());
 				}
+				else if (hit.collider.CompareTag("ourCanasta"))
+				{
+					Card cardOnTable = hit.collider.GetComponent<Card>();
+					print("ho trovato la carta : " + cardOnTable.name);
+					print("numero di canaste sul tavolo = " + burraco.ourTable.canaste.Count);
+					int numOfCan = 0;
+					foreach(Canasta c in burraco.ourTable.canaste)
+					{
+						numOfCan++;
+						print(" La canasta numero " + numOfCan + " ha " + c.cards.Count + " carte");
+					}
+					Canasta selected = burraco.ourTable.canaste.Find(canasta => canasta.cards.Find(c => c == cardOnTable));
+					//Canasta selected = new Canasta();
+					//foreach(Canasta c in burraco.ourTable.canaste)
+					//{
+					//	if (c.cards.Contains(cardOnTable))
+					//	{
+					//		print("ho trovato la canasta");
+					//		selected = c;
+					//		foreach(Card card in selected.cards)
+					//		{
+					//			print(" " + card.name);
+					//		}
+					//	}
+					//	else
+					//	{
+					//		print("non ho trovato la canasta");
+					//	}
+					//}
+					if(selected.cards != null)
+					{
+						print(" ho trovato la canasta con carte : ");
+						foreach (Card card in selected.cards)
+						{
+							print(" " + card.name);
+						}
+					}
+					else
+					{
+						print("non ho trovato nessuna canasta!");
+					}
+					
+					MyEventManager.instance.CastEvent(MyIndexEvent.cardsAddToCanasta, new MyEventArgs());
+				}
 				else if (hit.collider.CompareTag("card"))										//sto cercando di pescare
 				{
 					

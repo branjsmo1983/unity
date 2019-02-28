@@ -142,5 +142,6 @@ public enum MyIndexEvent
 	burracoMake = 5,
 	gameEnd = 6,
 	gameStart = 7,
+	cardsAddToCanasta = 8,
 
 }

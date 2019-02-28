@@ -88,6 +88,7 @@ public class Burraco : MonoBehaviour
 		MyEventManager.instance.AddListener(MyIndexEvent.burracoMake, OnBurracoMake);
 		MyEventManager.instance.AddListener(MyIndexEvent.gameEnd, OnGameEnd);
 		MyEventManager.instance.AddListener(MyIndexEvent.gameStart, OnGameStart);
+		MyEventManager.instance.AddListener(MyIndexEvent.cardsAddToCanasta, OnAddCardsToCanasta);
 	}
 
 
@@ -104,7 +105,8 @@ public class Burraco : MonoBehaviour
 			MyEventManager.instance.RemoveListener(MyIndexEvent.burracoMake, OnBurracoMake);
 			MyEventManager.instance.RemoveListener(MyIndexEvent.gameEnd, OnGameEnd);
 			MyEventManager.instance.RemoveListener(MyIndexEvent.gameStart, OnGameStart);
-		}
+			MyEventManager.instance.RemoveListener(MyIndexEvent.cardsAddToCanasta, OnAddCardsToCanasta);
+		} 
 	}
 	
 
@@ -495,11 +497,16 @@ public class Burraco : MonoBehaviour
 
 	}
 
+	public void OnAddCardsToCanasta(MyEventArgs e)
+	{
+		print(" Sono entrato nel metodo per aggiungere una carta alla canasta ");
+	}
+
 	public void OnCardsHang(MyEventArgs e)                  //attaccare al tavolo
 	{
 		print("Sono entrato nell'evento OnCardsHang");
-
-		if (me.cardsSelected.Count >= 3)			//se non ho ancora nessuna canasta devo controllare di aver selezionato almeno 3 carte
+													// if(!me.HasCollected && !me.HasFished)
+		if (me.cardsSelected.Count >= 3 && (me.HasCollected || me.HasFished))			//se non ho ancora nessuna canasta devo controllare di aver selezionato almeno 3 carte
 		{
 			if (Canasta.IsCanasta(ref me.cardsSelected))
 			{
