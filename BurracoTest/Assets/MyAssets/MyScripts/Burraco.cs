@@ -497,13 +497,23 @@ public class Burraco : MonoBehaviour
 
 	}
 
-	public void OnAddCardsToCanasta(MyEventArgs e)
+	public void OnAddCardsToCanasta(MyEventArgs e)			//aggiunge le carte selezionate alla canasta
 	{
+		// ------ per test
 		print(" Sono entrato nel metodo per aggiungere una carta alla canasta ");
 		foreach(Card c in e.canastaSelected.cards)
 		{
 			print("" + c.name);
 		}
+		//------ fine test
+
+		List<Card> canasta = new List<Card>();
+		canasta.AddRange(e.canastaSelected.cards.ToArray());
+		List<Card> cardsSelected = new List<Card>();
+		cardsSelected.AddRange(me.cardsSelected.ToArray());
+
+		//to do: metodo che dati canasta e carte da attaccare ritorni se può attaccarle o meno
+
 	}
 
 	public void OnCardsHang(MyEventArgs e)                  //attaccare al tavolo
@@ -514,7 +524,12 @@ public class Burraco : MonoBehaviour
 		{
 			if (Canasta.IsCanasta(ref me.cardsSelected))
 			{
-				//	TO DO: metodo che veda in che posizione inserire il Jolly
+				int checkTris = Canasta.GetTrisNumber(me.cardsSelected);
+				if(ourTable.canaste.Count > 0 && ourTable.canaste.Exists(c => c.TrisValue == checkTris && checkTris != -1))
+				{
+					print("esiste già una canasta-tris di questo valore : " + checkTris);
+					return;
+				}
 
 				print("le carte scelte formano una canasta");
 				float yOffset = 0;
@@ -541,6 +556,7 @@ public class Burraco : MonoBehaviour
 				}
 				OrderHand(me.myHand, hands[0].transform.position);
 				firstCanasta.cards.OrderByDescending(c => c.CurrentValue);
+				firstCanasta.GetTrisNumber();
 				ourTable.canaste.Add(firstCanasta);
 				me.cardsSelected.Clear();
 			}

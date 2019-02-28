@@ -13,6 +13,7 @@ public class Canasta : MonoBehaviour
 	public bool IsBurracoHalfClean { get; set; }
 	public bool IsFull { get; set; }
 	public bool IsTris { get; set; }
+	public int TrisValue { get; set; }
 
 	internal bool IsAddable(Card card)
 	{
@@ -175,6 +176,35 @@ public class Canasta : MonoBehaviour
 
 		return check;
 	}
+
+	internal static int GetTrisNumber(List<Card> cards)
+	{
+		int myValues = cards.FirstOrDefault(c => !c.CanBeJolly).CurrentValue;    //tris con jolly
+		print(" il valore che ho trovato è : " + myValues);
+		if (cards.All(c => c.PossibleValues.Contains(myValues)))
+		{
+			return myValues;
+		}
+		else
+		{
+			return -1;
+		}
+	}
+
+	internal void GetTrisNumber()
+	{
+		int myValues = cards.FirstOrDefault(c => !c.CanBeJolly).CurrentValue;    //tris con jolly
+		print(" il valore che ho trovato è : " + myValues);
+		if (cards.All(c => c.PossibleValues.Contains(myValues)))
+		{
+			TrisValue = myValues;
+		}
+		else
+		{
+			TrisValue =  -1;
+		}
+	}
+	
 
 	private static void CheckPinIs2(ref List<Card> myCards)
 	{
