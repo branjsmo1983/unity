@@ -27,6 +27,8 @@ public class Canasta : MonoBehaviour
 		if(card.CanBeJolly && !cards.Exists(c => c.CanBeJolly))
 		{
 			print(" nella canasta non ho un jolly e io sto attaccando un jolly");
+			cards.Add(card);
+			List<Card> temp = cards.OrderByDescending(c => c.CurrentValue).ToList();
 			return true;
 		}
 		if((card.CurrentValue != TrisValue) && (TrisValue != -1))				//check sul tris
@@ -47,13 +49,51 @@ public class Canasta : MonoBehaviour
 			print(" sto tentando di aggiungere un Asso in  una scala che ha già un asso");
 			return false;
 		}
-		if(cards.Exists(c=>c.CurrentValue == card.CurrentValue && c.CanBeJolly))
+		if(cards.Exists(c=>c.CurrentValue == card.CurrentValue && c.CanBeJolly ))
 		{
-			print(" sto mettendo la carta dove c'era il jolly");
+			print(" sto mettendo la carta dove c'era");
+			if(cards.Find(c=>c.CanBeJolly).Value == Card.MyValues.jolly)
+			{
+				print(" il jolly ");
+				cards.Find(c => c.CanBeJolly).CurrentValue = 16;
+				cards.Add(card);
+				List<Card> temp = cards.OrderByDescending(c => c.CurrentValue).ToList();
+				cards = temp;
+			}
+			else if (cards.Find(c => c.CanBeJolly).Value == Card.MyValues.due)
+			{
+				print(" la pinella ");
+				cards.Find(c => c.CanBeJolly).CurrentValue = 15;
+				cards.Add(card);
+				List<Card> temp = cards.OrderByDescending(c => c.CurrentValue).ToList();
+				cards = temp;
+			}
 			return true;
 		}
+		if (cards.Exists(c => c.CurrentValue == card.CurrentValue && !c.CanBeJolly))
+		{
+			print(" sto cercando di mettere una carta già presente");
+			return false;
+		}
+		if(cards.Exists(c => c.CurrentValue == (card.CurrentValue + 1)))
+		{
+			print("sto inserendo un elemento minore");
+			int rightIndex = cards.FindIndex(c => c.CurrentValue == card.CurrentValue + 1);		//in teoria in fondo alla lista
+			print(" all' indice " + (int)(rightIndex +1));
+			cards.Insert(rightIndex + 1, card);
+		}else if(cards.Exists(c => c.CurrentValue == (card.CurrentValue + 1)))
+		{
+			print(" sto inserendo un elemento maggiore");
+			int rightIndex = cards.FindIndex(c => c.CurrentValue == card.CurrentValue + 1);         //probabilmente sarà 0 o 1
+			print(" all' indice " + rightIndex);
+			cards.Insert(rightIndex, card);
+		}
+		else
+		{
+			print(" se sono arrivato qui ho dimenticato qualcosa");
+		}
 
-		return result;
+			return result;
 	}
 
 	internal bool AreAddables(ref List<Card> cardSelected)
@@ -81,6 +121,10 @@ public class Canasta : MonoBehaviour
 	{
 		bool check = false;
 
+		if(card.Exists(c=>c.Value == Card.MyValues.due))
+		{
+			CheckPinIs2(ref card);
+		}
 		//check sui giolly e pinelle
 		int numberOfJolly = card.Count(c => (c.CanBeJolly) && (!c.CanBePin));
 		print("numero di jolly : " + numberOfJolly);
@@ -208,9 +252,9 @@ public class Canasta : MonoBehaviour
 
 	internal static int GetTrisNumber(List<Card> cards)
 	{
-		int myValues = cards.FirstOrDefault(c => !c.CanBeJolly).CurrentValue;    //tris con jolly
+		int myValues = cards.FirstOrDefault(c => !c.CanBeJolly).CurrentValue;  
 		
-		if (cards.All(c => c.PossibleValues.Contains(myValues)))
+		if (cards.Count(c=>c.CurrentValue == myValues) >= (cards.Count - 1))
 		{
 			print(" è un tris di : " + myValues);
 			return myValues;
@@ -241,15 +285,18 @@ public class Canasta : MonoBehaviour
 
 	private static void CheckPinIs2(ref List<Card> myCards)
 	{
-		Card.MySuits mySuits = myCards.FirstOrDefault(c => !c.CanBeJolly).Suit;			//seme della prima carta non jolly
+		print(" sono entrato nell'evento in cui controllo i 2");
+		Card.MySuits mySuits = myCards.FirstOrDefault(c => !c.CanBeJolly).Suit;         //seme della prima carta non jolly
+		int numOfPin = myCards.Count(c => c.CanBeJolly);
+		print(""+mySuits);
 		if(myCards.Exists(c => c.Value == Card.MyValues.due && c.Suit == mySuits))
 		{
 			Card pin = myCards.FirstOrDefault(c => c.Value == Card.MyValues.due && c.Suit == mySuits);
 			if ((myCards.Exists(c => c.Value == Card.MyValues.A) && myCards.Exists(c => c.Value == Card.MyValues.tre)) ||
 				(myCards.Exists(c => c.Value == Card.MyValues.tre) && myCards.Exists(c => c.Value == Card.MyValues.quattro)) ||
-				(myCards.Exists(c => c.Value == Card.MyValues.A) && myCards.Exists(c => c.CanBeJolly && c != pin)) ||
-				(myCards.Exists(c => c.Value == Card.MyValues.tre) && myCards.Exists(c => c.CanBeJolly && c != pin)) ||
-				(myCards.Exists(c => c.Value == Card.MyValues.quattro) && myCards.Exists(c => c.CanBeJolly && c != pin)))
+				(myCards.Exists(c => c.Value == Card.MyValues.A) && numOfPin == 2 )||
+				(myCards.Exists(c => c.Value == Card.MyValues.tre) && numOfPin == 2) ||
+				(myCards.Exists(c => c.Value == Card.MyValues.quattro) && numOfPin == 2))
 			{
 				pin.CurrentValue = 2;
 				pin.CanBeJolly = false;

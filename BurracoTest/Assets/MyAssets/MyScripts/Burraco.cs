@@ -122,7 +122,7 @@ public class Burraco : MonoBehaviour
     void Update()
     {
 		CheckDistancePlayerCards(me.myHand,hands[0]);
-		CheckDistancePlayerCards(refuseCards, refusePosition);
+		CheckDistance(refuseCards, refusePosition);
 
 	}
 
@@ -499,6 +499,7 @@ public class Burraco : MonoBehaviour
 
 	public void OnAddCardsToCanasta(MyEventArgs e)			//aggiunge le carte selezionate alla canasta
 	{
+		Vector3 initialPosition = e.canastaSelected.cards[0].transform.position;
 		// ------ per test
 		print(" Sono entrato nel metodo per aggiungere una carta alla canasta ");
 		foreach(Card c in e.canastaSelected.cards)
@@ -508,12 +509,22 @@ public class Burraco : MonoBehaviour
 		//------ fine test
 
 		List<Card> canastaCards = new List<Card>();
-		canastaCards.AddRange(e.canastaSelected.cards.ToArray());
+		canastaCards.AddRange(e.canastaSelected.cards.ToArray().OrderByDescending(c=>c.CurrentValue));
 		List<Card> cardsSelected = new List<Card>();
-		cardsSelected.AddRange(me.cardsSelected.ToArray());
-		Canasta canasta = new Canasta();
-		canasta.cards = canastaCards;
-		//to do: metodo che dati canasta e carte da attaccare ritorni se può attaccarle o meno
+		cardsSelected.AddRange(me.cardsSelected.ToArray().OrderByDescending(c => c.CurrentValue));
+		Canasta canasta = new Canasta
+		{
+			cards = canastaCards
+		};
+		
+		if(canasta.AreAddables(ref cardsSelected))
+		{
+			print(" le carte selezionate sono aggiungibili alla canasta ");
+		}
+		else
+		{
+			print(" le carte selezionate NON sono aggiungibili alla cansta!!! ");
+		}
 
 	}
 
@@ -759,6 +770,18 @@ public class Burraco : MonoBehaviour
 		}
 	}
 
+	private void CheckDistance(List<Card> hand, GameObject startPosition)
+	{
+		if ((hand.Count > MAXCARDSFULLFACE) && (hand.Count <= MAXCARDHALFFECE))
+		{
+			Resize(hand, startPosition.transform.position, X_OFFSET_MID);
+		}
+		else if (me.myHand.Count > MAXCARDHALFFECE)
+		{
+			Resize(hand, startPosition.transform.position, X_OFFSET_SMALL);
+		}
+	}
+
 	private void ResizeHand(List<Card> hand, Vector3 position,float gap)
 	{
 		IEnumerable<Card> query = orderbyValue ? hand.OrderBy(card => card.Suit).OrderBy(card => card.Value) : hand.OrderBy(card => card.Value).OrderBy(card => card.Suit);
@@ -773,6 +796,20 @@ public class Burraco : MonoBehaviour
 			zOffset += 0.2f;
 		}
 		
+	}
+
+	private void Resize(List<Card> hand, Vector3 position, float gap)
+	{
+		float xOffSet = 0;
+		float zOffset = 0;
+		foreach (Card card in hand)
+		{
+			card.transform.position = new Vector3(position.x + xOffSet, position.y, position.z - zOffset);
+			card.IsVisible = true;
+			xOffSet += gap;
+			zOffset += 0.2f;
+		}
+
 	}
 
 }
