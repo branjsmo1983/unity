@@ -15,38 +15,7 @@ public class Canasta : MonoBehaviour
 	public bool IsTris { get; set; }
 	public int TrisValue { get; set; }
 
-	internal bool IsAddable(Card card)
-	{
-		bool result = false;
 
-		// TO DO: logica per vedere se una carta è attaccabile
-
-
-		return result;
-	}
-
-	internal bool Areaddable(List<Card> cards)
-	{
-		bool result = true;
-		foreach (Card card in cards)
-		{
-			if (!IsAddable(card))
-			{
-				result = false;
-				break;
-			}
-		}
-		return result;
-	}
-
-	internal bool IsCanasta()
-	{
-		bool check = false;
-
-		//TO DO: controllare quando una lista di carte è una canasta
-
-		return check;
-	}
 
 	internal static bool IsCanasta(ref List<Card> card)
 	{
