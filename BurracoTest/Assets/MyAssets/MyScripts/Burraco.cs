@@ -599,7 +599,11 @@ public class Burraco : MonoBehaviour
 		if(!me.HasCollected && !me.HasFished)
 		{
 			print("Sono nel ramo in cui sto raccogliendo");
-			
+			if(refuseCards.Count == 1)
+			{
+				print(" rendo non scartabile l'unica carta degli scarti");
+				refuseCards[0].IsDiscardable = false;
+			}
 			nextRefusePosition.transform.position = new Vector3(refusePosition.transform.position.x, refusePosition.transform.position.y, refusePosition.transform.position.z);
 			me.HasCollected = true;
 		
@@ -626,10 +630,15 @@ public class Burraco : MonoBehaviour
 		else if ((me.HasCollected && me.cardsSelected.Count() == 1)|| (me.HasFished && me.cardsSelected.Count() == 1))
 		{
 			print("Sono nel ramo in cui devo scartare");
-			me.myHand.Find(c => c.IsSelected == true).transform.position = new Vector3(nextRefusePosition.transform.position.x, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z);
-			me.myHand.Find(c => c.IsSelected == true).tag = "refuse";
+			if(!me.myHand.Find(c=>c.IsSelected == true).IsDiscardable)
+			{
+				print("sto cercando di scartare una carta che ho appena raccolto");
+				return;
+			}
+			me.myHand.Find(c => c.IsSelected).transform.position = new Vector3(nextRefusePosition.transform.position.x, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z);
+			me.myHand.Find(c => c.IsSelected).tag = "refuse";
 			me.cardsSelected.ElementAt(0).tag = "refuse";
-			me.myHand.Find(c => c.IsSelected == true).IsSelected = false;
+			me.myHand.Find(c => c.IsSelected).IsSelected = false;
 			refuseCards.Add( me.cardsSelected.ElementAt(0));
 			print("Ho scartato la carta : " + me.cardsSelected.ElementAt(0));
 			me.myHand.Remove(me.cardsSelected.ElementAt(0));
@@ -637,6 +646,10 @@ public class Burraco : MonoBehaviour
 			print("la carta scartata ha tag :" + refuseCards.ElementAt(0).tag);
 			OrderHand(me.myHand, hands[0].transform.position);
 			nextRefusePosition.transform.position = new Vector3(nextRefusePosition.transform.position.x + 0.9f, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z - 0.2f);
+			foreach(Card card in me.myHand)
+			{
+				card.IsDiscardable = true;
+			}
 			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, LEFTOPPONENT));
 			me.HasCollected = false;
 			me.HasFished = false;

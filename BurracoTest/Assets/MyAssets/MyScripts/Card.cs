@@ -39,6 +39,7 @@ public class Card : MonoBehaviour
 	public bool CanBeJolly { get; set; }
 	public bool CanBePin { get; set; }
 	public int CurrentValue { get; set; }
+	public bool IsDiscardable { get; set; }
 	public List<int> PossibleValues = new List<int>();
 
 	public MySuits Suit
@@ -66,6 +67,7 @@ public class Card : MonoBehaviour
 
 	private void CalculateProp()
 	{
+		IsDiscardable = true;
 		switch ((int)value)
 		{
 			case 0:
