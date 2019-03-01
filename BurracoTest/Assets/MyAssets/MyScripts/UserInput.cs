@@ -50,6 +50,7 @@ public class UserInput : MonoBehaviour
 				else if (hit.collider.CompareTag("ourCanasta"))
 				{
 					Card cardOnTable = hit.collider.GetComponent<Card>();
+					
 					Canasta selected = burraco.ourTable.canaste.Find(canasta => canasta.cards.Find(c => c == cardOnTable));
 					MyEventManager.instance.CastEvent(MyIndexEvent.cardsAddToCanasta, new MyEventArgs(this.gameObject, selected));
 				}

@@ -524,12 +524,12 @@ public class Burraco : MonoBehaviour
 		{
 			if (Canasta.IsCanasta(ref me.cardsSelected))
 			{
-				int checkTris = Canasta.GetTrisNumber(me.cardsSelected);
-				if(ourTable.canaste.Count > 0 && ourTable.canaste.Exists(c => c.TrisValue == checkTris && checkTris != -1))
-				{
-					print("esiste già una canasta-tris di questo valore : " + checkTris);
-					return;
-				}
+				//int checkTris = Canasta.GetTrisNumber(me.cardsSelected);
+				//if(ourTable.canaste.Count > 0 && ourTable.canaste.Exists(c => c.TrisValue == checkTris && checkTris != -1))
+				//{
+				//	print("esiste già una canasta-tris di questo valore : " + checkTris);
+				//	return;
+				//}
 
 				print("le carte scelte formano una canasta");
 				float yOffset = 0;

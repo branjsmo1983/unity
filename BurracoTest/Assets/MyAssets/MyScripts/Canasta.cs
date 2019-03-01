@@ -180,13 +180,15 @@ public class Canasta : MonoBehaviour
 	internal static int GetTrisNumber(List<Card> cards)
 	{
 		int myValues = cards.FirstOrDefault(c => !c.CanBeJolly).CurrentValue;    //tris con jolly
-		print(" il valore che ho trovato è : " + myValues);
+		
 		if (cards.All(c => c.PossibleValues.Contains(myValues)))
 		{
+			print(" è un tris di : " + myValues);
 			return myValues;
 		}
 		else
 		{
+			print(" non è un tris");
 			return -1;
 		}
 	}
@@ -194,13 +196,15 @@ public class Canasta : MonoBehaviour
 	internal void GetTrisNumber()
 	{
 		int myValues = cards.FirstOrDefault(c => !c.CanBeJolly).CurrentValue;    //tris con jolly
-		print(" il valore che ho trovato è : " + myValues);
+		
 		if (cards.All(c => c.PossibleValues.Contains(myValues)))
 		{
+			print(" è un tris di : " + myValues);
 			TrisValue = myValues;
 		}
 		else
 		{
+			print(" non è un tris");
 			TrisValue =  -1;
 		}
 	}

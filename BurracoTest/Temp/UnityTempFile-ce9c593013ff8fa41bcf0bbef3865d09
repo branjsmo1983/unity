@@ -1,12 +1,11 @@
 /target:library
 /nowarn:0169
-/out:Temp/Assembly-CSharp-Editor.dll
+/out:Temp/Unity.PackageManagerUI.Editor.dll
 /debug:portable
 /optimize-
 /nostdlib+
 /preferreduilang:en-US
 /langversion:latest
-/reference:Library/ScriptAssemblies/Assembly-CSharp.dll
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.AIModule.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.ARModule.dll"
@@ -70,11 +69,6 @@
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.XRModule.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/UnityEditor.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/Unity.Locator.dll"
-/reference:Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll
-/reference:Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll
-/reference:Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll
-/reference:Library/ScriptAssemblies/Unity.TextMeshPro.dll
-/reference:Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll"
@@ -315,12 +309,55 @@
 /define:ENABLE_VSTU
 /define:CSHARP_7_OR_LATER
 /define:CSHARP_7_3_OR_NEWER
-Assets\AIBehavior\Editor\AIBehaviorsMadeEasy\AIBehaviorsAboutWindow.cs
-Assets\AIBehavior\Editor\AIBehaviorsMadeEasy\AIBehaviorsEditor.cs
-Assets\AIBehavior\Editor\AIBehaviorsMadeEasy\AIBehaviorsMenuItems.cs
-Assets\AIBehavior\Editor\AIBehaviorsMadeEasy\AnimationStatesEditor.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Navigation\RunTimeNavMesh\Editor\NavMeshComponentsGUIUtility.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Navigation\RunTimeNavMesh\Editor\NavMeshLinkEditor.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Navigation\RunTimeNavMesh\Editor\NavMeshModifierEditor.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Navigation\RunTimeNavMesh\Editor\NavMeshModifierVolumeEditor.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Navigation\RunTimeNavMesh\Editor\NavMeshSurfaceEditor.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\AssemblyInfo.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\External\SemVersion.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\External\SemVersionExtension.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Common\ApplicationUtil.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Common\OperationSignal.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Common\Resources.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Common\ThreadedDelay.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Interfaces\IAddOperation.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Interfaces\IBaseOperation.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Interfaces\IListOperation.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Interfaces\IOperationFactory.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Interfaces\IRemoveOperation.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Interfaces\ISearchOperation.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\OperationFactory.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Packages\Package.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Packages\PackageAssetPostprocessor.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Packages\PackageCollection.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Packages\PackageError.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Packages\PackageFilter.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Packages\PackageGroupOrigins.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Packages\PackageInfo.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Packages\PackageInfoListExtensions.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Packages\PackageJsonHelper.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Packages\PackageListExtensions.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Packages\PackageOrigin.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Packages\PackageSearchFilter.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Packages\PackageState.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Packages\PackageTag.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Upm\UpmAddOperation.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Upm\UpmBaseOperation.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Upm\UpmListOperation.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Upm\UpmOperationFactory.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Upm\UpmRemoveOperation.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\Services\Upm\UpmSearchOperation.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\Common\Alert.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\Common\LoadingSpinner.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\Common\PopupField.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\Common\UIUtils.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\Common\VersionItem.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\Interfaces\IPackageManagerExtension.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\PackageAddFromUrlField.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\PackageDetails.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\PackageFiltering.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\PackageGroup.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\PackageItem.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\PackageList.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\PackageManagerExtensions.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\PackageManagerPrefs.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\PackageManagerToolbar.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\PackageManagerWindow.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\PackageSearchToolbar.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.package-manager-ui@2.0.3\Editor\Sources\UI\PackageStatusBar.cs
