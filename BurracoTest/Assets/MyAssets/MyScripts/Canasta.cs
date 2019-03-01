@@ -151,7 +151,7 @@ public class Canasta : MonoBehaviour
 				// se ho più di una pinella allora una delle 2 deve avere la stessa suite delle altre carte
 				if(card[index].CurrentValue - card[index + 1].CurrentValue == 1)
 				{
-					print("la differenza tra " +card[index].name + " e " + card[index + 1].name + " è : " + card[index].CurrentValue + " - " + card[index + 1].CurrentValue + (card[index].CurrentValue - card[index + 1].CurrentValue));
+					print("la differenza tra " +card[index].name + " e " + card[index + 1].name + " è : " + card[index].CurrentValue + " - " + card[index + 1].CurrentValue + " = " +(card[index].CurrentValue - card[index + 1].CurrentValue));
 					check = true;
 					continue;
 				}else if(card[index].CurrentValue - card[index + 1].CurrentValue == 2 && !jollyAlreadyUsed)

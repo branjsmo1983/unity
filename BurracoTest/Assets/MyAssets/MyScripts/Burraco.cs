@@ -524,13 +524,13 @@ public class Burraco : MonoBehaviour
 		{
 			if (Canasta.IsCanasta(ref me.cardsSelected))
 			{
-				//int checkTris = Canasta.GetTrisNumber(me.cardsSelected);
-				//if(ourTable.canaste.Count > 0 && ourTable.canaste.Exists(c => c.TrisValue == checkTris && checkTris != -1))
-				//{
-				//	print("esiste già una canasta-tris di questo valore : " + checkTris);
-				//	return;
-				//}
-
+				int checkTris = Canasta.GetTrisNumber(me.cardsSelected);
+				if (ourTable.canaste.Count > 0 && ourTable.canaste.Exists(c => c.TrisValue == checkTris && c.TrisValue != -1))
+				{
+					print("esiste già una canasta-tris di questo valore : " + checkTris);
+					return;
+				}
+				print(" il valore dell'ipotetico tris è : " + Canasta.GetTrisNumber(me.cardsSelected));
 				print("le carte scelte formano una canasta");
 				float yOffset = 0;
 				float zOffset = 0.2f;
@@ -583,6 +583,9 @@ public class Burraco : MonoBehaviour
 		}
 		else
 		{
+			print(" numero di carte selezionate : " + me.cardsSelected.Count);
+			print(" ho pescato? : " + me.HasFished);
+			print(" ho reccolto? : " + me.HasCollected);
 			print("entro nel ramo in cui nel tavolo ho almeno una canasta oppure non ho selezionato almeno 3 carte dalla mia mano");
 		}
 
