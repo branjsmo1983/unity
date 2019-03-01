@@ -507,11 +507,12 @@ public class Burraco : MonoBehaviour
 		}
 		//------ fine test
 
-		List<Card> canasta = new List<Card>();
-		canasta.AddRange(e.canastaSelected.cards.ToArray());
+		List<Card> canastaCards = new List<Card>();
+		canastaCards.AddRange(e.canastaSelected.cards.ToArray());
 		List<Card> cardsSelected = new List<Card>();
 		cardsSelected.AddRange(me.cardsSelected.ToArray());
-
+		Canasta canasta = new Canasta();
+		canasta.cards = canastaCards;
 		//to do: metodo che dati canasta e carte da attaccare ritorni se può attaccarle o meno
 
 	}

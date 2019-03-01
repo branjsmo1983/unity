@@ -15,6 +15,66 @@ public class Canasta : MonoBehaviour
 	public bool IsTris { get; set; }
 	public int TrisValue { get; set; }
 
+	internal bool IsAddable(Card card)
+	{
+		bool result = false;
+
+		if(cards.Exists(c => c.CanBeJolly) && card.CanBeJolly)					//check sul numero di pinelle
+		{
+			print(" nella canasta ho già un jolly ");
+			return false;
+		}
+		if(card.CanBeJolly && !cards.Exists(c => c.CanBeJolly))
+		{
+			print(" nella canasta non ho un jolly e io sto attaccando un jolly");
+			return true;
+		}
+		if((card.CurrentValue != TrisValue) && (TrisValue != -1))				//check sul tris
+		{
+			print(" il valore della carta " + card.CurrentValue);
+			print(" è diverso da quello del tris :" + TrisValue);
+			return false;
+		}
+		Card.MySuits suit = cards.FirstOrDefault(c => !c.CanBeJolly).Suit;		//check seme della scala
+		if((card.Suit != suit) && !card.CanBePin && TrisValue == -1)
+		{
+			print(" il seme della carta è : " + card.Suit);
+			print(" è diverso da quello della scala che è : " + suit);
+			return false;
+		}
+		if(card.Value == Card.MyValues.A && cards.Exists(c=>c.Value == Card.MyValues.A) && TrisValue == -1)
+		{
+			print(" sto tentando di aggiungere un Asso in  una scala che ha già un asso");
+			return false;
+		}
+		if(cards.Exists(c=>c.CurrentValue == card.CurrentValue && c.CanBeJolly))
+		{
+			print(" sto mettendo la carta dove c'era il jolly");
+			return true;
+		}
+
+		return result;
+	}
+
+	internal bool AreAddables(ref List<Card> cardSelected)
+	{
+		bool result = false;
+
+		foreach(Card card in cardSelected)
+		{
+			if (IsAddable(card))
+			{
+				result = true;
+			}
+			else
+			{
+				result = false;
+				return result;
+			}
+		}
+
+		return result;
+	}
 
 
 	internal static bool IsCanasta(ref List<Card> card)
