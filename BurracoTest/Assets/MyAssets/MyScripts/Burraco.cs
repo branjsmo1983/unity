@@ -534,6 +534,8 @@ public class Burraco : MonoBehaviour
 			ShowCanasta(e.canastaSelected.cards.OrderByDescending(C => C.CurrentValue).ToList(), initialPosition);
 			//ordino la mia mano senza le carte aggiunte alla canasta
 			OrderHand(me.myHand, hands[0].transform.position);
+			//pulisco la lista di carte selezionate
+			me.cardsSelected.Clear();
 
 		}
 		else
