@@ -8,9 +8,13 @@ using TMPro;
 public class Burraco : MonoBehaviour
 {
 	private const string ME = "mePlayer";
+	private const string MYCARD = "myCard";
 	private const string MYMATE = "myMatePlayer";
+	private const string MYMATECARD = "myMateCard";
 	private const string LEFTOPPONENT = "leftOpponentPlayer";
+	private const string LEFTOPPONENTCARD = "leftOpponentCard";
 	private const string RIGHTOPPONENT = "rightOpponentPlayer";
+	private const string RIGHTOPPONENTCARD = "rightOpponentCard";
 	private const string OURCANASTA = "ourCanasta";
 	private const string THEIRCANASTA = "theirCanasta";
 	private const int MAXCARDSFULLFACE = 16;
@@ -65,7 +69,8 @@ public class Burraco : MonoBehaviour
 	internal List<Card> secondCockpit = new List<Card>();									// secondo pozzetto
 	internal List<Card> refuseCards = new List<Card>();										// lista delle carte negli scarti
 	private List<CardForStartGame> myCardsForStart = new List<CardForStartGame>();			// mi serve per ordinare le 4 carte e prendere la maggiore con linq
-	internal string playerstart;															// stringa del giocatore iniziale											
+	internal string playerstart;                                                            // stringa del giocatore iniziale		
+	internal bool firstcockpitAlreadyToken = false;											// se è stato già preso il primo pozzetto 
 	internal bool isCanGetInput = false;													// per abilitare l'input all'utente o meno												
 	internal bool orderbyValue = false;														//ordino solo per valore o anche per suit
 	[SerializeField]
@@ -186,6 +191,7 @@ public class Burraco : MonoBehaviour
 		if(playerstart == ME)
 		{
 			namePlayer = "io";
+	
 		}else if(playerstart == LEFTOPPONENT)
 		{
 			namePlayer = "l'avversario di sinistra";
@@ -248,7 +254,7 @@ public class Burraco : MonoBehaviour
 				{
 					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x + xOffset, hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.identity;
-					newCard.tag = "myCard";
+					newCard.tag = MYCARD;
 					me.myHand.Add(newCard);
 					deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
 
@@ -257,7 +263,7 @@ public class Burraco : MonoBehaviour
 				{
 					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x + (xOffset * 2/3), hands[newIndex].transform.position.y, hands[newIndex].transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.identity;
-					newCard.tag = "myMateCard";
+					newCard.tag = MYMATECARD;
 					myMate.myHand.Add(newCard);
 					deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
 				}
@@ -265,7 +271,7 @@ public class Burraco : MonoBehaviour
 				{
 					newCard.transform.position = new Vector3(hands[newIndex].transform.position.x , hands[newIndex].transform.position.y - (yOffset *2/3), hands[newIndex].transform.position.z - zOffset);
 					newCard.transform.rotation = Quaternion.Euler(0, 0, 90);
-					newCard.tag = "leftOpponentCard";
+					newCard.tag = LEFTOPPONENTCARD;
 					leftOpponent.myHand.Add(newCard);
 					deck.myDeck.RemoveAt(deck.myDeck.Count - 1);
 				}
@@ -450,7 +456,7 @@ public class Burraco : MonoBehaviour
 		return offset;
 	}
 
-	void CheckGamefinished()
+	void CheckGameFinished()
 	{
 		if((me.myHand.Count == 0 && (me.CockpitAlreadyBeenTaken || myMate.CockpitAlreadyBeenTaken))|| (myMate.myHand.Count == 0 && (me.CockpitAlreadyBeenTaken || myMate.CockpitAlreadyBeenTaken)))
 		{
@@ -543,6 +549,10 @@ public class Burraco : MonoBehaviour
 			cardsSelected.Clear();
 			print(" le carte selezionate NON sono aggiungibili alla cansta!!! ");
 		}
+		if(me.myHand.Count == 0 && !me.CockpitAlreadyBeenTaken && !myMate.CockpitAlreadyBeenTaken)
+		{
+			MyEventManager.instance.CastEvent(MyIndexEvent.cockpitTake, new MyEventArgs(this.gameObject,me));
+		}
 
 	}
 
@@ -602,6 +612,10 @@ public class Burraco : MonoBehaviour
 				firstCanasta.GetTrisNumber();
 				ourTable.canaste.Add(firstCanasta);
 				me.cardsSelected.Clear();
+				if (me.myHand.Count == 0 && !me.CockpitAlreadyBeenTaken && !myMate.CockpitAlreadyBeenTaken)
+				{
+					MyEventManager.instance.CastEvent(MyIndexEvent.cockpitTake, new MyEventArgs(this.gameObject, me));
+				}
 			}
 			else
 			{
@@ -713,6 +727,61 @@ public class Burraco : MonoBehaviour
 	public void OnCockpitTake(MyEventArgs e)				//prendere i pozzetti
 	{
 		print("Sono entrato nell'evento OnCockpitTake");
+		
+		float xOffset = 0;
+		float yOffset = 0;
+		float zOffset = 0.2f;
+		bool isvisible = false;
+		string tag = "";
+		Vector3 initialPosition = new Vector3();
+		List<Card> cockpit = firstcockpitAlreadyToken ? firstCockpit : secondCockpit;
+		if (e.playerTookCockpit.tag == ME)
+		{
+			print("ho preso io il pozzetto");
+			initialPosition = hands[0].transform.position;
+			xOffset = 0.9f;
+			isvisible = true;
+			tag = MYCARD;
+		}
+		else if(e.playerTookCockpit.tag == MYMATE)
+		{
+			print(" il pozzetto lo ha preso il mio compagno");
+			initialPosition = hands[2].transform.position;
+			xOffset = 0.6f;
+			tag = MYMATECARD;
+		}
+		else if(e.playerTookCockpit.tag == LEFTOPPONENT)
+		{
+			print(" il pozzetto lo ha preso l'avversario di sinistra");
+			initialPosition = hands[1].transform.position;
+			yOffset = 0.47f;
+			tag = LEFTOPPONENTCARD;
+		}
+		else if(e.playerTookCockpit.tag == RIGHTOPPONENT)
+		{
+			print(" il pozzetto lo ha preso l'avversario di destra");
+			initialPosition = hands[3].transform.position;
+			yOffset = 0.47f;
+			tag = RIGHTOPPONENTCARD;
+		}
+		else
+		{
+			print(" Errore, non mi ha preso il tag del giocatore giusto ");
+		}
+		PlaceCockpit(cockpit, e.playerTookCockpit.myHand, initialPosition, xOffset, yOffset, zOffset, isvisible,tag);
+	}
+
+	private void PlaceCockpit(List<Card> cockpit,List<Card> hand, Vector3 initialposition, float x,float y, float z,bool isVisible,string tag)
+	{
+		for(int index = 0; index < cockpit.Count; index++)
+		{
+			cockpit[index].transform.position = new Vector3(initialposition.x + x, initialposition.y - y, initialposition.z - z);
+			cockpit[index].tag = tag;
+			cockpit[index].IsVisible = isVisible;
+			hand.Add(cockpit[index]);
+
+		}
+		cockpit.Clear();
 	}
 
 	public void OnBurracoMake(MyEventArgs e)				//fare burraco

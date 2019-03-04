@@ -79,6 +79,7 @@ public class MyEventArgs
 	public Card cardSelected;
 	public Card cardFished;
 	public Canasta canastaSelected;
+	public Player playerTookCockpit;
 	//public LevelData myLevelData;
 
 	public MyEventArgs()
@@ -95,6 +96,12 @@ public class MyEventArgs
 	{
 		this.sender = sender;
 		this.myInt = myInt;
+	}
+
+	public MyEventArgs(GameObject sender, Player player)
+	{
+		this.sender = sender;
+		this.playerTookCockpit = player;
 	}
 
 	public MyEventArgs(GameObject sender, Canasta canastaSelected)
