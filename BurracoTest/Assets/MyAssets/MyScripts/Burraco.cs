@@ -550,7 +550,7 @@ public class Burraco : MonoBehaviour
 		float zOffset = 0.2f;
 		foreach(Card card in cards)
 		{
-			card.transform.position = new Vector3(initialPosition.x, initialPosition.y + yOffset, initialPosition.z + zOffset);
+			card.transform.position = new Vector3(initialPosition.x, initialPosition.y - yOffset, initialPosition.z - zOffset);
 			yOffset += 0.4f;
 			zOffset += 0.2f;
 		}
