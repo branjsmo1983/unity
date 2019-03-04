@@ -70,7 +70,8 @@ public class Burraco : MonoBehaviour
 	internal List<Card> refuseCards = new List<Card>();										// lista delle carte negli scarti
 	private List<CardForStartGame> myCardsForStart = new List<CardForStartGame>();			// mi serve per ordinare le 4 carte e prendere la maggiore con linq
 	internal string playerstart;                                                            // stringa del giocatore iniziale		
-	internal bool firstcockpitAlreadyToken = false;											// se è stato già preso il primo pozzetto 
+	internal bool firstcockpitAlreadyToken = false;                                         // se è stato già preso il primo pozzetto 
+	internal bool secondcokpitAlreadyToken = false;
 	internal bool isCanGetInput = false;													// per abilitare l'input all'utente o meno												
 	internal bool orderbyValue = false;														//ordino solo per valore o anche per suit
 	[SerializeField]
@@ -727,6 +728,10 @@ public class Burraco : MonoBehaviour
 	public void OnCockpitTake(MyEventArgs e)				//prendere i pozzetti
 	{
 		print("Sono entrato nell'evento OnCockpitTake");
+		if (secondcokpitAlreadyToken)
+		{
+			print("sono stati raccolti già entrambi i pozzetti");
+		}
 		
 		float xOffset = 0;
 		float yOffset = 0;
@@ -734,7 +739,18 @@ public class Burraco : MonoBehaviour
 		bool isvisible = false;
 		string tag = "";
 		Vector3 initialPosition = new Vector3();
-		List<Card> cockpit = firstcockpitAlreadyToken ? firstCockpit : secondCockpit;
+		List<Card> cockpit = new List<Card>();
+		if (firstcockpitAlreadyToken)
+		{
+			cockpit = firstCockpit;
+			firstcockpitAlreadyToken = true;
+		}
+		else
+		{
+			cockpit = secondCockpit;
+			secondcokpitAlreadyToken = true;
+		}
+
 		if (e.playerTookCockpit.tag == ME)
 		{
 			print("ho preso io il pozzetto");
@@ -742,6 +758,7 @@ public class Burraco : MonoBehaviour
 			xOffset = 0.9f;
 			isvisible = true;
 			tag = MYCARD;
+		
 		}
 		else if(e.playerTookCockpit.tag == MYMATE)
 		{
@@ -749,6 +766,7 @@ public class Burraco : MonoBehaviour
 			initialPosition = hands[2].transform.position;
 			xOffset = 0.6f;
 			tag = MYMATECARD;
+
 		}
 		else if(e.playerTookCockpit.tag == LEFTOPPONENT)
 		{
@@ -756,6 +774,7 @@ public class Burraco : MonoBehaviour
 			initialPosition = hands[1].transform.position;
 			yOffset = 0.47f;
 			tag = LEFTOPPONENTCARD;
+
 		}
 		else if(e.playerTookCockpit.tag == RIGHTOPPONENT)
 		{
@@ -763,6 +782,7 @@ public class Burraco : MonoBehaviour
 			initialPosition = hands[3].transform.position;
 			yOffset = 0.47f;
 			tag = RIGHTOPPONENTCARD;
+	
 		}
 		else
 		{
@@ -771,14 +791,28 @@ public class Burraco : MonoBehaviour
 		PlaceCockpit(cockpit, e.playerTookCockpit.myHand, initialPosition, xOffset, yOffset, zOffset, isvisible,tag);
 	}
 
-	private void PlaceCockpit(List<Card> cockpit,List<Card> hand, Vector3 initialposition, float x,float y, float z,bool isVisible,string tag)
+	private void PlaceCockpit(List<Card> cockpit,List<Card> hand, Vector3 initialposition, float x,float y, float z,bool isVisible,string tag )
 	{
+		float xOffset = 0;
+		float yOffset = 0;
+		float zOffset = 0;
 		for(int index = 0; index < cockpit.Count; index++)
 		{
-			cockpit[index].transform.position = new Vector3(initialposition.x + x, initialposition.y - y, initialposition.z - z);
+			cockpit[index].transform.position = new Vector3(initialposition.x + xOffset, initialposition.y - yOffset, initialposition.z - z);
+			if(tag == MYCARD || tag == MYMATECARD)
+			{
+				cockpit[index].transform.rotation = Quaternion.identity;
+			}
+			else
+			{
+				cockpit[index].transform.rotation = Quaternion.Euler(0, 0, 90);
+			}
 			cockpit[index].tag = tag;
 			cockpit[index].IsVisible = isVisible;
 			hand.Add(cockpit[index]);
+			xOffset += x;
+			yOffset += y;
+			zOffset += z;
 
 		}
 		cockpit.Clear();

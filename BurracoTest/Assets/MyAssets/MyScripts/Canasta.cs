@@ -87,9 +87,10 @@ public class Canasta : MonoBehaviour
 		else if(cards.Exists(c => c.CurrentValue == (card.CurrentValue - 1)))
 		{
 			print(" sto inserendo un elemento maggiore");
-			int rightIndex = cards.FindIndex(c => c.CurrentValue == card.CurrentValue + 1);         //probabilmente sarà 0 o 1
-			print(" all' indice " + rightIndex);
-			cards.Insert(rightIndex, card);
+			//int rightIndex = cards.FindIndex(c => c.CurrentValue == card.CurrentValue + 1);         //probabilmente sarà 0 o 1
+			//print(" all' indice " + rightIndex);
+			//cards.Insert(rightIndex, card);
+			cards.Insert(0, card);
 			return true;
 		}
 		else if (cards.Exists(c => c.CurrentValue == (card.CurrentValue + 2)) && cards.Exists(c => c.CanBeJolly))
@@ -221,7 +222,7 @@ public class Canasta : MonoBehaviour
 				CheckPinIs2(ref card);
 			}
 			
-			if (card.Where(c => c.CanBePin).Count() > 1) return false;
+			//if (card.Where(c => c.CanBePin).Count() > 1) return false;
 
 			//metto a posto l'asso
 			if(card.Exists(c => c.Value == Card.MyValues.A))
@@ -318,6 +319,7 @@ public class Canasta : MonoBehaviour
 		{
 			Card pin = myCards.FirstOrDefault(c => c.Value == Card.MyValues.due && c.Suit == mySuits);
 			if ((myCards.Exists(c => c.Value == Card.MyValues.A) && myCards.Exists(c => c.Value == Card.MyValues.tre)) ||
+				(myCards.Exists(c => c.Value == Card.MyValues.tre) && myCards.Exists(c => c.Value == Card.MyValues.quattro) && numOfPin == 2) ||
 				(myCards.Exists(c => c.Value == Card.MyValues.A) && numOfPin == 2 )||
 				(myCards.Exists(c => c.Value == Card.MyValues.tre) && numOfPin == 2) ||
 				(myCards.Exists(c => c.Value == Card.MyValues.quattro) && numOfPin == 2))
