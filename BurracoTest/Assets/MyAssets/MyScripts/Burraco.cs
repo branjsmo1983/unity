@@ -499,9 +499,9 @@ public class Burraco : MonoBehaviour
 
 	public void OnAddCardsToCanasta(MyEventArgs e)			//aggiunge le carte selezionate alla canasta
 	{
-		Vector3 initialPosition = e.canastaSelected.cards[0].transform.position;
+		Vector3 initialPosition = e.canastaSelected.cards[0].transform.position;							//salvo la posizione iniziale della canasta
 		// ------ per test
-		print(" Sono entrato nel metodo per aggiungere una carta alla canasta ");
+		print(" Sono entrato nel metodo per aggiungere carte alla canasta ");
 		foreach(Card c in e.canastaSelected.cards)
 		{
 			print("" + c.name);
@@ -515,15 +515,44 @@ public class Burraco : MonoBehaviour
 		Canasta canasta = new Canasta
 		{
 			cards = canastaCards
+			
 		};
-		
+		canasta.GetTrisNumber();
+		print(" il valore della canasta è : " + canasta.TrisValue);
 		if(canasta.AreAddables(ref cardsSelected))
 		{
 			print(" le carte selezionate sono aggiungibili alla canasta ");
+			foreach(Card card in cardsSelected)
+			{
+				card.tag = OURCANASTA;
+				card.IsSelected = false;
+				e.canastaSelected.cards.Add(card);
+				me.myHand.Remove(card);
+			}
+
+			// chiamo il metodo che mostra le cards nella canasta
+			ShowCanasta(e.canastaSelected.cards.OrderByDescending(C => C.CurrentValue).ToList(), initialPosition);
+			//ordino la mia mano senza le carte aggiunte alla canasta
+			OrderHand(me.myHand, hands[0].transform.position);
+
 		}
 		else
 		{
+			cardsSelected.Clear();
 			print(" le carte selezionate NON sono aggiungibili alla cansta!!! ");
+		}
+
+	}
+
+	private void ShowCanasta(List<Card> cards, Vector3 initialPosition)
+	{
+		float yOffset = 0;
+		float zOffset = 0.2f;
+		foreach(Card card in cards)
+		{
+			card.transform.position = new Vector3(initialPosition.x, initialPosition.y + yOffset, initialPosition.z + zOffset);
+			yOffset += 0.4f;
+			zOffset += 0.2f;
 		}
 
 	}

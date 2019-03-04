@@ -15,10 +15,11 @@ public class Canasta : MonoBehaviour
 	public bool IsTris { get; set; }
 	public int TrisValue { get; set; }
 
+
+
 	internal bool IsAddable(Card card)
 	{
-		bool result = false;
-
+		print("  °°°° entro nel metodo che controlla se una carta è aggiungibile °°°°");
 		if(cards.Exists(c => c.CanBeJolly) && card.CanBeJolly)					//check sul numero di pinelle
 		{
 			print(" nella canasta ho già un jolly ");
@@ -75,25 +76,47 @@ public class Canasta : MonoBehaviour
 			print(" sto cercando di mettere una carta già presente");
 			return false;
 		}
-		if(cards.Exists(c => c.CurrentValue == (card.CurrentValue + 1)))
+		if(cards.Exists(c => c.CurrentValue == (card.CurrentValue + 1))) 
 		{
 			print("sto inserendo un elemento minore");
 			int rightIndex = cards.FindIndex(c => c.CurrentValue == card.CurrentValue + 1);		//in teoria in fondo alla lista
 			print(" all' indice " + (int)(rightIndex +1));
 			cards.Insert(rightIndex + 1, card);
-		}else if(cards.Exists(c => c.CurrentValue == (card.CurrentValue + 1)))
+			return true;
+		}
+		else if(cards.Exists(c => c.CurrentValue == (card.CurrentValue - 1)))
 		{
 			print(" sto inserendo un elemento maggiore");
 			int rightIndex = cards.FindIndex(c => c.CurrentValue == card.CurrentValue + 1);         //probabilmente sarà 0 o 1
 			print(" all' indice " + rightIndex);
 			cards.Insert(rightIndex, card);
+			return true;
+		}
+		else if (cards.Exists(c => c.CurrentValue == (card.CurrentValue + 2)) && cards.Exists(c => c.CanBeJolly))
+		{
+			Card jolly = cards.Find(c => c.CanBeJolly);
+			jolly.CurrentValue = card.CurrentValue + 1;
+			cards.Remove(jolly);
+			cards.Insert(cards.Count - 1, jolly);	//metto in ultima posizione il jolly
+			cards.Insert(cards.Count - 1, card);    //metto in ultima posizione la mia carta
+			return true;
+		}
+		else if (cards.Exists(c => c.CurrentValue == (card.CurrentValue - 2)) && cards.Exists(c => c.CanBeJolly))
+		{
+			Card jolly = cards.Find(c => c.CanBeJolly);
+			jolly.CurrentValue = card.CurrentValue - 1;
+			cards.Remove(jolly);
+			cards.Insert(0, jolly);				//metto in prima posizione il jolly
+			cards.Insert(0, card);              //metto in prima posizione la mia carta
+			return true;
 		}
 		else
 		{
 			print(" se sono arrivato qui ho dimenticato qualcosa");
+			return false;
 		}
 
-			return result;
+
 	}
 
 	internal bool AreAddables(ref List<Card> cardSelected)
@@ -104,10 +127,12 @@ public class Canasta : MonoBehaviour
 		{
 			if (IsAddable(card))
 			{
+				print(" la carta : " + card.name + " è aggiungibile");
 				result = true;
 			}
 			else
 			{
+				print(" la carta : " + card.name + " NON è aggiungibile!!!");
 				result = false;
 				return result;
 			}
@@ -252,7 +277,7 @@ public class Canasta : MonoBehaviour
 
 	internal static int GetTrisNumber(List<Card> cards)
 	{
-		int myValues = cards.FirstOrDefault(c => !c.CanBeJolly).CurrentValue;  
+		int myValues = cards.FirstOrDefault(c => c.Value != Card.MyValues.jolly && c.Value != Card.MyValues.due).CurrentValue;  
 		
 		if (cards.Count(c=>c.CurrentValue == myValues) >= (cards.Count - 1))
 		{
@@ -293,7 +318,6 @@ public class Canasta : MonoBehaviour
 		{
 			Card pin = myCards.FirstOrDefault(c => c.Value == Card.MyValues.due && c.Suit == mySuits);
 			if ((myCards.Exists(c => c.Value == Card.MyValues.A) && myCards.Exists(c => c.Value == Card.MyValues.tre)) ||
-				(myCards.Exists(c => c.Value == Card.MyValues.tre) && myCards.Exists(c => c.Value == Card.MyValues.quattro)) ||
 				(myCards.Exists(c => c.Value == Card.MyValues.A) && numOfPin == 2 )||
 				(myCards.Exists(c => c.Value == Card.MyValues.tre) && numOfPin == 2) ||
 				(myCards.Exists(c => c.Value == Card.MyValues.quattro) && numOfPin == 2))
@@ -301,6 +325,12 @@ public class Canasta : MonoBehaviour
 				pin.CurrentValue = 2;
 				pin.CanBeJolly = false;
 				pin.CanBePin = false;
+			}else if(myCards.Exists(c => c.Value == Card.MyValues.tre) && myCards.Exists(c => c.Value == Card.MyValues.quattro))
+			{
+				pin.CurrentValue = 2;
+				pin.CanBeJolly = true;
+				pin.CanBePin = true;
+
 			}
 		}
 
