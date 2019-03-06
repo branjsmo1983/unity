@@ -147,10 +147,7 @@ public class Canasta : MonoBehaviour
 	{
 		bool check = false;
 
-		if(card.Exists(c=>c.Value == Card.MyValues.due))
-		{
-			CheckPinIs2(ref card);
-		}
+		
 		//check sui giolly e pinelle
 		int numberOfJolly = card.Count(c => (c.CanBeJolly) && (!c.CanBePin));
 		print("numero di jolly : " + numberOfJolly);
@@ -219,7 +216,11 @@ public class Canasta : MonoBehaviour
 			if (card.Exists(c => c.CanBePin))
 			{
 				print("sono entrato nel metodo in cui controllo la pinella");
-				CheckPinIs2(ref card);
+				if (!PinsAreValidOnScale(ref card))
+				{
+					print("se il metodo che controlla le pins ritorna falso esco con il return false");
+					return false;
+				}
 			}
 			
 			//if (card.Where(c => c.CanBePin).Count() > 1) return false;
@@ -309,34 +310,80 @@ public class Canasta : MonoBehaviour
 	}
 	
 
-	private static void CheckPinIs2(ref List<Card> myCards)
+	//private static void CheckPinIs2(ref List<Card> myCards)
+	//{
+	//	print(" sono entrato nell'evento in cui controllo i 2");
+	//	Card.MySuits mySuits = myCards.FirstOrDefault(c => !c.CanBeJolly).Suit;         //seme della prima carta non jolly
+	//	int numOfPin = myCards.Count(c => c.CanBeJolly);
+	//	print(""+mySuits);
+	//	if(myCards.Exists(c => c.Value == Card.MyValues.due && c.Suit == mySuits))
+	//	{
+	//		Card pin = myCards.FirstOrDefault(c => c.Value == Card.MyValues.due && c.Suit == mySuits);
+	//		if ((myCards.Exists(c => c.Value == Card.MyValues.A) && myCards.Exists(c => c.Value == Card.MyValues.tre)) ||
+	//			(myCards.Exists(c => c.Value == Card.MyValues.tre) && myCards.Exists(c => c.Value == Card.MyValues.quattro) && numOfPin == 2) ||
+	//			(myCards.Exists(c => c.Value == Card.MyValues.A) && numOfPin == 2 )||
+	//			(myCards.Exists(c => c.Value == Card.MyValues.tre) && numOfPin == 2) ||
+	//			(myCards.Exists(c => c.Value == Card.MyValues.quattro) && numOfPin == 2))
+	//		{
+	//			pin.CurrentValue = 2;
+	//			pin.CanBeJolly = false;
+	//			pin.CanBePin = false;
+	//		}else if(myCards.Exists(c => c.Value == Card.MyValues.tre) && myCards.Exists(c => c.Value == Card.MyValues.quattro))
+	//		{
+	//			pin.CurrentValue = 2;
+	//			pin.CanBeJolly = true;
+	//			pin.CanBePin = true;
+
+	//		}
+	//	}
+
+	//}
+
+	private static bool PinsAreValidOnScale(ref List<Card> myCards)
 	{
-		print(" sono entrato nell'evento in cui controllo i 2");
-		Card.MySuits mySuits = myCards.FirstOrDefault(c => !c.CanBeJolly).Suit;         //seme della prima carta non jolly
-		int numOfPin = myCards.Count(c => c.CanBeJolly);
-		print(""+mySuits);
-		if(myCards.Exists(c => c.Value == Card.MyValues.due && c.Suit == mySuits))
+		Card.MySuits mySuits = myCards.FirstOrDefault(c => !c.CanBeJolly).Suit;
+		print("" + mySuits);
+		int numOfPin = myCards.Count(c => c.Value == Card.MyValues.due);
+		if(numOfPin < 2)
 		{
-			Card pin = myCards.FirstOrDefault(c => c.Value == Card.MyValues.due && c.Suit == mySuits);
-			if ((myCards.Exists(c => c.Value == Card.MyValues.A) && myCards.Exists(c => c.Value == Card.MyValues.tre)) ||
-				(myCards.Exists(c => c.Value == Card.MyValues.tre) && myCards.Exists(c => c.Value == Card.MyValues.quattro) && numOfPin == 2) ||
-				(myCards.Exists(c => c.Value == Card.MyValues.A) && numOfPin == 2 )||
-				(myCards.Exists(c => c.Value == Card.MyValues.tre) && numOfPin == 2) ||
-				(myCards.Exists(c => c.Value == Card.MyValues.quattro) && numOfPin == 2))
+			print("ho meno di 2 pinelle");
+			return true;
+
+		}
+		else
+		{
+			print("ho più di 2 pinelle");
+			if (!myCards.Exists(c => c.Value == Card.MyValues.due && c.Suit == mySuits))
 			{
-				pin.CurrentValue = 2;
-				pin.CanBeJolly = false;
-				pin.CanBePin = false;
-			}else if(myCards.Exists(c => c.Value == Card.MyValues.tre) && myCards.Exists(c => c.Value == Card.MyValues.quattro))
+				print(" non ho nessuna pinella con il seme della scala ");
+				return false;
+			}
+			else
 			{
-				pin.CurrentValue = 2;
-				pin.CanBeJolly = true;
-				pin.CanBePin = true;
+				print(" ho una pinella con il seme della scala ");
+				Card pin = myCards.FirstOrDefault(c => c.Value == Card.MyValues.due && c.Suit == mySuits);
+				if ((myCards.Exists(c => c.Value == Card.MyValues.A) && myCards.Exists(c => c.Value == Card.MyValues.tre)) ||
+				(myCards.Exists(c => c.Value == Card.MyValues.A) && myCards.Exists(c => c.Value == Card.MyValues.quattro)) ||
+				(myCards.Exists(c => c.Value == Card.MyValues.tre) || myCards.Exists(c => c.Value == Card.MyValues.quattro)))
+				{
+					print(" se ho un 3, o un 4, o un asso con un 3 o un 4 ");
+					pin.CurrentValue = 2;
+					pin.CanBeJolly = false;
+					pin.CanBePin = false;
+					return true;
+				}
+				else
+				{
+					print(" non ho ne un 3, ne un 4, ne un asso con un 3 o un 4");
+					return false;
+				}
 
 			}
+
 		}
 
 	}
+
 
 	private static void CheckAcePosition(ref List<Card> myCards)
 	{

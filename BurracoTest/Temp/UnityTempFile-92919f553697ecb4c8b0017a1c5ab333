@@ -91,12 +91,11 @@
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll"
-/reference:"C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll"
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll
 /reference:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\System.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\System.Core.dll"
@@ -232,7 +231,6 @@
 /define:PLATFORM_ARCH_64
 /define:UNITY_64
 /define:UNITY_INCLUDE_TESTS
-/define:UNITY_ANALYTICS
 /define:ENABLE_AUDIO
 /define:ENABLE_CACHING
 /define:ENABLE_CLOTH

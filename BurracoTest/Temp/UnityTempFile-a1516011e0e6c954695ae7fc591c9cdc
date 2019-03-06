@@ -1,16 +1,11 @@
 /target:library
 /nowarn:0169
-/out:Temp/Assembly-CSharp.dll
+/out:Temp/Unity.TextMeshPro.dll
 /debug:portable
 /optimize-
 /nostdlib+
 /preferreduilang:en-US
 /langversion:latest
-/reference:Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll
-/reference:Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll
-/reference:Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll
-/reference:Library/ScriptAssemblies/Unity.TextMeshPro.dll
-/reference:Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.AIModule.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.ARModule.dll"
@@ -74,13 +69,23 @@
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/UnityEditor.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/Unity.Locator.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll"
+/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll"
+/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/Editor/UnityEditor.Timeline.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll"
+/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll"
+/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/Editor/UnityEditor.GoogleAudioSpatializer.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll"
+/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/Editor/UnityEditor.SpatialTracking.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll"
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll
-/reference:C:/Users/Adamo/Desktop/Corso_Unity_Completo/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll
+/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll"
+/reference:"C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll"
+/reference:"C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll"
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll
+/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll
 /reference:"C:\Program Files\Unity\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\NetStandard\compat\2.0.0\shims\netstandard\Microsoft.Win32.Primitives.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\NetStandard\compat\2.0.0\shims\netstandard\System.AppContext.dll"
@@ -297,127 +302,48 @@
 /define:ENABLE_VSTU
 /define:CSHARP_7_OR_LATER
 /define:CSHARP_7_3_OR_NEWER
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\AIBehaviors.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Animation\AIAnimationState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Animation\AIAnimationStates.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Animation\CharacterAnimator.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\EditorHelpers\AIBehaviorsAnimationEditorGUI.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\EditorHelpers\AIBehaviorsAssignableObjectArray.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\EditorHelpers\AIBehaviorsCodeSampleGUI.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\EditorHelpers\AIBehaviorsComponentInfoHelper.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\EditorHelpers\AIBehaviorsGeneralEditorGUI.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\EditorHelpers\AIBehaviorsStatePopups.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\EditorHelpers\AIBehaviorsStyles.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\EditorHelpers\AIBehaviorsTriggerGizmos.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\EditorHelpers\AIBehaviorsTriggersGUI.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\EditorHelpers\ComponentHelper.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\EditorHelpers\InspectorHelper.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\GroupMoving\AIFormationAttacking.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\GroupMoving\AIFormationMoving.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\GroupMoving\FormationMouseSender.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Mecanim\MecanimAnimation.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Mecanim\MecanimNavMeshPathScript.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Navigation\FlightArea.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Navigation\FlightNavigation.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Navigation\FlightNavigator.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Navigation\NavMeshBaker.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Navigation\RunTimeNavMesh\Scripts\NavMeshLink.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Navigation\RunTimeNavMesh\Scripts\NavMeshModifier.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Navigation\RunTimeNavMesh\Scripts\NavMeshModifierVolume.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Navigation\RunTimeNavMesh\Scripts\NavMeshSurface.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Other\AiBehaviorVariable.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Other\AIComponent.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Other\Attributes.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Other\Enumerations.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Other\SaveIdDistributor.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Other\Structs.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Other\TaggedObjectFinder.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\AttackState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\BaseState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\ChangeState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\ChangeTagState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\CooldownableState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\DeadState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\DefendState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\FleeState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\GetHelpState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\GetInvisibleState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\GotHitState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\HelpState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\IdleState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\MecanimAttackState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\OffMeshLinkState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\PatrolState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\SeekState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\StateSkeleton.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\StepBackState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\States\WanderState.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\AudioTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\BaseTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\BeyondDistanceTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\CheckVariableTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\CurrentStateTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\DistanceTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\GoToRandomStateTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\GroupTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\HealthTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\HighHealthTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\InPlayerViewTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\InSameLayerTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\IsAliveTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\IsObstructedFromPlayers.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\IsOnOffMeshLinkTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\ItemCountTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\KeyDownTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\KeyUpTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\LineOfSightTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\LowHealthTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\NoPlayerInSightTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\PathReachableTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\SpeedExceededTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\TimerTrigger.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\TriggerSkeleton.cs
-Assets\AIBehavior\Plugins\AIBehaviorsMadeEasy\Triggers\WithinDistanceTrigger.cs
-Assets\MyAssets\MyScripts\Burraco.cs
-Assets\MyAssets\MyScripts\Canasta.cs
-Assets\MyAssets\MyScripts\Card.cs
-Assets\MyAssets\MyScripts\CardForStartGame.cs
-Assets\MyAssets\MyScripts\Deck.cs
-Assets\MyAssets\MyScripts\DeckForStartGame.cs
-Assets\MyAssets\MyScripts\MyEventManager.cs
-Assets\MyAssets\MyScripts\Player.cs
-Assets\MyAssets\MyScripts\Table.cs
-Assets\MyAssets\MyScripts\UserInput.cs
-"Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark01.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark01_UGUI.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark02.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark03.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark04.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\CameraController.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\ChatController.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\EnvMapAnimator.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\ObjectSpin.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\ShaderPropAnimator.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\SimpleScript.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\SkewTextExample.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TeleType.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TextConsoleSimulator.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TextMeshProFloatingText.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TextMeshSpawner.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_DigitValidator.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_ExampleScript_01.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_FrameRateCounter.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_PhoneNumberValidator.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextEventCheck.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextEventHandler.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextInfoDebugTool.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextSelector_A.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextSelector_B.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_UiFrameRateCounter.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\TMPro_InstructionOverlay.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\VertexColorCycler.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\VertexJitter.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\VertexShakeA.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\VertexShakeB.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\VertexZoom.cs"
-"Assets\TextMesh Pro\Examples & Extras\Scripts\WarpTextExample.cs"
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\FastAction.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\MaterialReferenceManager.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\PackageResourceImporterWindow.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TextContainer.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TextMeshPro.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TextMeshProUGUI.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_Asset.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_ColorGradient.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_Compatibility.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_CoroutineTween.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_DefaultControls.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_Dropdown.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_FontAsset.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_InputField.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_InputValidator.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_LineInfo.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_ListPool.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_MaterialManager.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_MeshInfo.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_ObjectPool.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_ScrollbarEventHandler.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_SelectionCaret.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_Settings.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_Sprite.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_SpriteAnimator.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_SpriteAsset.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_SpriteAssetImportFormats.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_Style.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_StyleSheet.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_SubMesh.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_SubMeshUI.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_Text.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_TextElement.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_TextInfo.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_TextUtilities.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_UpdateManager.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_UpdateRegistery.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMP_XmlTagStack.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMPro_EventManager.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMPro_ExtensionMethods.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMPro_FontUtilities.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMPro_MeshUtilities.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMPro_Private.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMPro_ShaderUtilities.cs
+C:\Users\abranz\Desktop\Unity_corsoMI\test_vari\unity\BurracoTest\Library\PackageCache\com.unity.textmeshpro@1.3.0\Scripts\Runtime\TMPro_UGUI_Private.cs

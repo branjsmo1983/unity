@@ -585,7 +585,7 @@ public class Burraco : MonoBehaviour
 					return;
 				}
 				print(" il valore dell'ipotetico tris è : " + Canasta.GetTrisNumber(me.cardsSelected));
-				print("le carte scelte formano una canasta");
+	
 				float yOffset = 0;
 				float zOffset = 0.2f;
 				float xOffset = 0.9f;
