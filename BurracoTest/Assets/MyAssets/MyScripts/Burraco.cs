@@ -506,7 +506,7 @@ public class Burraco : MonoBehaviour
 
 	public void OnAddCardsToCanasta(MyEventArgs e)			//aggiunge le carte selezionate alla canasta
 	{
-		Vector3 initialPosition = e.canastaSelected.cards[0].transform.position;							//salvo la posizione iniziale della canasta
+		Vector3 initialPosition = e.canastaSelected.cards.OrderByDescending(c=>c.CurrentValue).ElementAt(0).transform.position;							//salvo la posizione iniziale della canasta
 		// ------ per test
 		print(" Sono entrato nel metodo per aggiungere carte alla canasta ");
 		foreach(Card c in e.canastaSelected.cards)
