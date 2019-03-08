@@ -600,7 +600,7 @@ public class Burraco : MonoBehaviour
 				{
 					print("sto attacanado la carta : "+ card.Name);
 					print("con nome : " + card.name);
-					card.transform.position = new Vector3(firstOurCanastaPosition.transform.position.x + (xOffset * ourTable.canaste.Count),firstOurCanastaPosition.transform.position.y - yOffset,firstOurCanastaPosition.transform.position.z - zOffset);
+					card.transform.position = new Vector3(firstOurCanastaPosition.transform.position.x + (xOffset * ourTable.canaste.Count), firstOurCanastaPosition.transform.position.y - yOffset,firstOurCanastaPosition.transform.position.z - zOffset -(zOffset * ourTable.canaste.Count));
 					yOffset += 0.4f;
 					zOffset += 0.2f;
 					card.IsSelected = false;

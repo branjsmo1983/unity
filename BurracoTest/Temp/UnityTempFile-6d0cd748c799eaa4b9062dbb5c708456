@@ -72,6 +72,9 @@
 /reference:"C:\Program Files\Unity\Editor\Data\Managed/Unity.Locator.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll"
+/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll"
+/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll"
+/reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/Editor/UnityEditor.Timeline.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll"
@@ -83,12 +86,10 @@
 /reference:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll"
 /reference:"C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll"
-/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.ads@2.0.8/UnityEngine.Advertisements.dll
 /reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll
 /reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll
 /reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll
 /reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll
-/reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.purchasing@2.0.3/UnityEngine.Purchasing.dll
 /reference:C:/Users/abranz/Desktop/Unity_corsoMI/test_vari/unity/BurracoTest/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll
 /reference:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll"
 /reference:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\System.dll"
