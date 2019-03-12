@@ -5,14 +5,14 @@ using UnityEngine;
 public class UserInput : MonoBehaviour
 {
 
-	public GameObject slot1;
+	//public GameObject slot1;
 	internal Burraco burraco;
 
 	// Start is called before the first frame update
 	void Start()
     {
 		burraco = FindObjectOfType<Burraco>();
-		slot1 = this.gameObject;
+		//slot1 = this.gameObject;
 	}
 
     // Update is called once per frame

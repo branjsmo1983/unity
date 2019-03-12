@@ -849,6 +849,12 @@ public class Burraco : MonoBehaviour
 			print(" tocca al giocatore di sinistra ");
 			isCanGetInput = false;
 
+			// TO DO 1) Metodo per decidere se pescare o raccogliere -> booleano 
+			//		 2) Coroutine per mostare che raccoglie o scarta
+			//		 3) Metodo per cercare di attaccare
+			//		 4) Metodo per cercare di calare canasta
+			//		 5) Metodo per scartare una carta
+
 			//da rimuovere, mi serve per adesso per giocare sempre io
 			MyEventManager.instance.CastEvent(MyIndexEvent.gameStart, new MyEventArgs(this.gameObject, MYMATE));
 		}
@@ -944,6 +950,101 @@ public class Burraco : MonoBehaviour
 			zOffset += 0.2f;
 		}
 
+	}
+
+	private bool ShouldCollect(List<Card> hand,List<Card> refuse,Table table,Player player)
+	{
+		if(hand.Count == 1 && (hand[0].Value == Card.MyValues.jolly|| hand[0].Value == Card.MyValues.due))
+		{
+			print("sono nel ramo in cui ho solo una carta, ed è un jolly o una pinella");
+			if(refuse.Count == 1 && (refuse[0].Value == Card.MyValues.jolly || refuse[0].Value == Card.MyValues.due))
+			{
+				print("sono nel caso in cui in mano ho una pinella/jolly e negli scarti ho 1 carta pinella/jolly");
+				return false;
+			}
+			if(table.existBurraco && IsAddable(table, hand[0]))
+			{
+				print("sono nel ramo in cui ho già un burraco e il jolly è attaccabile");
+				return false; 
+			}
+			if(!table.existBurraco && refuse.Count > 1)
+			{
+				print("sono nel ramo in cui non ho ancora un burraco nel tavolo e le carte scartate sono + di 1");
+				return true;
+			}
+			if (!table.existBurraco && refuse.Count == 1)
+			{
+				print("sono nel ramo in cui non ho ancora un burraco nel tavolo e ho solo una carta scartata");
+				return false;
+			}
+		}
+		if (hand.Count == 1 && (hand[0].Value != Card.MyValues.jolly && hand[0].Value != Card.MyValues.due))
+		{
+			print("sono nel ramo in cui ho solo una carta, non è ne un jolly ne una pinella");
+			if (!player.CockpitAlreadyBeenTaken)
+			{
+				if(refuse.Count == 1 && IsAddable(table, refuse[0]))
+				{
+					print("sono nel ramo in cui non ho ancora preso il pozzetto, negli scarti ho solo una carta e quella mi attacca al tavolo");
+					return true;
+				}
+				else if (refuse.Count == 1 && !IsAddable(table, refuse[0]))
+				{
+					print("sono nel ramo in cui non ho ancora preso il pozzetto, negli scarti ho solo una carta MA quella NON mi attacca al tavolo");
+					return false;
+				}
+				else
+				{
+					print("sono nel ramo in cui ho + di una carta negli scarti");
+					foreach(Card card in refuse)
+					{
+						if (!IsAddable(table, card))
+						{
+							print("la carta " + card.name + " NON è aggiungibile!");
+							return false;
+						}
+						else
+						{
+							print("la carta " + card.name + " è aggiungibile");
+							continue;
+						}
+					}
+					return true;
+				}
+			}
+			else
+			{
+				if (table.existBurraco)
+				{
+					if (refuse.Count == 1 && IsAddable(table, refuse[0]))
+					{
+						print("sono nel ramo in cui ho preso il pozzetto, negli scarti ho solo una carta e quella mi attacca al tavolo");
+						return true;
+					}
+				}
+				else
+				{
+
+				}
+			}
+		}
+
+			return false;
+	}
+
+	private bool IsAddable(Table table, Card card)
+	{
+		if(card.Value == Card.MyValues.jolly || card.Value == Card.MyValues.due)
+		{
+			print("c'è un jolly o un 2 negli scarti");
+			return true;
+		}
+		bool result = false;
+		foreach(Canasta canasta in table.canaste)
+		{
+
+		}
+		return result;
 	}
 
 }

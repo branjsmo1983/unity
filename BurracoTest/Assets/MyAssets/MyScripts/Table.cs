@@ -5,6 +5,7 @@ using UnityEngine;
 public class Table : MonoBehaviour
 {
 	internal List<Canasta> canaste;
+	internal bool existBurraco;
 
 
 	internal bool IsAddable(Canasta canasta)
