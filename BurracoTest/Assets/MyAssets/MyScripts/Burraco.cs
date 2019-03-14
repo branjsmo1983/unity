@@ -981,8 +981,9 @@ public class Burraco : MonoBehaviour
 		if (hand.Count == 1 && (hand[0].Value != Card.MyValues.jolly && hand[0].Value != Card.MyValues.due))
 		{
 			print("sono nel ramo in cui ho solo una carta, non è ne un jolly ne una pinella");
-			if (!player.CockpitAlreadyBeenTaken)
+			if (!player.CockpitAlreadyBeenTaken || player.CockpitAlreadyBeenTaken && table.existBurraco)
 			{
+				print("sono nel ramo in cui non ho preso il pozzetto oppure l'ho preso e ho già il burraco");
 				if(refuse.Count == 1 && IsAddable(table, refuse[0]))
 				{
 					print("sono nel ramo in cui non ho ancora preso il pozzetto, negli scarti ho solo una carta e quella mi attacca al tavolo");
@@ -1014,22 +1015,84 @@ public class Burraco : MonoBehaviour
 			}
 			else
 			{
-				if (table.existBurraco)
+				print(" sono nel ramo in cui ho preso il pozzetto  e non ho fatto burraco");
+				if(refuse.Count > 1)
 				{
-					if (refuse.Count == 1 && IsAddable(table, refuse[0]))
-					{
-						print("sono nel ramo in cui ho preso il pozzetto, negli scarti ho solo una carta e quella mi attacca al tavolo");
-						return true;
-					}
+					print("se ho il monte scarti > 1 -> raccolgo");
+					return true;
 				}
 				else
 				{
-
+					print("se ho il monte scarti == 1 devo controllare se la carta è attaccabile o meno");
+					if (IsAddable(table, refuse[0]))
+					{
+						print("la carta scartata è attaccabile -> raccolgo");
+						return true;
+					}
+					else
+					{
+						print("la carta scartata NON è attaccabile -> pesco");
+						return false;
+					}
+					
 				}
 			}
 		}
+		else
+		{
+			print("sono nel ramo in cui in mano ho + di 1 carta");
+		
+			if(refuse.Count == 1)
+			{
+				print("sono nel ramo in cui ho solo una carta negli scarti");
+				if (refuse[0].Value == Card.MyValues.due || refuse[0].Value == Card.MyValues.jolly)
+				{
+					print(" la carta scartata è un jolly o una pinella quindi la raccolgo");
+					return true;
+				}
+				else
+				{
+					if (hand.Count(c => c.Value == refuse[0].Value) > 1)
+					{
+						print("ho 2 carte in mano con lo stesso valore della carta scartata");
+						return true;
+					}
+					else if (hand.Exists(c => c.Suit == refuse[0].Suit && ((c.Value == refuse[0].Value - 1) || (c.Value == refuse[0].Value + 1) || (c.Value == refuse[0].Value - 2) || (c.Value == refuse[0].Value + 2))) &&
+						!hand.Exists(c => c.Suit == refuse[0].Suit & c.Value == refuse[0].Value))
+					{
+						print(" sono nel ramo in cui in mano ho una carta di un numero o due più grandi o più piccoli di quella negli scarti e dello stesso seme");
+						return true;
+					}
+					else
+					{
+						print("sono nel ramo in cui la carta non mi serve ne per il tris ne per la scala");
+						return false;
+					}
+					
+				}
+
+			}
+			else
+			{
+				print("sono nel ramo in cui ho + di una carta negli scarti");
+
+				// ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+				//						TO DO: 3 metodi che tornino un bool 1-se utili per il tavolo 2-se utili per la mano 3-se utili tra di loro 
+				//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+			}
+
+		}
 
 			return false;
+	}
+
+	private bool AreUsefulToEachOther(List<Card> refuseCards)
+	{
+		bool result = false;
+
+		return result;
 	}
 
 	private bool IsAddable(Table table, Card card)
@@ -1039,12 +1102,22 @@ public class Burraco : MonoBehaviour
 			print("c'è un jolly o un 2 negli scarti");
 			return true;
 		}
-		bool result = false;
+		
 		foreach(Canasta canasta in table.canaste)
 		{
-
+			if (canasta.IsAddable(card))
+			{
+				print("ho trovato una canasta in cui la carta " + card.name + " è aggiungibile");
+				return true;
+			}
+			else
+			{
+				print("ho trovato una canasta in cui la carta " + card.name + "NON è aggiungibile!!");
+				continue;
+			}
 		}
-		return result;
+		print("non ho trovato nessuna canasta a cui attaccare ");
+		return false;
 	}
 
 }
