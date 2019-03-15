@@ -1057,8 +1057,8 @@ public class Burraco : MonoBehaviour
 						print("ho 2 carte in mano con lo stesso valore della carta scartata");
 						return true;
 					}
-					else if (hand.Exists(c => c.Suit == refuse[0].Suit && ((c.Value == refuse[0].Value - 1) || (c.Value == refuse[0].Value + 1) || (c.Value == refuse[0].Value - 2) || (c.Value == refuse[0].Value + 2))) &&
-						!hand.Exists(c => c.Suit == refuse[0].Suit & c.Value == refuse[0].Value))
+					else if (hand.Exists(c => c.Suit == refuse[0].Suit && ((c.CurrentValue == refuse[0].CurrentValue - 1) || (c.CurrentValue == refuse[0].CurrentValue + 1) || (c.CurrentValue == refuse[0].CurrentValue - 2) || (c.CurrentValue == refuse[0].CurrentValue + 2))) &&
+						!hand.Exists(c => c.Suit == refuse[0].Suit & c.CurrentValue == refuse[0].CurrentValue))
 					{
 						print(" sono nel ramo in cui in mano ho una carta di un numero o due più grandi o più piccoli di quella negli scarti e dello stesso seme");
 						return true;
@@ -1089,6 +1089,30 @@ public class Burraco : MonoBehaviour
 	}
 
 	private bool AreUsefulToEachOther(List<Card> refuseCards)
+	{
+		foreach(Card card in refuseCards)
+		{
+			if(refuseCards.Count(x=>x.Value == card.Value) > 1															//buono per i tris
+				|| (refuseCards.Exists(x => x.Suit == card.Suit && x.CurrentValue == card.CurrentValue + 1))			//combinazioni per un'ipotetica scala
+				|| (refuseCards.Exists(x => x.Suit == card.Suit && x.CurrentValue == card.CurrentValue - 1)) 
+				|| (refuseCards.Exists(x => x.Suit == card.Suit && x.CurrentValue == card.CurrentValue + 2)) 
+				|| (refuseCards.Exists(x => x.Suit == card.Suit && x.CurrentValue == card.CurrentValue - 2)) 
+				|| (refuseCards.Exists(x => x.Suit == card.Suit && x.CurrentValue == card.CurrentValue - 11)))			//caso di A e 3
+			{
+				print("sono nel ramo in cui ho almeno un'altra carta con lo stesso valore oppure");
+				print("ho una carta dello stesso seme con un valore vicino ( +/- 1 o 2)");
+				return true;
+			}
+			else
+			{
+				print("questa carta non ha nessun'altra buona per un tris o una scala");
+				continue;
+			}
+		}
+		return false;
+	}
+
+	private bool AreUsefulToHand(List<Card> hand, List<Card> refuseCards)
 	{
 		bool result = false;
 
