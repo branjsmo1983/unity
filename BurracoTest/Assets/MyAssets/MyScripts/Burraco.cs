@@ -1119,6 +1119,187 @@ public class Burraco : MonoBehaviour
 		return result;
 	}
 
+	private bool AreUsefulToTable(Table table, List<Card> refuseCards)
+	{
+		bool result = false;
+
+		return result;
+	}
+
+	private bool IsThereCanasta(List<Card> cards)
+	{
+		return (IsThereClearRummy(cards) || IsThereClearTris(cards) || IsThereRummy(cards) || IsThereTris(cards));
+	}
+		
+	private bool IsThereClearTris(List<Card> cards)
+	{
+		print("sono nel metodo che controlla se ho un tris pulito");
+		foreach(Card card in cards)
+		{
+			if(cards.Count(c=>c.CurrentValue == card.CurrentValue) > 2)
+			{
+				print("ho trovato 3 carte dello stesso valore -> ritorno true");
+				return true;
+			}
+			else
+			{
+				print("NON  ho trovato 3 carte dello stesso valore -> cambio carta");
+				continue;
+			}
+		}
+		return false;
+	}
+
+	private bool IsThereTris(List<Card> cards)
+	{
+		print("sono nel metodo che controlla se ho un tris");
+		foreach(Card card in cards)
+		{
+			if((cards.Count(c=>c.CurrentValue == card.CurrentValue) > 1) && (cards.Exists(c=>c.Value == Card.MyValues.due ) || (cards.Exists(c=>c.Value == Card.MyValues.jolly))))
+			{
+				print("ho trovato almeno 2 carte dello stesso valore e o un jolly o una pinella -> ritorno true");
+				return true;
+			}
+			else
+			{
+				print("NON  ho trovato 2 carte dello stesso valore + jolly o pin -> cambio carta");
+				continue;
+			}
+		}
+
+		return false;
+	}
+
+	private bool IsThereClearRummy(List<Card> cards)
+	{
+		print("sono nel metodo che controlla se ho una scala pulita");
+		foreach(Card card in cards)
+		{
+			if(card.Value == Card.MyValues.A)
+			{
+				if(cards.Exists(c=>c.Suit == card.Suit && c.Value == Card.MyValues.due) && cards.Exists(c => c.Suit == card.Suit && c.Value == Card.MyValues.tre))
+				{
+					print("sono nel ramo in cui oltre all'asso ho anche il 2 e il 3 dello stesso seme");
+					return true;
+				}else if (cards.Exists(c => c.Suit == card.Suit && c.Value == Card.MyValues.K) && cards.Exists(c => c.Suit == card.Suit && c.Value == Card.MyValues.Q))
+				{
+					print("sono nel ramo in cui oltre all'asso ho anche il K e il Q dello stesso seme");
+					return true;
+				}
+				else
+				{
+					print("oltre l'A non ho ne il 2 e il 3 ne il K e il Q dello stesso seme -> cambio carta");
+					continue;
+				}
+			}
+			else
+			{
+				if (cards.Exists(c => c.Suit == card.Suit && c.CurrentValue == card.CurrentValue + 1) && cards.Exists(c => c.Suit == card.Suit && c.CurrentValue == card.CurrentValue - 1))
+				{
+					print("sono nel ramo in cui oltre alla mia carta ho 1 carta di un numero in più e 1 di un numero in meno");
+					return true;
+				}
+				else if (cards.Exists(c => c.Suit == card.Suit && c.CurrentValue == card.CurrentValue + 1) && cards.Exists(c => c.Suit == card.Suit && c.CurrentValue == card.CurrentValue + 2))
+				{
+					print("sono nel ramo in cui oltre alla mia carta ho le 2 carte successive");
+					return true;
+				}
+				else if (cards.Exists(c => c.Suit == card.Suit && c.CurrentValue == card.CurrentValue - 1) && cards.Exists(c => c.Suit == card.Suit && c.CurrentValue == card.CurrentValue - 2))
+				{
+					print("sono nel ramo in cui oltre alla mia carta ho le 2 precedenti");
+					return true;
+				}
+				else
+				{
+					print("non ho nessuna carta vicina alla mia -> cambio carta");
+					continue;
+				}
+			}
+		}
+		return false;
+	}
+
+	private bool IsThereRummy(List<Card> cards)
+	{
+		print("sono nel metodo che controlla se ho una scala");
+		foreach(Card card in cards)
+		{
+			if(card.Value == Card.MyValues.A)
+			{
+				print("ho trovato un asso");
+				if(cards.Exists(c=>c.Value == Card.MyValues.tre && c.Suit == card.Suit) && cards.Exists(c => c.CanBeJolly))
+				{
+					print("sono nel ramo in cui ho il 3 e una carta jolly");
+					return true;
+				}else if(cards.Exists(c => c.Value == Card.MyValues.due && c.Suit == card.Suit) && cards.Exists(c => c.CanBeJolly)||
+						 cards.Exists(c => c.Value == Card.MyValues.due && c.Suit == card.Suit) && cards.Count(c=>c.Value == Card.MyValues.due) >1)
+				{
+					print("sono nel ramo in cui oltre al 2 ho un jolly o un altro due");
+					return true;
+				}
+				else if (cards.Exists(c => c.Value == Card.MyValues.K && c.Suit == card.Suit) && cards.Exists(c => c.CanBeJolly))
+				{
+					print("sono nel ramo in cui oltre al K ho un jolly o un altro due");
+					return true;
+				}
+				else if(cards.Exists(c => c.Value == Card.MyValues.Q && c.Suit == card.Suit) && cards.Exists(c => c.CanBeJolly))
+				{
+					print("sono nel ramo in cui oltre al Q ho un jolly o un altro due");
+					return true;
+				}
+				else
+				{
+					print("ho l'asso ma non ho nessun 2,3,K o Q");
+					continue;
+				}
+			}
+			else
+			{
+				if((cards.Exists(c=> c.Suit == card.Suit && c.CurrentValue == card.CurrentValue - 1) ||
+					cards.Exists(c => c.Suit == card.Suit && c.CurrentValue == card.CurrentValue - 2)||
+					cards.Exists(c => c.Suit == card.Suit && c.CurrentValue == card.CurrentValue + 1)||
+					cards.Exists(c => c.Suit == card.Suit && c.CurrentValue == card.CurrentValue + 2))&&
+					cards.Exists(c => c.CanBeJolly)
+					)
+				{
+					print("ho trovato una carta vicina + 1 jolly");
+					return true;
+				}
+				else
+				{
+					print("NON ho trovato nessuna carta vicina con anche un jolly!!");
+					continue;
+				}
+			}
+		}
+		return false;
+	}
+
+	private Canasta MakeCanasta(ref List<Card> refusecards)
+	{
+		Canasta canasta = new Canasta
+		{
+			cards = new List<Card>()
+		};
+		if (IsThereClearRummy(refusecards))
+		{
+
+		}else if (IsThereRummy(refuseCards))
+		{
+			
+		}else if (IsThereClearTris(refuseCards))
+		{
+
+		}else if (IsThereTris(refuseCards))
+		{
+
+		}
+
+		return canasta;
+	}
+
+	
+
 	private bool IsAddable(Table table, Card card)
 	{
 		if(card.Value == Card.MyValues.jolly || card.Value == Card.MyValues.due)
