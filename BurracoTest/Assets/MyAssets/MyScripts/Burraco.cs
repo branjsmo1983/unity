@@ -1090,6 +1090,10 @@ public class Burraco : MonoBehaviour
 
 	private bool AreUsefulToEachOther(List<Card> refuseCards)
 	{
+		if(refuseCards.Exists(c=> c.Value == Card.MyValues.J || c.Value == Card.MyValues.due))
+		{
+			return true;
+		}
 		foreach(Card card in refuseCards)
 		{
 			if(refuseCards.Count(x=>x.Value == card.Value) > 1															//buono per i tris
@@ -1275,27 +1279,54 @@ public class Burraco : MonoBehaviour
 		return false;
 	}
 
+
+
 	private Canasta MakeCanasta(ref List<Card> refusecards)
 	{
-		Canasta canasta = new Canasta
-		{
-			cards = new List<Card>()
-		};
+		//TO DO: testo il numero di carte che ho all'inizio del metodo
+		print("all'inizio del metodo ho : " + refusecards.Count + " carte scartate");
+
+		List<Card> myRefuseCards = new List<Card>();
+		myRefuseCards = refusecards.ToList();
+		Canasta canasta = new Canasta();
 		if (IsThereClearRummy(refusecards))
 		{
+			List<Card> myCanasta = refuseCards
+				.Where(c =>( myRefuseCards.Exists(card => card.Suit == c.Suit && (card.Value == c.Value + 1)) && myRefuseCards.Exists(card2 => card2.Suit == c.Suit &&(card2.Value == c.Value + 2))||
+				 myRefuseCards.Exists(card => card.Suit == c.Suit && (card.Value == c.Value + 1)) && myRefuseCards.Exists(card2 => card2.Suit == c.Suit && (card2.Value == c.Value -1)) ||
+				  myRefuseCards.Exists(card => card.Suit == c.Suit && (card.Value == c.Value - 1)) && myRefuseCards.Exists(card2 => card2.Suit == c.Suit && (card2.Value == c.Value - 2))||
+				  myRefuseCards.Exists(card => card.Suit == c.Suit && (card.CurrentValue == c.CurrentValue + 1)) && myRefuseCards.Exists(card2 => card2.Suit == c.Suit && (card2.CurrentValue == c.CurrentValue + 2)) ||
+				 myRefuseCards.Exists(card => card.Suit == c.Suit && (card.CurrentValue == c.CurrentValue + 1)) && myRefuseCards.Exists(card2 => card2.Suit == c.Suit && (card2.CurrentValue == c.CurrentValue - 1)) ||
+				  myRefuseCards.Exists(card => card.Suit == c.Suit && (card.CurrentValue == c.CurrentValue - 1)) && myRefuseCards.Exists(card2 => card2.Suit == c.Suit && (card2.CurrentValue == c.CurrentValue - 2)))).ToList();
+			canasta.cards = myCanasta;
+			refuseCards.RemoveAll(c => myCanasta.Exists(card => c.Value == card.Value && c.Color == card.Color && c.Suit == card.Suit));
 
-		}else if (IsThereRummy(refuseCards))
-		{
-			
-		}else if (IsThereClearTris(refuseCards))
+			//TO DO: metodo che ordina la canasta e cerca se ci sono altre carte da aggiungere
+
+			return canasta;
+		}
+		else if (IsThereRummy(refuseCards))
 		{
 
-		}else if (IsThereTris(refuseCards))
+			return canasta;
+		}
+		else if (IsThereClearTris(refuseCards))
 		{
 
+			return canasta;
+		}
+		else if (IsThereTris(refuseCards))
+		{
+
+			return canasta;
+		}
+		else
+		{
+			print("se arrivo qui ho sbagliato qualcosa");
+			return null;
 		}
 
-		return canasta;
+		
 	}
 
 	
