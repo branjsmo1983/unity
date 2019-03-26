@@ -23,6 +23,7 @@ public class Burraco : MonoBehaviour
 	private const float X_OFFSET = 0.9f;
 	private const float X_OFFSET_MID = 0.6f;
 	private const float X_OFFSET_SMALL = 0.3f;
+	private const double GOOD_PERCENTUAL_FOR_COLLECT = 0.3;
 
 	[SerializeField]
 	private TextMeshProUGUI text;															//testo durante il gioco
@@ -149,7 +150,7 @@ public class Burraco : MonoBehaviour
 	{
 		print("ho cliccato il bottone per cambiare l'ordine");
 		orderbyValue = !orderbyValue;
-		OrderHand(me.myHand, hands[0].transform.position);
+		OrderHand(me.myHand, hands[0].transform.position,true);
 	}
 
 	void Shuffle<T>(List<T> list)
@@ -540,7 +541,7 @@ public class Burraco : MonoBehaviour
 			// chiamo il metodo che mostra le cards nella canasta
 			ShowCanasta(e.canastaSelected.cards.OrderByDescending(C => C.CurrentValue).ToList(), initialPosition);
 			//ordino la mia mano senza le carte aggiunte alla canasta
-			OrderHand(me.myHand, hands[0].transform.position);
+			OrderHand(me.myHand, hands[0].transform.position,true);
 			//pulisco la lista di carte selezionate
 			me.cardsSelected.Clear();
 
@@ -608,7 +609,7 @@ public class Burraco : MonoBehaviour
 					firstCanasta.cards.Add(card);
 					me.myHand.Remove(card);
 				}
-				OrderHand(me.myHand, hands[0].transform.position);
+				OrderHand(me.myHand, hands[0].transform.position,true);
 				firstCanasta.cards.OrderByDescending(c => c.CurrentValue);
 				firstCanasta.GetTrisNumber();
 				ourTable.canaste.Add(firstCanasta);
@@ -702,7 +703,7 @@ public class Burraco : MonoBehaviour
 			me.myHand.Remove(me.cardsSelected.ElementAt(0));
 			me.cardsSelected.Clear();
 			print("la carta scartata ha tag :" + refuseCards.ElementAt(0).tag);
-			OrderHand(me.myHand, hands[0].transform.position);
+			OrderHand(me.myHand, hands[0].transform.position, true);
 			nextRefusePosition.transform.position = new Vector3(nextRefusePosition.transform.position.x + 0.9f, nextRefusePosition.transform.position.y, nextRefusePosition.transform.position.z - 0.2f);
 			foreach(Card card in me.myHand)
 			{
@@ -841,7 +842,7 @@ public class Burraco : MonoBehaviour
 		if(name == ME)
 		{
 			print(" tocca a me ");
-			OrderHand(me.myHand, hands[0].transform.position);
+			OrderHand(me.myHand, hands[0].transform.position, true);
 			isCanGetInput = true;           //abilito l'input utente
 			
 		}else if(name == LEFTOPPONENT)
@@ -880,7 +881,7 @@ public class Burraco : MonoBehaviour
 		}
 	}
 
-	private void OrderHand(List<Card> hand, Vector3 position)
+	private void OrderHand(List<Card> hand, Vector3 position, bool isVisible)
 	{
 		
 		IEnumerable<Card> query = orderbyValue? hand.OrderBy(card => card.Suit).OrderBy(card => card.Value) : hand.OrderBy(card => card.Value).OrderBy(card => card.Suit);
@@ -890,7 +891,7 @@ public class Burraco : MonoBehaviour
 		foreach(Card card in hand)
 		{
 			card.transform.position = new Vector3(position.x + xOffSet, position.y, position.z - zOffset);
-			card.IsVisible = true;
+			card.IsVisible = isVisible;
 			xOffSet = hand.Count < MAXCARDSFULLFACE ? xOffSet += X_OFFSET : xOffSet += X_OFFSET_MID;
 			zOffset += Z_OFFSET;
 		}
@@ -902,11 +903,11 @@ public class Burraco : MonoBehaviour
 	{
 		if ((hand.Count > MAXCARDSFULLFACE) && (hand.Count <= MAXCARDHALFFECE))
 		{
-			ResizeHand(hand, startPosition.transform.position, X_OFFSET_MID);
+			ResizeHand(hand, startPosition.transform.position, X_OFFSET_MID,true);
 		}
 		else if (me.myHand.Count > MAXCARDHALFFECE)
 		{
-			ResizeHand(hand, startPosition.transform.position, X_OFFSET_SMALL);
+			ResizeHand(hand, startPosition.transform.position, X_OFFSET_SMALL,true);
 		}
 	}
 
@@ -914,15 +915,15 @@ public class Burraco : MonoBehaviour
 	{
 		if ((hand.Count > MAXCARDSFULLFACE) && (hand.Count <= MAXCARDHALFFECE))
 		{
-			Resize(hand, startPosition.transform.position, X_OFFSET_MID);
+			Resize(hand, startPosition.transform.position, X_OFFSET_MID,true);
 		}
 		else if (me.myHand.Count > MAXCARDHALFFECE)
 		{
-			Resize(hand, startPosition.transform.position, X_OFFSET_SMALL);
+			Resize(hand, startPosition.transform.position, X_OFFSET_SMALL,true);
 		}
 	}
 
-	private void ResizeHand(List<Card> hand, Vector3 position,float gap)
+	private void ResizeHand(List<Card> hand, Vector3 position,float gap, bool isVisible)
 	{
 		IEnumerable<Card> query = orderbyValue ? hand.OrderBy(card => card.Suit).OrderBy(card => card.Value) : hand.OrderBy(card => card.Value).OrderBy(card => card.Suit);
 		hand = query.ToList();
@@ -931,21 +932,21 @@ public class Burraco : MonoBehaviour
 		foreach (Card card in hand)
 		{
 			card.transform.position = new Vector3(position.x + xOffSet, position.y, position.z - zOffset);
-			card.IsVisible = true;
+			card.IsVisible = isVisible;
 			xOffSet += gap;
 			zOffset += 0.2f;
 		}
 		
 	}
 
-	private void Resize(List<Card> hand, Vector3 position, float gap)
+	private void Resize(List<Card> hand, Vector3 position, float gap, bool isVisible)
 	{
 		float xOffSet = 0;
 		float zOffset = 0;
 		foreach (Card card in hand)
 		{
 			card.transform.position = new Vector3(position.x + xOffSet, position.y, position.z - zOffset);
-			card.IsVisible = true;
+			card.IsVisible = isVisible;
 			xOffSet += gap;
 			zOffset += 0.2f;
 		}
@@ -1076,16 +1077,12 @@ public class Burraco : MonoBehaviour
 			{
 				print("sono nel ramo in cui ho + di una carta negli scarti");
 
-				// ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-				//						TO DO: 3 metodi che tornino un bool 1-se utili per il tavolo 2-se utili per la mano 3-se utili tra di loro 
-				//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+				return (AreUsefulToEachOther(refuse)||AreUsefulToHand(hand,refuse)||AreUsefulToTable(table,refuse));
 
 			}
 
 		}
 
-			return false;
 	}
 
 	private bool AreUsefulToEachOther(List<Card> refuseCards)
@@ -1118,16 +1115,76 @@ public class Burraco : MonoBehaviour
 
 	private bool AreUsefulToHand(List<Card> hand, List<Card> refuseCards)
 	{
-		bool result = false;
+		int numberUsefulCards = 0;
+		foreach(Card card in refuseCards)
+		{
+			if(hand.Count(c=>c.Value == card.Value) > 1)
+			{
+				print("ho trovato che in mano ho almeno 2 carte con lo stesso valore :" + card.name);
+				numberUsefulCards++;
+				continue;
+			}else if(hand.Exists(c => (c.CurrentValue == card.CurrentValue - 1 && c.Suit == card.Suit) ||
+									  (c.CurrentValue == card.CurrentValue + 1 && c.Suit == card.Suit) ||
+									  (c.CurrentValue == card.CurrentValue - 2 && c.Suit == card.Suit) ||
+									  (c.CurrentValue == card.CurrentValue + 2 && c.Suit == card.Suit) ||
+									  (c.Value == card.Value - 1 && c.Suit == card.Suit) ||
+									  (c.Value == card.Value + 1 && c.Suit == card.Suit) ||
+									  (c.Value == card.Value - 2 && c.Suit == card.Suit) ||
+									  (c.Value == card.Value + 2 && c.Suit == card.Suit)))
+			{
+				print("ho trovato che in mano ho una carta vicina dello stesso seme : " + card.name);
+				numberUsefulCards++;
+				continue;
+			}
+			else
+			{
+				print("la carta trovata non è utile");
+				continue;
+			}
+		}
+		print("il numero di carte utili tra quelle negli scarti è : " + numberUsefulCards);
+		
 
-		return result;
+		return IsGoodPercentual(refuseCards.Count,numberUsefulCards, GOOD_PERCENTUAL_FOR_COLLECT);
+	}
+
+	//per adesso imposto che ci sia almeno una carta utile su 3, poi in caso modifico
+	private bool IsGoodPercentual(int refuseSize, int usefulCards, double goodPercentual)
+	{
+		// in base alle carte utili rispetto a quelle pescate dico se vanno raccolte o meno
+		double result = (double)usefulCards / refuseSize;
+		return result > goodPercentual;
 	}
 
 	private bool AreUsefulToTable(Table table, List<Card> refuseCards)
 	{
-		bool result = false;
+		int numberUsefulCards = 0;
+		if (table.canaste.Count == 0)
+		{
+			return false;
+		}
+		else
+		{
+			
+			foreach(Card card in refuseCards)
+			{
+				if (IsAddable(table, card))
+				{
+					print(" ho trovato una carta aggiungibile al tavolo : " + card.name);
+					numberUsefulCards++;
+					continue;
+				}
+				else
+				{
+					print("la carta trovata non è utile");
+					continue;
+				}
+			}
 
-		return result;
+		}
+		
+
+		return IsGoodPercentual(refuseCards.Count,numberUsefulCards, GOOD_PERCENTUAL_FOR_COLLECT);
 	}
 
 	private bool IsThereCanasta(List<Card> cards)
@@ -1302,8 +1359,9 @@ public class Burraco : MonoBehaviour
 			refuseCards.RemoveAll(c => myCanasta.Exists(card => c.Value == card.Value && c.Color == card.Color && c.Suit == card.Suit));
 
 			print("dopo ho : " + refusecards.Count + " carte scartate");
-			
-			while(refusecards.Exists(c=>c.CurrentValue == (canasta.cards.Max(x => x.CurrentValue) + 1) ||  c.CurrentValue == (canasta.cards.Min(x => x.CurrentValue) - 1) || c.Value == canasta.cards.Max(x => x.Value) + 1 || c.Value == (canasta.cards.Min(x => x.Value) - 1)))
+			print("e una canasta di : " + canasta.cards.Count + " carte");
+
+			while (refusecards.Exists(c=>c.CurrentValue == (canasta.cards.Max(x => x.CurrentValue) + 1) ||  c.CurrentValue == (canasta.cards.Min(x => x.CurrentValue) - 1) || c.Value == canasta.cards.Max(x => x.Value) + 1 || c.Value == (canasta.cards.Min(x => x.Value) - 1)))
 			{
 				
 				Card cardToAddAtCanasta = refusecards.First((c => c.CurrentValue == (canasta.cards.Max(x => x.CurrentValue) + 1) || c.CurrentValue == (canasta.cards.Min(x => x.CurrentValue) - 1) || c.Value == (canasta.cards.Max(x => x.Value) + 1) || c.Value == (canasta.cards.Min(x => x.Value) - 1)));
@@ -1316,6 +1374,8 @@ public class Burraco : MonoBehaviour
 		}
 		else if (IsThereRummy(refuseCards))
 		{
+			print("all'inizio del metodo ho : " + refusecards.Count + " carte scartate");
+
 			List<Card> myCanasta = refuseCards
 				.Where(c => (myRefuseCards.Exists(card => card.Suit == c.Suit && (card.Value == c.Value + 1)) && myRefuseCards.Exists(card2 => card2.CanBeJolly) ||
 				 myRefuseCards.Exists(card => card.Suit == c.Suit && (card.Value == c.Value + 2)) && myRefuseCards.Exists(card2 => card2.CanBeJolly) ||
@@ -1329,17 +1389,38 @@ public class Burraco : MonoBehaviour
 			refuseCards.RemoveAll(c => myCanasta.Exists(card => c.Value == card.Value && c.Color == card.Color && c.Suit == card.Suit));
 
 			print("dopo ho : " + refusecards.Count + " carte scartate");
-
+			print("e una canasta di : " + canasta.cards.Count + " carte");
 
 			return canasta;
 		}
 		else if (IsThereClearTris(refuseCards))
 		{
+			print("all'inizio del metodo ho : " + refusecards.Count + " carte scartate");
+
+			int targetValue = refuseCards.FirstOrDefault(card => refuseCards.Count(c => c.CurrentValue == card.CurrentValue) > 2).CurrentValue;
+			List<Card> myCanasta = refuseCards.FindAll(c => c.CurrentValue == targetValue);
+			canasta.cards = myCanasta;
+			refuseCards.RemoveAll(c => c.CurrentValue == targetValue);
+
+			print("dopo ho : " + refusecards.Count + " carte scartate");
+			print("e una canasta di : " + canasta.cards.Count + " carte");
 
 			return canasta;
 		}
 		else if (IsThereTris(refuseCards))
 		{
+			print("all'inizio del metodo ho : " + refusecards.Count + " carte scartate");
+
+			int targetValue = refuseCards.FirstOrDefault(card => refuseCards.Count(c => c.CurrentValue == card.CurrentValue) > 1).CurrentValue;
+			List<Card> myCanasta = refuseCards.FindAll(c => c.CurrentValue == targetValue);
+			Card jolly = refuseCards.FirstOrDefault(card => card.CanBeJolly);
+			myCanasta.Add(jolly);
+			canasta.cards = myCanasta;
+			refuseCards.RemoveAll(c => c.CurrentValue == targetValue);
+			refuseCards.Remove(jolly);
+
+			print("dopo ho : " + refusecards.Count + " carte scartate");
+			print("e una canasta di : " + canasta.cards.Count + " carte");
 
 			return canasta;
 		}
@@ -1357,10 +1438,9 @@ public class Burraco : MonoBehaviour
 
 	private bool IsAddable(Table table, Card card)
 	{
-		if(card.Value == Card.MyValues.jolly || card.Value == Card.MyValues.due)
+		if(table.canaste.Count == 0)
 		{
-			print("c'è un jolly o un 2 negli scarti");
-			return true;
+			return false;
 		}
 		
 		foreach(Canasta canasta in table.canaste)
