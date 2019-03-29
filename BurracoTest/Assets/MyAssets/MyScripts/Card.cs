@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card : MonoBehaviour
+public class Card : MonoBehaviour, ICloneable
 {
 
 	[SerializeField]
@@ -182,6 +183,11 @@ public class Card : MonoBehaviour
 			gameObject.transform.localScale = new Vector3(0.2f, 0.2f, 1);
 
 		}
+	}
+
+	public object Clone()
+	{
+		return MemberwiseClone();
 	}
 
 	public enum MySuits

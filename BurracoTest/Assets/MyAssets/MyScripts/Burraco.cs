@@ -3,29 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using static Utility;
+using static Constant;
 using TMPro;
 
 public class Burraco : MonoBehaviour
 {
-	private const string ME = "mePlayer";
-	private const string MYCARD = "myCard";
-	private const string MYMATE = "myMatePlayer";
-	private const string MYMATECARD = "myMateCard";
-	private const string LEFTOPPONENT = "leftOpponentPlayer";
-	private const string LEFTOPPONENTCARD = "leftOpponentCard";
-	private const string RIGHTOPPONENT = "rightOpponentPlayer";
-	private const string RIGHTOPPONENTCARD = "rightOpponentCard";
-	private const string OURCANASTA = "ourCanasta";
-	private const string THEIRCANASTA = "theirCanasta";
-	private const int MAXCARDSFULLFACE = 16;
-	private const int MAXCARDHALFFECE = 25;
-	private const float Z_OFFSET = 0.2f;
-	private const float Y_OFFSET = 0.7f;
-	private const float Y_OFFSET_MID = 0.7f * 2 / 3;
-	private const float X_OFFSET = 0.9f;
-	private const float X_OFFSET_MID = 0.6f;
-	private const float X_OFFSET_SMALL = 0.3f;
-	private const double GOOD_PERCENTUAL_FOR_COLLECT = 0.3;
 
 	[SerializeField]
 	private TextMeshProUGUI text;															//testo durante il gioco
@@ -579,15 +562,15 @@ public class Burraco : MonoBehaviour
 													// if(!me.HasCollected && !me.HasFished)
 		if (me.cardsSelected.Count >= 3 && (me.HasCollected || me.HasFished))			//se non ho ancora nessuna canasta devo controllare di aver selezionato almeno 3 carte
 		{
-			if (Canasta.IsCanasta(ref me.cardsSelected))
+			if (IsCanasta(ref me.cardsSelected))
 			{
-				int checkTris = Canasta.GetTrisNumber(me.cardsSelected);
+				int checkTris = GetTrisNumber(me.cardsSelected);
 				if (ourTable.canaste.Count > 0 && ourTable.canaste.Exists(c => c.TrisValue == checkTris && c.TrisValue != -1))
 				{
 					print("esiste già una canasta-tris di questo valore : " + checkTris);
 					return;
 				}
-				print(" il valore dell'ipotetico tris è : " + Canasta.GetTrisNumber(me.cardsSelected));
+				print(" il valore dell'ipotetico tris è : " + GetTrisNumber(me.cardsSelected));
 	
 				float yOffset = 0;
 				float zOffset = 0.2f;
@@ -1040,7 +1023,7 @@ public class Burraco : MonoBehaviour
 				print("sono nel caso in cui in mano ho una pinella/jolly e negli scarti ho 1 carta pinella/jolly");
 				return false;
 			}
-			if(table.existBurraco && IsAddable(table, hand[0]))
+			if(table.existBurraco && table.IsAddable(hand[0]))
 			{
 				print("sono nel ramo in cui ho già un burraco e il jolly è attaccabile");
 				return false; 
@@ -1062,12 +1045,12 @@ public class Burraco : MonoBehaviour
 			if (!player.CockpitAlreadyBeenTaken || player.CockpitAlreadyBeenTaken && table.existBurraco)
 			{
 				print("sono nel ramo in cui non ho preso il pozzetto oppure l'ho preso e ho già il burraco");
-				if(refuse.Count == 1 && IsAddable(table, refuse[0]))
+				if(refuse.Count == 1 && table.IsAddable(refuse[0]))
 				{
 					print("sono nel ramo in cui non ho ancora preso il pozzetto, negli scarti ho solo una carta e quella mi attacca al tavolo");
 					return true;
 				}
-				else if (refuse.Count == 1 && !IsAddable(table, refuse[0]))
+				else if (refuse.Count == 1 && !table.IsAddable(refuse[0]))
 				{
 					print("sono nel ramo in cui non ho ancora preso il pozzetto, negli scarti ho solo una carta MA quella NON mi attacca al tavolo");
 					return false;
@@ -1077,7 +1060,7 @@ public class Burraco : MonoBehaviour
 					print("sono nel ramo in cui ho + di una carta negli scarti");
 					foreach(Card card in refuse)
 					{
-						if (!IsAddable(table, card))
+						if (!table.IsAddable(card))
 						{
 							print("la carta " + card.name + " NON è aggiungibile!");
 							return false;
@@ -1102,7 +1085,7 @@ public class Burraco : MonoBehaviour
 				else
 				{
 					print("se ho il monte scarti == 1 devo controllare se la carta è attaccabile o meno");
-					if (IsAddable(table, refuse[0]))
+					if (table.IsAddable(refuse[0]))
 					{
 						print("la carta scartata è attaccabile -> raccolgo");
 						return true;
@@ -1248,7 +1231,7 @@ public class Burraco : MonoBehaviour
 			
 			foreach(Card card in refuseCards)
 			{
-				if (IsAddable(table, card))
+				if (table.IsAddable(card))
 				{
 					print(" ho trovato una carta aggiungibile al tavolo : " + card.name);
 					numberUsefulCards++;
@@ -1420,41 +1403,35 @@ public class Burraco : MonoBehaviour
 
 	private Canasta MakeCanasta(ref List<Card> cards)
 	{
-		//TO DO: testo il numero di carte che ho all'inizio del metodo
 		print("all'inizio del metodo ho : " + cards.Count + " carte");
 
 		List<Card> myCards = new List<Card>();
 		myCards = cards.ToList();
 		Canasta canasta = new Canasta();
+		List<Card> cardsOfCanasta = new List<Card>();
 		if (IsThereClearRummy(cards))
 		{
-			List<Card> myCanasta = cards
-				.Where(c =>( myCards.Exists(card => card.Suit == c.Suit && (card.Value == c.Value + 1)) && myCards.Exists(card2 => card2.Suit == c.Suit &&(card2.Value == c.Value + 2))||
-				 myCards.Exists(card => card.Suit == c.Suit && (card.Value == c.Value + 1)) && myCards.Exists(card2 => card2.Suit == c.Suit && (card2.Value == c.Value -1)) ||
-				  myCards.Exists(card => card.Suit == c.Suit && (card.Value == c.Value - 1)) && myCards.Exists(card2 => card2.Suit == c.Suit && (card2.Value == c.Value - 2))||
-				  myCards.Exists(card => card.Suit == c.Suit && (card.CurrentValue == c.CurrentValue + 1)) && myCards.Exists(card2 => card2.Suit == c.Suit && (card2.CurrentValue == c.CurrentValue + 2) && c.CurrentValue < 15) ||
-				 myCards.Exists(card => card.Suit == c.Suit && (card.CurrentValue == c.CurrentValue + 1)) && myCards.Exists(card2 => card2.Suit == c.Suit && (card2.CurrentValue == c.CurrentValue - 1) && c.CurrentValue < 15) ||
-				  myCards.Exists(card => card.Suit == c.Suit && (card.CurrentValue == c.CurrentValue - 1)) && myCards.Exists(card2 => card2.Suit == c.Suit && (card2.CurrentValue == c.CurrentValue - 2) && c.CurrentValue < 15))).ToList();
-			canasta.cards = myCanasta;
-
-			// TO DO: myCanasta potrebbe avere una lista di + scale -> rivedere il metodo di linQ che la genera o spezzarla
-
-			cards.RemoveAll(c => myCanasta.Exists(card => c.Value == card.Value && c.Color == card.Color && c.Suit == card.Suit));
-
-			print("dopo ho : " + cards.Count + " carte in mano");
-			print("e una canasta di : " + canasta.cards.Count + " carte");
-
-			while (cards.Exists(c=>c.CurrentValue == (canasta.cards.Max(x => x.CurrentValue) + 1) ||  c.CurrentValue == (canasta.cards.Min(x => x.CurrentValue) - 1) || c.Value == canasta.cards.Max(x => x.Value) + 1 || c.Value == (canasta.cards.Min(x => x.Value) - 1)))
+			Card root = cards.First(c => myCards.Exists(card => (c.CurrentValue == card.CurrentValue + 1) && c.Suit == card.Suit) && myCards.Exists(card => (c.CurrentValue == card.CurrentValue - 1) && c.Suit == card.Suit));
+			cardsOfCanasta.Add(root);
+			Card rootCopy = (Card) root.Clone();
+			while(FindPrevious(rootCopy,cards) != null)
 			{
-				
-				Card cardToAddAtCanasta = cards.First((c => c.CurrentValue == (canasta.cards.Max(x => x.CurrentValue) + 1) || c.CurrentValue == (canasta.cards.Min(x => x.CurrentValue) - 1) || c.Value == (canasta.cards.Max(x => x.Value) + 1) || c.Value == (canasta.cards.Min(x => x.Value) - 1)));
-				print(" ho trovato un " + cardToAddAtCanasta.name + " da aggiungere alla canasta");
-				canasta.cards.Add(cardToAddAtCanasta);
-				cards.Remove(cardToAddAtCanasta);
+				Card newRoot = FindPrevious(rootCopy, cards);
+				cardsOfCanasta.Add(newRoot);
+				rootCopy = (Card) newRoot.Clone();
 			}
-
+			rootCopy = (Card)root.Clone();
+			while (FindSuccessor(rootCopy, cards) != null)
+			{
+				Card newRoot = FindSuccessor(rootCopy, cards);
+				cardsOfCanasta.Add(newRoot);
+				rootCopy = (Card)newRoot.Clone();
+			}
+			cards.RemoveAll(c => cardsOfCanasta.Contains(c));
+			canasta.cards = cardsOfCanasta;
 			return canasta;
 		}
+		//Da rifare tutti gli altri casi come quello sopra
 		else if (IsThereRummy(cards))
 		{
 			print("all'inizio del metodo ho : " + cards.Count + " carte scartate");
@@ -1517,31 +1494,10 @@ public class Burraco : MonoBehaviour
 		
 	}
 
+
 	
 
-	private bool IsAddable(Table table, Card card)
-	{
-		if(table.canaste.Count == 0)
-		{
-			return false;
-		}
-		
-		foreach(Canasta canasta in table.canaste)
-		{
-			if (canasta.IsAddable(card))
-			{
-				print("ho trovato una canasta in cui la carta " + card.name + " è aggiungibile");
-				return true;
-			}
-			else
-			{
-				print("ho trovato una canasta in cui la carta " + card.name + "NON è aggiungibile!!");
-				continue;
-			}
-		}
-		print("non ho trovato nessuna canasta a cui attaccare ");
-		return false;
-	}
+	
 
 }
 

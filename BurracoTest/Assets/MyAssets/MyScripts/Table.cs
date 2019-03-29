@@ -10,21 +10,33 @@ public class Table : MonoBehaviour
 
 	internal bool IsAddable(Canasta canasta)
 	{
-		bool result = false;
-
-		//TO DO logica di controllo sul fatto di poter calare la canasta o meno
-
-		return result;
+		return false;
 	}
 
 	internal bool IsAddable(Card card)
 	{
-		bool result = false;
+		if (canaste.Count == 0)
+		{
+			return false;
+		}
 
-		//TO DO logica di controllo sul fatto di poter calare la canasta o meno
-
-		return result;
+		foreach (Canasta c in canaste)
+		{
+			if (c.IsAddable(card))
+			{
+				print("ho trovato una canasta in cui la carta " + card.name + " è aggiungibile");
+				return true;
+			}
+			else
+			{
+				print("ho trovato una canasta in cui la carta " + card.name + "NON è aggiungibile!!");
+				continue;
+			}
+		}
+		print("non ho trovato nessuna canasta a cui attaccare ");
+		return false;
 	}
+	
 
 	// Start is called before the first frame update
 	void Start()
